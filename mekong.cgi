@@ -218,8 +218,19 @@ def finalise_order(login, credit_card, expiry_date):
 def login_form():
     print "<p>\n<form>\nlogin: <input type=\"text\" name=\"login\" size=16>\</input>\n</form>\<p>\n"
         
-print 'Content-type: text/html\n\n<html>\n<head></head>\n<body>\n<h2>Execution Environment</h2>\n<pre>\n'
+print '<!DOCTYPE html>\
+<html lang="en">\
+<head>\
+<title>mekong.com.au</title>\
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">\
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>\
+</head>\
+<body>\
+<p>\
+<div class="container">'
 
 login_form()
 
-print '</pre>\n</body>\n</html>\n'
+print '</div>\
+<body>\
+</html>'
