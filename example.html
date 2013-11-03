@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+<html lang="en">
+<!-- Code taken from Bootstrap website -->
 <html>
   <head>
-    <title>Bootstrap 101 Template</title>
+    <title>Mekong Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -14,60 +16,50 @@
     <![endif]-->
   </head>
   <body>
-    <h1>Hello, world!</h1>
+    <header class="navbar navbar-inverse">
+        <div class="container">
+            <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+                <ul class="nav navbar-nav">
+                    <li><a href="mekong.cgi">Home</a></li>
+                    <li><a href="cart.cgi">Cart</a></li>
+                    <li><a href="checkout">Checkout</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="Login">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div id="content" class="bs-header">
+        <div class="container">
+            <h1>mekong.com.au</h1>
+            <p>Welcome to mekong.com.au</p>
+        </div>
+    </div>
+    
+    <div class="bs-old-docs">
+        <p><br></p>
+    </div>
+    
+    <div class="container bs-docs-container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="bs-sidebar hidden-print affix-top" role="complementary">
+                    <ul class="nav bs-sidenav">
+                        Your cart is empty.
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9" role="main">
+                MAIN
+            </div>
+        </div>
+    </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-<div class="container bs-docs-container">
-<div class="container bs-docs-container">
-<h3 id="panels-alternatives">Contextual alternatives</h3>
-    <p>Like other components, easily make a panel more meaningful to a particular context by adding any of the contextual state classes.</p>
-    <div class="bs-example">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Panel title</h3>
-        </div>
-        <div class="panel-body">
-          Panel content
-        </div>
-      </div>
-      <div class="panel panel-success">
-        <div class="panel-heading">
-          <h3 class="panel-title">Panel title</h3>
-        </div>
-        <div class="panel-body">
-          Panel content
-        </div>
-      </div>
-      <div class="panel panel-info">
-        <div class="panel-heading">
-          <h3 class="panel-title">Panel title</h3>
-        </div>
-        <div class="panel-body">
-          Panel content
-        </div>
-      </div>
-      <div class="panel panel-warning">
-        <div class="panel-heading">
-          <h3 class="panel-title">Panel title</h3>
-        </div>
-        <div class="panel-body">
-          Panel content
-        </div>
-      </div>
-      <div class="panel panel-danger">
-        <div class="panel-heading">
-          <h3 class="panel-title">Panel title</h3>
-        </div>
-        <div class="panel-body">
-          Panel content
-        </div>
-      </div>
-    </div>
-    </div>
-    </div>
-</div>
   </body>
 </html>
