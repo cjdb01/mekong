@@ -216,7 +216,14 @@ def finalise_order(login, credit_card, expiry_date):
         
 
 def login_form():
-    print "<p>\n<form>\nlogin: <input type=\"text\" name=\"login\" size=16>\</input>\n</form>\<p>\n"
+    print '<p>\n\
+<center>\n\
+<form>\n\
+Username: <input type="text" name="username" size=16></input>\n\
+Password: <input type="password" name="password" size=16></input>\n\
+</form>\n\
+</center>\n\
+<p>\n'
         
 print 'Content-Type: text-html\n\n\
 <!DOCTYPE html>\n\
