@@ -88,7 +88,7 @@ def total_books(isbns):
 def authenticate(username, password):
     global login
     global error
-    if not login:
+    if login:
         error = "User is already logged in."
     elif legal_username(username) == True:
         try:
