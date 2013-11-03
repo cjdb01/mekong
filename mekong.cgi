@@ -216,31 +216,54 @@ def finalise_order(login, credit_card, expiry_date):
         
 
 def login_form():
-    print '<p>\n\
-<center>\n\
-<form>\n\
-Username: <input type="text" name="username" size=16></input>\n\
-<br>\n\
-Password: <input type="password" name="password" size=16></input>\n\
-<br>\n\
-<input class="btn" type="submit" name="login" value="Login"></input>\n\
-<input class="btn" type="submit" name="create_account" value="Create Account"></input>\n\
-</form>\n\
-</center>\n\
-<p>\n'
+    print """
+<p>
+<center>
+<form>
+Username: <input type="text" name="username" size=16></input>
+<br>
+Password: <input type="password" name="password" size=16></input>
+<br>
+<input class="btn" type="submit" name="login" value="Login"></input>
+<input class="btn" type="submit" name="create_account" value="Create Account"></input>
+</form>
+</center>
+"""
+    form = cgi.FieldStorage()
+    if "username" not in form:
+        print """
+<br>
+<font color="red">Please enter a username.</font>
+"""
+    elif "password" not in form:
+        print """
+<br>
+<font color="red">Please enter a password.</font>
+"""
+    else:
+        username = form["username"].value
+        password = form["password"].value
+        if authenticate(username, password):
+            print "</p><p>Woot"
+        else:
+            print "</p><p>", error
+            error = ""
+    print "</p>"
         
-print 'Content-Type: text-html\n\n\
-<!DOCTYPE html>\n\
-<html lang="en">\n\
-<head>\n\
-<title>mekong.com.au</title>\n\
-<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">\n\
-<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>\n\
-</head>\n\
-<body>\n\
-<p>\n\
-<div class="container">\n'
-
+print "Content-Type: text-html"
+print
+print """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>mekong.com.au</title>
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<p>
+<div class="container">
+"""
 login_form()
 
 print '</div>\n\
