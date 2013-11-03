@@ -271,6 +271,8 @@ print """
 <p>
 <div class="container">
 """
+
+set_globals()
 login_form()
 
 print '</div>\n\
