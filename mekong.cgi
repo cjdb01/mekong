@@ -216,6 +216,7 @@ def finalise_order(login, credit_card, expiry_date):
         
 
 def login_form():
+    global error
     print """
 <p>
 <center>
