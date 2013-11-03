@@ -16,23 +16,40 @@
     <![endif]-->
   </head>
   <body>
-    <header class="navbar navbar-inverse">
+    <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <nav class="collapse navbar-collapse navbar-collapse" role="navigation">
                 <ul class="nav navbar-nav">
                     <li><a href="mekong.cgi">Home</a></li>
+                    <li><a href="search.cgi">Search</a></li>
                     <li><a href="cart.cgi">Cart</a></li>
                     <li><a href="checkout">Checkout</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="Login">Login</a></li>
+                <!-- TODO: FIX SO THAT IT SAYS YOUR USERNAME AND TAKES YOU TO A PAGE IF YOU CLICK ON IT! -->
+                    <li id="fat-menu" class="dropdown">
+                        <a id="drop3" class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">
+                            Login
+                            <b class="caret"></b>
+                        </a>
+                        <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px; width: 250px;" aria-labelledby="drop3" role="menu">
+                            <form>
+                                <label for="exampleInputEmail1">Login</label>
+                                <input type="text" id="username" class="form-control" placeholder="Enter username" style="margin-bottom: 5px;"></input>
+                                <input type="password" id="password" class="form-control" placeholder="Enter password" style="margin-bottom: 10px;"></input>
+                                <button type="submit" id="login" class="btn btn-primary" style="margin-right: 30px; margin-bottom: 10px;">Login</button>
+                                <button type="submit" id="create" class="btn btn-warning" style="margin-bottom: 10px;">Create account</button>
+                            </form>
+                        </div>
+                    </li>
+                    
                 </ul>
             </nav>
         </div>
-    </header>
+    </div>
     
-    <div id="content" class="bs-header">
-        <div class="container">
+    <div id="content" class="container">
+        <div class="jumbotron">
             <h1>mekong.com.au</h1>
             <p>Welcome to mekong.com.au</p>
         </div>
@@ -45,14 +62,24 @@
     <div class="container bs-docs-container">
         <div class="row">
             <div class="col-md-3">
-                <div class="bs-sidebar hidden-print affix-top" role="complementary">
-                    <ul class="nav bs-sidenav">
-                        Your cart is empty.
-                    </ul>
+                <div class="panel panel-info" style="min-height: 3000px;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Quick trolley</h3>
+                    </div>
+                    <div class="panel-body">
+                        Your trolley is empty...
+                    </div>
                 </div>
             </div>
             <div class="col-md-9" role="main">
-                MAIN
+                <div class="panel panel-info" style="min-height: 300px;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Search results</h3>
+                    </div>
+                    <div class="panel-body">
+                        No results to display.
+                    </div>
+                </div>
             </div>
         </div>
     </div>
