@@ -215,6 +215,12 @@ def finalise_order(login, credit_card, expiry_date):
         file.close()
         
 
+def set_globals():
+    global login
+    global error
+    login = ()
+    error = ""
+        
 def login_form():
     global error
     print """
