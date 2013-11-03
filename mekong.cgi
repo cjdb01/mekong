@@ -220,7 +220,11 @@ def login_form():
 <center>\n\
 <form>\n\
 Username: <input type="text" name="username" size=16></input>\n\
+<br>\n\
 Password: <input type="password" name="password" size=16></input>\n\
+<br>\n\
+<input type="button" name="login" size=16>Login</input>\n\
+<input type="button" name="create_account" size=16>Create Account</input>\n\
 </form>\n\
 </center>\n\
 <p>\n'
