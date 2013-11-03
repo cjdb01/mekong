@@ -218,7 +218,7 @@ def finalise_order(login, credit_card, expiry_date):
 def set_globals():
     global login
     global error
-    login = ()
+    login = {}
     error = ""
         
 def login_form():
