@@ -223,8 +223,8 @@ Username: <input type="text" name="username" size=16></input>\n\
 <br>\n\
 Password: <input type="password" name="password" size=16></input>\n\
 <br>\n\
-<input type="submit" name="login" value="Login"></input>\n\
-<input type="submit" name="create_account" value="Create Account"></input>\n\
+<input class="btn" type="submit" name="login" value="Login"></input>\n\
+<input class="btn" type="submit" name="create_account" value="Create Account"></input>\n\
 </form>\n\
 </center>\n\
 <p>\n'
