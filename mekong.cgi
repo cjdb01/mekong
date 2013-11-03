@@ -218,7 +218,8 @@ def finalise_order(login, credit_card, expiry_date):
 def login_form():
     print "<p>\n<form>\nlogin: <input type=\"text\" name=\"login\" size=16>\</input>\n</form>\<p>\n"
         
-print '<!DOCTYPE html>\n\
+print 'Content-Type: text-html\n\n\
+<!DOCTYPE html>\n\
 <html lang="en">\n\
 <head>\n\
 <title>mekong.com.au</title>\n\
