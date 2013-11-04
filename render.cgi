@@ -1,6 +1,54 @@
 #!/usr/bin/python -u
 
-def html_header(title):
+def login_details(login):
+    print """
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="fat-menu" class="dropdown">
+                        <a id="drop3" class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">
+"""
+    if not login:
+        print "Login"
+    else:
+        print login["username"]
+
+    print """
+                            <b class="caret"></b>
+                        </a>
+                        <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px; width: 250px;" aria-labelledby="drop3" role="menu">
+"""
+
+    if not login:
+        print """
+                            <form>
+                                <label for="login">Login</label>
+                                <input type="text" id="username" class="form-control" placeholder="Enter username" style="margin-bottom: 5px;"></input>
+                                <input type="password" id="password" class="form-control" placeholder="Enter password" style="margin-bottom: 10px;"></input>
+                                <button type="submit" id="login" class="btn btn-primary" style="margin-bottom: 10px; width: 215px">Login</button>
+                                <button type="submit" id="login" class="btn btn-danger" style="margin-bottom: 10px; width: 215px">Forgot Password</button>
+                                <button type="submit" id="create" class="btn btn-warning" style="margin-bottom: 10px; width: 215px">Create account</button>
+                            </form>
+"""
+    else:
+        print """
+                            <ul class="dropdown-menu" aria-labelledby="drop3" role="menu">
+                                <li role="presentation">
+                                    Account
+                                </li>
+                                <li role="presentation">
+                                    History
+                                </li>
+                                <li role="presentation">
+                                    Settings
+                                </li>
+                            </ul>
+"""
+    print """
+                        </div>
+                    </li> 
+                </ul>
+"""
+
+def html_header(title, login):
     print "Content-Type: text-html"
     print
     print """
@@ -112,52 +160,4 @@ def html_header(title):
 
 """
 
-def login_details(login):
-    print """
-                <ul class="nav navbar-nav navbar-right">
-                    <li id="fat-menu" class="dropdown">
-                        <a id="drop3" class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">
-"""
-    if not login:
-        print "Login"
-    else:
-        print login["username"]
-
-    print """
-                            <b class="caret"></b>
-                        </a>
-                        <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px; width: 250px;" aria-labelledby="drop3" role="menu">
-"""
-
-    if not login:
-        print """
-                            <form>
-                                <label for="login">Login</label>
-                                <input type="text" id="username" class="form-control" placeholder="Enter username" style="margin-bottom: 5px;"></input>
-                                <input type="password" id="password" class="form-control" placeholder="Enter password" style="margin-bottom: 10px;"></input>
-                                <button type="submit" id="login" class="btn btn-primary" style="margin-bottom: 10px; width: 215px">Login</button>
-                                <button type="submit" id="login" class="btn btn-danger" style="margin-bottom: 10px; width: 215px">Forgot Password</button>
-                                <button type="submit" id="create" class="btn btn-warning" style="margin-bottom: 10px; width: 215px">Create account</button>
-                            </form>
-"""
-    else:
-        print """
-                            <ul class="dropdown-menu" aria-labelledby="drop3" role="menu">
-                                <li role="presentation">
-                                    Account
-                                </li>
-                                <li role="presentation">
-                                    History
-                                </li>
-                                <li role="presentation">
-                                    Settings
-                                </li>
-                            </ul>
-"""
-    print """
-                        </div>
-                    </li> 
-                </ul>
-"""
-
-html_header([])
+html_header("Mekong", {})
