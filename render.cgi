@@ -33,7 +33,7 @@ def login_details(login):
         print """
                         <ul class="dropdown-menu" aria-labelledby="drop3" role="menu">
                             <li role="presentation">
-                                Account
+                                <a href="#">Account</a>
                             </li>
                             <li role="presentation">
                                 History
