@@ -33,13 +33,19 @@ def login_details(login):
         print """
                         <ul class="dropdown-menu" aria-labelledby="drop3" role="menu">
                             <li role="presentation">
-                                <a href="#">Account</a>
+                                <a href="#">
+                                    Account
+                                </a>
                             </li>
                             <li role="presentation">
-                                History
+                                <a href="#">
+                                    History
+                                </a>
                             </li>
                             <li role="presentation">
-                                Settings
+                                <a href="#">
+                                    Settings
+                                </a>
                             </li>
                         </ul>
 """
@@ -48,7 +54,7 @@ def login_details(login):
                 </ul>
 """
 
-def html_header(title, login):
+def html_header(title, login, trolley):
     print "Content-Type: text-html"
     print
     print """
@@ -103,14 +109,8 @@ def html_header(title, login):
         <div class="jumbotron">
             <h1>mekong.com.au</h1>
             <p>Welcome to mekong.com.au</p>
-        </div>
-        
-        
-        
-        
-        
-        
-</div>
+        </div>    
+    </div>
     
     <div class="bs-old-docs">
         <p><br></p>
@@ -125,7 +125,14 @@ def html_header(title, login):
                             <strong>Quick trolley</strong><br>
                             <div class="row">
                                 <div class="col-md-6">
-                                    0 items
+"""
+    items = len(trolley)
+    if items == 1:
+        print "1 item"
+    else:
+        print items, "items"
+    print """
+                                    
                                 </div>
                                 <div class="col-md-6" align="right">
                                     $0.00
@@ -160,4 +167,4 @@ def html_header(title, login):
 
 """
 
-html_header("Mekong", {"username": "cjdb"})
+html_header("Mekong", {"username": "cjdb"}, {"12345": 1})
