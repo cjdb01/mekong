@@ -14,11 +14,11 @@ def login_details(login):
     print """
                             <b class="caret"></b>
                         </a>
-                        <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px; width: 250px;" aria-labelledby="drop3" role="menu">
 """
 
     if not login:
         print """
+                        <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px; width: 250px;" aria-labelledby="drop3" role="menu">
                             <form>
                                 <label for="login">Login</label>
                                 <input type="text" id="username" class="form-control" placeholder="Enter username" style="margin-bottom: 5px;"></input>
@@ -27,23 +27,23 @@ def login_details(login):
                                 <button type="submit" id="login" class="btn btn-danger" style="margin-bottom: 10px; width: 215px">Forgot Password</button>
                                 <button type="submit" id="create" class="btn btn-warning" style="margin-bottom: 10px; width: 215px">Create account</button>
                             </form>
+                        </div>
 """
     else:
         print """
-                            <ul class="dropdown-menu" aria-labelledby="drop3" role="menu">
-                                <li role="presentation">
-                                    Account
-                                </li>
-                                <li role="presentation">
-                                    History
-                                </li>
-                                <li role="presentation">
-                                    Settings
-                                </li>
-                            </ul>
+                        <ul class="dropdown-menu" aria-labelledby="drop3" role="menu">
+                            <li role="presentation">
+                                Account
+                            </li>
+                            <li role="presentation">
+                                History
+                            </li>
+                            <li role="presentation">
+                                Settings
+                            </li>
+                        </ul>
 """
     print """
-                        </div>
                     </li> 
                 </ul>
 """
