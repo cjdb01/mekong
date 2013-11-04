@@ -126,22 +126,28 @@ def html_header(title, login, trolley):
                             <div class="row">
                                 <div class="col-md-6">
 """
-    items = len(trolley)
+    items = count_basket()
     if items == 1:
         print "1 item"
     else:
         print items, "items"
-    print """
-                                    
+    print """  
                                 </div>
                                 <div class="col-md-6" align="right">
-                                    $0.00
+"""
+    print "$%.2f" % total_books()
+    print """
                                 </div>
                             </div> 
                         </h3>
                     </div>
                     <div class="panel-body">
-                        Your trolley is empty...
+"""
+    if items == 0:
+        print "Your trolley is empty..."
+    else:
+        print_cart()
+    print """
                     </div>
                 </div>
             </div>
@@ -151,7 +157,12 @@ def html_header(title, login, trolley):
                         <h3 class="panel-title">Search results</h3>
                     </div>
                     <div class="panel-body">
-                        No results to display.
+"""
+    if not results:
+        print "No results to display."
+    else:
+        print_results(results)
+    print """
                     </div>
                 </div>
             </div>

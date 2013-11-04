@@ -76,15 +76,15 @@ def legal_expiry_date(mm, yy):
     else:
         return good()
         
-def total_books(isbns, db):
+def total_books(db):
     total_price = 0
     
-    for isbn in isbns:
+    for isbn in basket:
         db.execute("SELECT price FROM Books WHERE isbn = :isbn", {"isbn": isbn})
         row = db.fetchone()
         
         if row:
-            total_price += int(row["price"])
+            total_price += float(row["price"])
         
     return total_price
             
@@ -166,3 +166,8 @@ def add_basket(isbn, db):
         
     write_basket(db)
     
+def count_basket()
+    items = 0
+    for i in basket:
+        items += i
+    return items
