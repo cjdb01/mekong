@@ -23,6 +23,11 @@ def login_details(login):
                                 <label for="login">Login</label>
                                 <input type="text" id="username" class="form-control" placeholder="Enter username" style="margin-bottom: 5px;"></input>
                                 <input type="password" id="password" class="form-control" placeholder="Enter password" style="margin-bottom: 10px;"></input>
+                                <div class="checkbox">
+                                    <label>
+                                        <input id="remember-me" type="checkbox"> Remember me
+                                    </label>
+                                </div>
                                 <button type="submit" id="login" class="btn btn-primary" style="margin-bottom: 10px; width: 215px">Login</button>
                                 <button type="submit" id="login" class="btn btn-danger" style="margin-bottom: 10px; width: 215px">Forgot Password</button>
                                 <button type="submit" id="create" class="btn btn-warning" style="margin-bottom: 10px; width: 215px">Create account</button>
@@ -33,19 +38,13 @@ def login_details(login):
         print """
                         <ul class="dropdown-menu" aria-labelledby="drop3" role="menu">
                             <li role="presentation">
-                                <a href="#">
-                                    Account
-                                </a>
+                                <a href="mekong.cgi?myaccount">Account</a>
                             </li>
                             <li role="presentation">
-                                <a href="#">
-                                    History
-                                </a>
+                                <a href="mekong.cgi?myhistory">History</a>
                             </li>
                             <li role="presentation">
-                                <a href="#">
-                                    Settings
-                                </a>
+                                <a href="mekong.cgi?mysettings">Settings</a>
                             </li>
                         </ul>
 """
@@ -84,10 +83,10 @@ def html_header(title, login, trolley):
         <div class="container">
             <nav class="collapse navbar-collapse navbar-collapse" role="navigation">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Recommendations</a></li>
-                    <li><a href="#">Trolley</a></li>
-                    <li><a href="#">Checkout</a></li>
+                    <li><a href="mekong.cgi">Home</a></li>
+                    <li><a href="mekong.cgi?recommendations">Recommendations</a></li>
+                    <li><a href="mekong.cgi?trolley">Trolley</a></li>
+                    <li><a href="mekong.cgi?checkout">Checkout</a></li>
                 </ul>
                 <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">
@@ -96,7 +95,9 @@ def html_header(title, login, trolley):
                     <button type="submit" class="btn btn-default">Search</button>
                 </form>
                 <ul class="nav navbar-nav">
-                    <li><a href="#">Advanced search</a></li>
+                    <li>
+                        <a href="mekong.cgi?advanced-search">Advanced search</a>
+                    </li>
                 </ul>
 """
     login_details(login)
@@ -135,7 +136,10 @@ def html_header(title, login, trolley):
                                 </div>
                                 <div class="col-md-6" align="right">
 """
-    print "$%.2f" % total_books()
+    if items == 0:
+        print "$0.00"
+    else:
+        print "$%.2f" % total_books()
     print """
                                 </div>
                             </div> 
@@ -177,5 +181,3 @@ def html_header(title, login, trolley):
 </html>
 
 """
-
-html_header("Mekong", {"username": "cjdb"}, {"12345": 1})

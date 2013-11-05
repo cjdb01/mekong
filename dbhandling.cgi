@@ -46,14 +46,14 @@ def legal_password(password, username, first_name, last_name):
         error += "contain at least one special character."
     elif reg.search(username) or reg.search(first_name) or reg.search(last_name):
         error += "not contain usernames, first names, or last names."
-    else
+    else:
         return good()
     return False
     
-def legal_isbn(isbn)
+def legal_isbn(isbn):
     global error
     
-    if not re.match("\d{9} (\d|X):
+    if not re.match("\d{9} (\d|X)", isbn):
         error = "Invalid ISBN '" + isbn + "': an ISBN must be exactly 10 digits."
         return False
     else:
@@ -166,8 +166,12 @@ def add_basket(isbn, db):
         
     write_basket(db)
     
-def count_basket()
+def count_basket():
     items = 0
     for i in basket:
         items += i
     return items
+    
+import render
+
+render.html_header("Mekong", {"username": "cjdb"}, {"12345": 1})
