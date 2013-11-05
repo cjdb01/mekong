@@ -19,7 +19,7 @@ def login_details(login):
     if not login:
         print """
                         <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px; width: 250px;" aria-labelledby="drop3" role="menu">
-                            <form>
+                            <form action="mekong.cgi" method="post">
                                 <label for="login">Login</label>
                                 <input type="text" id="username" class="form-control" placeholder="Enter username" style="margin-bottom: 5px;"></input>
                                 <input type="password" id="password" class="form-control" placeholder="Enter password" style="margin-bottom: 10px;"></input>
@@ -88,7 +88,7 @@ def html_header(title, login, trolley):
                     <li><a href="mekong.cgi?trolley">Trolley</a></li>
                     <li><a href="mekong.cgi?checkout">Checkout</a></li>
                 </ul>
-                <form class="navbar-form navbar-left" role="search">
+                <form class="navbar-form navbar-left" role="search" action="mekong.cgi" method="post">
                     <div class="form-group">
                         <input type="text" class="form-control" style="width: 300px;" placeholder="Quick title search"></input>
                     </div>
