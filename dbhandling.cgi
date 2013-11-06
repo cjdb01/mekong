@@ -147,8 +147,7 @@ def print_body_search():
 """
 
 form = cgi.FieldStorage()
-if form.getvalue("username"):
-    sys.exit("LOL")
+
 
 print_header()
 print_body_search()
