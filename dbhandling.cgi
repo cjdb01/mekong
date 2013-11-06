@@ -156,4 +156,6 @@ print_header()
 
 if form.getvalue("username"):
     print form.getvalue("username")
+else:
+    print "bad request"
 print_body_search()
