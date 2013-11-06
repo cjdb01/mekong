@@ -74,19 +74,6 @@ print """
         <h1>mekong.com.au</h1>
         <p>Welcome to mekong.com.au</p>
       </div>
-      
-      <div class="progress progress-striped active">
-        <div class="progress-bar progress-bar-success"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 78%">
-            <span class="sr-only">45% Complete</span>
-        </div>
-      </div>
-      
-      <div class="alert alert-success fade in">
-        <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
-          ×
-        </button>
-        <strong>Item successfully added to cart.</strong>
-      </div>
     </div>
   </body>
 </html>
