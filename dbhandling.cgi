@@ -75,6 +75,51 @@ print """
         <p>Welcome to mekong.com.au</p>
       </div>
     </div>
+    
+    <div class="bs-old-docs">
+        <p><br></p>
+    </div>
+    
+    <div class="container bs-docs-container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="panel panel-info" style="min-height: 300px;">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                  <strong>Quick trolley</strong><br>
+                  <div class="row">
+                    <div class="col-md-6">
+                      0 items
+                    </div>
+                    <div class="col-md-6" align="right">
+                      $0.00
+                    </div>
+                  </div> 
+                </h3>
+            </div>
+            <div class="panel-body">
+                Your trolley is empty...
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9" role="main">
+          <div class="panel panel-info fixed-left" style="min-height: 300px;">
+            <div class="panel-heading">
+              <h3 class="panel-title">Search results</h3>
+            </div>
+            <div class="panel-body">
+              No results to display.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    
   </body>
 </html>
 """
