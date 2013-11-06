@@ -82,76 +82,7 @@ def legal_password(password, username, first_name, last_name):
         return ""
     return error
     
-def authenticate_user(username, password):
-    error = "Authentication error: "
-    
-    if account:
-        error = "A user is already logged in."
-    elif legal_username(username):
-        db = db_init(login_db)
-    
-        with db:
-            cursor = db.cursor()
-            db.execute("SELECT * FROM Users WHERE username = :uname", {"uname": username})
-            
-            row = db.fetchone()        
-            if not row:
-                error += "username '" + username + "' does not exist."
-            elif password != row["password"]:
-                error += "incorrect username or password."
-            else:
-                account = row
-                return ""
-    else:
-        error += "incorrect username or password."
-    return error
-    
-def create_account(user):
-    error = legal_username(user["username"])
-    if not error:
-        if not unique_username(user["username"]):
-            error = "Create account error: username is not unique"
-        else:
-            error = legal_password(user["password"], user["username"], user["firstname"], user["lastname"])
-            if not error:
-                db = db_init(login_db)
-        
-                with db:
-                    cursor = db.cursor()
-                
-                    hash = hashlib.sha512()
-                    hash.update(user["password"])
-                    pwd = hash.hexdigest()
-                
-                    cursor.execute("INSERT INTO Users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [user["username"], pwd, user["firstname"], user["lastname"],\
-                                            user["address"], user["suburb"], user["state"], user["postcode"], user["dob"], user["email"], user["phone"], user["sex"], False])
-                    # TODO: send confirmation email
-    return error
-    
-def change_password(username, current_password, new_password):
-    hash = hashlib.sha512()
-    hash.update(current_password)
-    
-    db = db_init(login_db)
-    with db:
-        cursor = db.cursor()
-        cursor.execute("SELECT * FROM Users")
-        
-        row = cursor.fetchone()
-        
-        error = legal_password(new_password, row["username"], row["firstname"], row["lastname"])
-        if row["password"] == hash.hexdigest() and not error:
-            hash = hashlib.sha512()
-            hash.update(new_password)
-            
-            if hash.hexdigest() != row["password"]:
-                cursor.execute("UPDATE Users SET password = ? WHERE username = ? AND password = ?", [hash.hexdigest(), username, row["password"]])
-            else:
-                error = "Password update error: new password cannot match old password."
-        elif row["password"] != hash.hexdigest():
-            error = "Password update error: incorrect password."
-                
-    return error
+
 
 def reset_password(username):
     return 0 # TODO
