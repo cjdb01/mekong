@@ -1,12 +1,9 @@
 #!/usr/bin/python -u
 
-import trolley as basket
-import books
 import cgi
 import cgitb
 import datetime
 import hashlib
-import login
 import re
 import sqlite3 as lite
 import sys
