@@ -51,6 +51,7 @@ def legal_username(username):
     
 def unique_username(username):
     db = db_init(login_db)
+    rows = {}
     with db:
         cursor = db.cursor()
         cursor.execute("SELECT * FROM Users WHERE username = ?", [username])
