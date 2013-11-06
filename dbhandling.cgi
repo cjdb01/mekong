@@ -143,5 +143,7 @@ def print_body_search():
     </html>
 """
 
+form = cgi.FieldStorage()
+
 print_header()
 print_body_search()
