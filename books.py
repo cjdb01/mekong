@@ -60,7 +60,7 @@ def present_books(criteria, category, order, asc):
                                 <h3 class="media-heading">%s</h3>
                               </div>
                               <div class="col-md-6" align="right">
-                                <h3 class="media-heading">$%f</h3>
+                                <h3 class="media-heading">$%.2f</h3>
                               </div>
                             </div>
   
