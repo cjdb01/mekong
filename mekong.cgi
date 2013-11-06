@@ -102,14 +102,8 @@ def print_header(title):
         </div>
 """
     if form.getvalue("isbn-to-add"):
-      print """
-        <div class="alert alert-success fade in">
-          <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
-              ×
-          </button>
-          <strong>Item successfully added to trolley.</strong>
-        </div>
-"""
+        #basket.quick_basket(account["username"])
+      
     print """
         
         <div class="bs-old-docs">
