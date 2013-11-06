@@ -138,7 +138,7 @@ def print_body_search(form):
                 <div class="panel-body">
 """
     if form.getvalue("page") == "search":
-        books.present_books(form.getvalue("searchbar"))
+        books.present_books(form.getvalue("searchbar"), "title", "salesrank", "DESC")
     print """
                 </div>
               </div>
