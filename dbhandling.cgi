@@ -48,6 +48,18 @@ def legal_username(username):
     else:
         return ""
     return error
+    
+def unique_username(username):
+    db = db_init(login_db)
+    with db:
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM Users WHERE username = ?", [username])
+        
+        rows = cursor.fetchone()
+        
+    return rows is None
+    
+
 
 ##################################################################################################################################################
 # Render code
