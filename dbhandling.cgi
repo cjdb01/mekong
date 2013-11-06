@@ -139,7 +139,7 @@ def html_header(title, form):
                     </li>
                 </ul>
 """
-    login_details()
+    #login_details()
     print """
             </nav>
         </div>
