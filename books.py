@@ -2,8 +2,8 @@ import database as dbase
 import sqlite3 as lite
 import re
 
-books_db = 'main.db'
-    
+books_db = 'data/main.db'
+
 def legal_isbn(isbn):
     global error
     
@@ -20,7 +20,7 @@ def total_books(basket):
     with db:
         cursor = db.cursor()
         for isbn in basket:
-            cursor.execute("SELECT price FROM Books WHERE isbn = :isbn", {"isbn": isbn})
+            cursor.execute("SELECT price FROM Books WHERE isbn = ?", [isbn])
             row = cursor.fetchone()
             
             if row:
@@ -35,7 +35,7 @@ def search_books(criteria, category, order, asc):
     with db:
         cursor = db.cursor()
         if (category == "isbn" and legal_isbn(criteria)):
-            cursor.execute("SELECT * FROM Books WHERE isbn = :criteria", {"criteria": criteria})
+            cursor.execute("SELECT * FROM Books WHERE isbn = ?", [criteria])
         else:
             cursor.execute("SELECT * FROM Books WHERE " + dbase.sanitise(category) + " REGEXP ? ORDER BY " + dbase.sanitise(order) + " " + dbase.sanitise(asc), [criteria])
 
@@ -49,17 +49,43 @@ def present_books(criteria, category, order, asc):
         print "No items match your search."
     
     for book in booklist:
-        
-        print book["title"], "... $" + str(book["price"])
-        print "Author(s):", book["authors"]
-        print "Pages:", book["numpages"], " ; ISBN:", book["isbn"]
-        print "Publisher:", book["publisher"], " ; Publication date:", book["publication_date"]
-        print "Catalogue:", book["catalog"], " ; Binding:", book["binding"]
-        print "Sales rank:", book["salesrank"]
-        print
-        print re.sub(r"<[^>]+>(.*)", r"\1", book["productdescription"])
-        print
-        print
-        print
-        print
-        print
+       print """
+                        <div class="media">
+                          <a class="pull-left" href="#">
+                            <img class="media-object src="%s" alt="No picture to display">
+                          </a>
+                          <div class="media-body">
+                            <div class="row">
+                              <div class="col-md-6">
+                                <h3 class="media-heading">%s</h3>
+                              </div>
+                              <div class="col-md-6" align="right">
+                                <h3 class="media-heading">$%f</h3>
+                              </div>
+                            </div>
+  
+                            <div class="row">
+                              <div class="col-md-6">
+                                <strong>%s</strong>
+                              </div>
+                              <div class="col-md-6" align="right">
+                                <strong>Published by %s</strong>
+                              </div>
+                            </div>
+    
+                            %s
+                          </div>
+                          <br/>
+                          <form>
+                            <div class="row">
+                              <div class="col-md-9"></div>
+                              <div class="col-md-1">
+                                <input type="text" class="form-control" name="qty" placeholder="1" style="width: 60px;">
+                              </div>
+                              <div class="col-md-1">
+                                <button type="button" class="btn btn-success">Add to cart</button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+""" % (book["mediumimageurl"], book["title"], book["price"], book["authors"], book["publisher"], book["productdescription"])
