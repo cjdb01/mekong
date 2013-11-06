@@ -100,6 +100,17 @@ def print_header(title):
             <p>Welcome to mekong.com.au</p>
           </div>
         </div>
+"""
+    if form.getvalue("isbn-to-add"):
+      print """
+        <div class="alert alert-success fade in">
+          <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
+              ×
+          </button>
+          <strong>Item successfully added to trolley.</strong>
+        </div>
+"""
+    print """
         
         <div class="bs-old-docs">
             <p><br></p>

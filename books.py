@@ -42,7 +42,7 @@ def search_books(criteria, category, order, asc):
         booklist = cursor.fetchall()
     return booklist
     
-def present_books(criteria, category, order, asc):
+def present_books(criteria, category, order, asc, account):
     booklist = search_books(criteria, category, order, asc)
     
     if not booklist:
@@ -76,20 +76,23 @@ def present_books(criteria, category, order, asc):
                             %s
                           </div>
                           <br/>
-</div>
-<div class="media">
-                          <form>
+                        </div>
+""" % (book["mediumimageurl"], book["title"], book["price"], book["authors"], book["publisher"], book["productdescription"])
+#  if account:
+    print """
+                        <div class="media">
+                          <form action="mekong.cgi?page=search" method="post">
                             <div class="row">
                               <div class="col-md-9"></div>
                               <div class="col-md-1">
                                 <input type="text" class="form-control" name="qty" placeholder="1" style="width: 60px;">
                               </div>
                               <div class="col-md-1">
-                                <button type="button" class="btn btn-success">Add to cart</button>
+                                <button type="button" class="btn btn-success" name="isbn-to-add" value="%s">Add to cart</button>
                               </div>
                             </div>
                           </form>
                         </div>
                         <br />
                         <br />
-""" % (book["mediumimageurl"], book["title"], book["price"], book["authors"], book["publisher"], book["productdescription"])
+""" % (book["isbn"])
