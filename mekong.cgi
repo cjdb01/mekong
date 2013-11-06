@@ -52,7 +52,6 @@ def print_header(title):
     <!DOCTYPE html>
     <html lang="en">
     <!-- Code taken from Bootstrap website -->
-    <html>
       <head>
         <title>"""
     print title
@@ -81,7 +80,7 @@ def print_header(title):
               </ul>
               <form class="navbar-form navbar-left" role="search" action="mekong.cgi?page=search" method="post">
                 <div class="form-group">
-                    <input type="text" class="form-control" style="width: 300px;" placeholder="Quick title search"></input>
+                    <input type="text" class="form-control" style="width: 300px;" placeholder="Quick title search" id="searchbar"></input>
                 </div>
                 <button type="submit" class="btn btn-default">Search</button>
               </form>
@@ -107,7 +106,7 @@ def print_header(title):
         </div>
 """
 
-def print_body_search():
+def print_body_search(form):
     print """
         <div class="container bs-docs-container">
           <div class="row">
@@ -137,7 +136,10 @@ def print_body_search():
                   <h3 class="panel-title">Search results</h3>
                 </div>
                 <div class="panel-body">
-                  No results to display.
+"""
+    if form.getvalue("page") == "search":
+        books.present_books(form.getvalue("searchbar"))
+    print """
                 </div>
               </div>
             </div>
@@ -156,4 +158,4 @@ def print_body_search():
 form = cgi.FieldStorage()
 
 print_header("Mekong")
-print_body_search()
+print_body_search(form)
