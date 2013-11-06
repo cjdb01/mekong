@@ -38,59 +38,6 @@ def legal_expiry_date(mm, yy):
     
 #############################################
 
-def login_details():
-    print """
-                <ul class="nav navbar-nav navbar-right">
-                    <li id="fat-menu" class="dropdown">
-                        <a id="drop3" class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">
-"""
-    if not account:
-        print "Login"
-    else:
-        print account["username"]
-
-    print """
-                            <b class="caret"></b>
-                        </a>
-"""
-
-    if not account:
-        print """
-                        <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px; width: 250px;" aria-labelledby="drop3" role="menu">
-                            <form action="mekong.cgi" method="post">
-                                <label for="login">Login</label>
-                                <input type="text" id="username" class="form-control" placeholder="Enter username" style="margin-bottom: 5px;"></input>
-                                <input type="password" id="password" class="form-control" placeholder="Enter password" style="margin-bottom: 10px;"></input>
-                                <div class="checkbox">
-                                    <label>
-                                        <input id="remember-me" type="checkbox"> Remember me
-                                    </label>
-                                </div>
-                                <button type="submit" id="login" class="btn btn-primary" style="margin-bottom: 10px; width: 215px">Login</button>
-                                <button type="submit" id="login" class="btn btn-danger" style="margin-bottom: 10px; width: 215px">Forgot Password</button>
-                                <button type="submit" id="create" class="btn btn-warning" style="margin-bottom: 10px; width: 215px">Create account</button>
-                            </form>
-                        </div>
-"""
-    else:
-        print """
-                        <ul class="dropdown-menu" aria-labelledby="drop3" role="menu">
-                            <li role="presentation">
-                                <a href="mekong.cgi?page=myaccount">Account</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="mekong.cgi?page=myhistory">History</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="mekong.cgi?page=mysettings">Settings</a>
-                            </li>
-                        </ul>
-"""
-    print """
-                    </li> 
-                </ul>
-"""
-
 def html_header(title, form):
     print "Content-type: text/html"
     print # Do not remove
@@ -195,6 +142,5 @@ def html_header(title, form):
 """
 
 form = cgi.FieldStorage()
-login.authenticate(form.getvalue("username"), form.getvalue("password"), account)
 
 html_header("Mekong", form)
