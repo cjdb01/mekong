@@ -48,37 +48,6 @@ def legal_username(username):
     else:
         return ""
     return error
-    
-def unique_username(username):
-    db = db_init(login_db)
-    with db:
-        cursor = db.cursor()
-        cursor.execute("SELECT * FROM Users WHERE username = ?", [username])
-        
-        rows = cursor.fetchone()
-        
-    return rows is None
-    
-def legal_password(password, username, first_name, last_name):
-    length = len(password)
-    
-    error = "Invalid password: passwords must "
-    
-    if length < 6 or length > 64:
-        error += "be 6 - 64 characters long."
-    elif not re.search("[A-Z]", password):
-        error += "contain at least one upper case letter."
-    elif not re.search("[a-z]", password):
-        error += "contain at least one lower case letter."
-    elif not re.search("\d", password):
-        error += "contain at least one numeral."
-    elif not re.search("\W", password):
-        error += "contain at least one special character."
-    elif re.search(username, password, re.IGNORECASE) or re.search(first_name, password, re.IGNORECASE) or re.search(last_name, password, re.IGNORECASE):
-        error += "not contain usernames, first names, or last names."
-    else:
-        return ""
-    return error
 
 ##################################################################################################################################################
 # Render code
