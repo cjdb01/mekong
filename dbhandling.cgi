@@ -151,7 +151,7 @@ def html_header(title, form):
             <p>Welcome to mekong.com.au</p>
         </div>
 """
-    if authenticated == 0 or form.getvalue("page") == "advanced-search":
+    #if authenticated == 0 or form.getvalue("page") == "advanced-search":
         print """
         <div class="alert alert-danger fade in">
             <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
@@ -164,7 +164,7 @@ def html_header(title, form):
             </strong>
         </div>
 """
-    elif authenticated == 1 and not form.getvalue("prevlogin"):
+    #elif authenticated == 1 and not form.getvalue("prevlogin"):
         print """
         <div class="alert alert-danger fade in">
             <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
