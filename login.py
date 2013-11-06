@@ -49,7 +49,7 @@ def legal_password(password, username, first_name, last_name):
         return ""
     return error
     
-def authenticate_user(username, password, login):    
+def authenticate_user(username, password, login):
     error = "Authentication error: "
     
     if login:
@@ -68,7 +68,6 @@ def authenticate_user(username, password, login):
                 error += "incorrect username or password."
             else:
                 login = row
-                login["password"] = ""
                 return ""
     else:
         error += "incorrect username or password."

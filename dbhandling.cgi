@@ -2,16 +2,19 @@
 
 from os import environ
 
+import trolley as basket
+import books
 import cgi
 import cgitb
 import datetime
 import hashlib
+import login
 import re
 import sqlite3 as lite
 import sys
 
 error = ""
-login = {}
+account = {}
 
 def legal_credit_card_number(number):
     global error
@@ -30,49 +33,7 @@ def legal_expiry_date(mm, yy):
     else:
         return good()
     
-def read_basket(db):
-    global basket
-    
-    db.execute("SELECT * FROM :login", { "login": login["username"] })
-    
-    while True:
-        row = db.fetchone()
-        if row:
-            basket[row["isbn"]] = row["quantity"]
-        else:
-            break
-            
-def write_basket(db):
-    db.execute("DROP TABLE IF EXISTS :user", { "user": login["username"] })
-    db.execute("CREATE TABLE :user(isbn TEXT PRIMARY KEY, quantity INT)", { "user": login["username"]})
-    
-    for k, v in basket:
-        db.execute("INSERT INTO :user VALUES(:isbn, :quantity)", { "user": login["username"], "isbn": k, "quantity": v })
 
-def delete_basket(isbn, db):
-    global basket
-    try:
-        basket[isbn] -= 1
-        if basket[isbn] <= 0:
-            basket.remove(isbn)
-        write_basket(db)
-    except Exception:
-        error = "Not in basket"
-        
-def add_basket(isbn, db):
-    global basket
-    try:
-        basket[isbn] += 1
-    except Exception:
-        basket[isbn] = 1
-        
-    write_basket(db)
-    
-def count_basket():
-    items = 0
-    for i in basket:
-        items += i
-    return items
     
     
 #############################################
@@ -83,17 +44,17 @@ def login_details():
                     <li id="fat-menu" class="dropdown">
                         <a id="drop3" class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">
 """
-    if not login:
+    if not account:
         print "Login"
     else:
-        print login["username"]
+        print account["username"]
 
     print """
                             <b class="caret"></b>
                         </a>
 """
 
-    if not login:
+    if not account:
         print """
                         <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px; width: 250px;" aria-labelledby="drop3" role="menu">
                             <form action="mekong.cgi" method="post">
@@ -115,13 +76,13 @@ def login_details():
         print """
                         <ul class="dropdown-menu" aria-labelledby="drop3" role="menu">
                             <li role="presentation">
-                                <a href="mekong.cgi?myaccount">Account</a>
+                                <a href="mekong.cgi?page=myaccount">Account</a>
                             </li>
                             <li role="presentation">
-                                <a href="mekong.cgi?myhistory">History</a>
+                                <a href="mekong.cgi?page=myhistory">History</a>
                             </li>
                             <li role="presentation">
-                                <a href="mekong.cgi?mysettings">Settings</a>
+                                <a href="mekong.cgi?page=mysettings">Settings</a>
                             </li>
                         </ul>
 """
@@ -130,39 +91,10 @@ def login_details():
                 </ul>
 """
 
-def cookie_output(form):
-    username = form.getvalue("username")
-    password = form.getvalue("password")
-    remember = form.getvalue("remember")
-    
-    expires = ""
-    if remember:
-        expires = "Monday, 31-Dec-2040 23:59:59 GMT"
-    else:
-        expires = datetime.datetime.fromtimestamp(time.time()).strftime('%A, %d-%m-%Y ' + str(datetime.datetime.now().hour + 1) + ':%M:%S GMT')
-    
-    to_print = 'Set-Cookie: UserID=' + username + '; Password=' + password + '; Exipres=' + expires + '; Set-Cookie-Domain=www.cse.unsw.edu.au/~chrisdb/mekong.cgi'
-    print to_print
-
 def html_header(title, form):
-
-    print "Content-Type: text-html"
-    cookie_output(form)
-
-    cookie_username = ""
-    cookie_password = ""
     authenticated = -1
-    if environ.haskey('HTTP_COOKIE'):
-        for cookie in map(strip, split(environ['HTTP_COOKIE'], ';')):
-            (key, value) = split(cookie, '=')
-                if key == 'UserID':
-                    cookie_username = value
-                elif key == 'Password':
-                    cookie_passowrd = value
-    if cookie_username != "" and cookie_password != "":
-        authenticated = int(authenticate(cookie_username, cookie_password)
     
-    print
+    print "Content-Type: text-html"
     print """
 <!DOCTYPE html>
 <html lang="en">
@@ -191,9 +123,9 @@ def html_header(title, form):
             <nav class="collapse navbar-collapse navbar-collapse" role="navigation">
                 <ul class="nav navbar-nav">
                     <li><a href="mekong.cgi">Home</a></li>
-                    <li><a href="mekong.cgi?recommendations">Recommendations</a></li>
-                    <li><a href="mekong.cgi?trolley">Trolley</a></li>
-                    <li><a href="mekong.cgi?checkout">Checkout</a></li>
+                    <li><a href="mekong.cgi?page=recommendations">Recommendations</a></li>
+                    <li><a href="mekong.cgi?page=trolley">Trolley</a></li>
+                    <li><a href="mekong.cgi?page=checkout">Checkout</a></li>
                 </ul>
                 <form class="navbar-form navbar-left" role="search" action="mekong.cgi" method="post">
                     <div class="form-group">
@@ -203,7 +135,7 @@ def html_header(title, form):
                 </form>
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="mekong.cgi?advanced-search">Advanced search</a>
+                        <a href="mekong.cgi?page=advanced-search">Advanced search</a>
                     </li>
                 </ul>
 """
@@ -219,7 +151,7 @@ def html_header(title, form):
             <p>Welcome to mekong.com.au</p>
         </div>
 """
-    if authenticated == 0:
+    if authenticated == 0 or form.getvalue("page") == "advanced-search":
         print """
         <div class="alert alert-danger fade in">
             <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
@@ -240,7 +172,7 @@ def html_header(title, form):
             </button>
             <strong>Welcome,
 """
-        print login["username"] + "!"
+        print account["username"] + "!"
         print """
             </strong>
 """
@@ -261,7 +193,7 @@ def html_header(title, form):
                             <div class="row">
                                 <div class="col-md-6">
 """
-    items = count_basket()
+    items = basket.count_basket()
     if items == 1:
         print "1 item"
     else:
@@ -273,7 +205,7 @@ def html_header(title, form):
     if items == 0:
         print "$0.00"
     else:
-        print "$%.2f" % total_books()
+        print "$%.2f" % basket.total_books()
     print """
                                 </div>
                             </div> 
@@ -299,7 +231,7 @@ def html_header(title, form):
     if not results:
         print "No results to display."
     else:
-        print_results(results)
+        present_results(results)
     print """
                     </div>
                 </div>
@@ -313,8 +245,9 @@ def html_header(title, form):
     <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
-
 """
 
 form = cgi.FieldStorage()
+login.authenticate(form.getvalue("username"), form.getvalue("password"), account)
+
 html_header("Mekong", form)
