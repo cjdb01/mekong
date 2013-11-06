@@ -80,7 +80,7 @@ def print_header(title):
               </ul>
               <form class="navbar-form navbar-left" role="search" action="mekong.cgi?page=search" method="post">
                 <div class="form-group">
-                    <input type="text" class="form-control" style="width: 300px;" placeholder="Quick title search" id="searchbar"></input>
+                    <input type="text" class="form-control" style="width: 300px;" placeholder="Quick title search" name="searchbar"></input>
                 </div>
                 <button type="submit" class="btn btn-default">Search</button>
               </form>
