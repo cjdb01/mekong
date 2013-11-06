@@ -5,6 +5,9 @@ def regexp(expr, item):
     expr = re.escape(expr)
     reg = re.compile(expr)
     return reg.search(item) is not None
+    
+def sanitise(expr):
+    return re.escape(expr)
 
 def db_init(path):
     db = lite.connect(path)

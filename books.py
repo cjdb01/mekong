@@ -29,7 +29,7 @@ def total_books(basket):
         
     return total_price
 
-def search_books(criteria, category):
+def search_books(criteria, category, order, asc):
     db = dbase.db_init(books_db)
     
     with db:
@@ -37,25 +37,25 @@ def search_books(criteria, category):
         if (category == "isbn" and legal_isbn(criteria)):
             cursor.execute("SELECT * FROM Books WHERE isbn = :criteria", {"criteria": criteria})
         else:
-            cursor.execute("SELECT * FROM Books WHERE title REGEXP :criteria", {"criteria": criteria})
+            cursor.execute("SELECT * FROM Books WHERE " + dbase.sanitise(category) + " REGEXP ? ORDER BY " + dbase.sanitise(order) + " " + dbase.sanitise(asc), [criteria])
 
         booklist = cursor.fetchall()
     return booklist
     
-def present_books(criteria, category):
-    booklist = search_books(criteria, category)
+def present_books(criteria, category, order, asc):
+    booklist = search_books(criteria, category, order, asc)
     
     if not booklist:
         print "No items match your search."
     
     for book in booklist:
         
-        print book["title"], "...", book["price"]
+        print book["title"], "... $" + str(book["price"])
         print "Author(s):", book["authors"]
         print "Pages:", book["numpages"], " ; ISBN:", book["isbn"]
         print "Publisher:", book["publisher"], " ; Publication date:", book["publication_date"]
         print "Catalogue:", book["catalog"], " ; Binding:", book["binding"]
-        print
+        print "Sales rank:", book["salesrank"]
         print
         print re.sub(r"<[^>]+>(.*)", r"\1", book["productdescription"])
         print

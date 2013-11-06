@@ -75,7 +75,6 @@ def authenticate_user(username, password, login):
     return error
     
 def create_account(user):
-    
     error = legal_username(user["username"])
     if not error:
         if not unique_username(user["username"]):
@@ -94,6 +93,7 @@ def create_account(user):
                 
                     cursor.execute("INSERT INTO Users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [user["username"], pwd, user["firstname"], user["lastname"],\
                                             user["address"], user["suburb"], user["state"], user["postcode"], user["dob"], user["email"], user["phone"], user["sex"], False])
+                    # TODO: send confirmation email
     return error
     
 def change_password(username, current_password, new_password):
@@ -120,3 +120,6 @@ def change_password(username, current_password, new_password):
             error = "Password update error: incorrect password."
                 
     return error
+
+def reset_password(username):
+    return 0 # TODO
