@@ -1,6 +1,17 @@
 #!/usr/bin/python -u
 
+import trolley as basket
+import books
 import cgi
+import cgitb
+import datetime
+import hashlib
+import login
+import re
+import sqlite3 as lite
+import sys
+
+account = {}
 
 def login_details():
     print """
@@ -134,6 +145,12 @@ def print_body_search():
       </body>
     </html>
 """
+
+form = cgi.FieldStorage()
+if form.getvalue("username"):
+    sys.exit("LOL")
+else:
+    sys.exit("YES")
 
 print_header()
 print_body_search()
