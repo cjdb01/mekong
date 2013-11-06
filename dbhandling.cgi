@@ -8,7 +8,7 @@ import re
 import sqlite3 as lite
 import sys
 
-import trolley
+import login
 
 account = {}
 
