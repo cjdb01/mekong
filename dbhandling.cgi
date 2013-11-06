@@ -74,6 +74,13 @@ print """
         <h1>mekong.com.au</h1>
         <p>Welcome to mekong.com.au</p>
       </div>
+      
+      <div class="alert alert-success fade in">
+            <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
+                ×
+            </button>
+            <strong>Item successfully added to cart.</strong>
+        </div> 
     </div>
     
     <div class="bs-old-docs">
