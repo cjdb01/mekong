@@ -1,280 +1,159 @@
-#!/usr/bin/python -u
+#!/usr/bin/env python2.7
 
-import cgi
+import cgi, cgitb; cgitb.enable()
+import datetime
+import hashlib
 import re
+import sqlite3 as lite
+import sys
 
-error = ""
-login = {}
-books = {}
-basket = {}
+import books
+import login
+import trolley
 
-i_username = "username"
-i_password = "password"
-i_givename = "givename"
-i_lastname = "lastname"
-i_street_address = "street_address"
-i_suburb = "suburb"
-i_state = "state"
-i_postcode = "postcode"
-i_gender = "gender"
-i_phone_number = "phone_number"
-i_credit_card = "credit_card"
 
-# Return true
-def legal_username(username):
-    global error
-    if re.match("[A-Za-z_]\w+", username) == None:
-        error = "Invalid username '" + username + "': usernames must start with a letter and only contain letters, numbers and underscores."
-    elif len(username) < 3 or len(username) > 8:
-        error = "Invalid username '" + username + "': usernames must be 3 - 8 characters long."
-    else:
-        return True
-    return False
-    
-def legal_password(password, username, first_name, surname):
-    global error
-    if len(password) < 6 or len(password) > 64:
-        error = "Invalid password: passwords must be 6 - 64 characters long."
-    elif re.search("[A-Z]", password) == None:
-        error = "Invalid password: passwords must contain at least one upper case character."
-    elif re.search("[a-z]", password) == None:
-        error = "Invalid password: passwords must contain at least one lower case character."
-    elif re.search("\d", password) == None:
-        error = "Invalid password: passwords must contain at least one digit."
-    elif re.search("\W", password) == None:
-        error = "Invalid password: passwords must contain at least one special character."
-    elif re.search(username, password) != None:
-        error = "Invalid password: passwords cannot contain your username."
-    elif re.search(username, first_name) != None:
-        error = "Invalid password: passwords cannot contain your first name."
-    elif re.search(username, surname) != None:
-        error = "Invalid password: passwords cannot contain your last name."
-    else:
-        return True
-    return False
+account = {}
 
-def legal_isbn(isbn):
-    global error
-    if re.match("\d{9} (\d|X)") == None:
-        error = "Invalid ISBN '" + isbn + "': an ISBN must be exactly 10 digits."
-        return False
-    else:
-        return True
-        
-def legal_credit_card_number(number):
-    global error
-    if re.match("\d{16}", number) == None:
-        error = "Invalid credit card number: a credit card number has exactly 16 digits."
-        return False
-    return True
+##################################################################################################################################################
+# Render code
 
-def legal_expiry_date(mm, yy):
-    global error
-    if datetime.date.year > yy or (datetime.date.year == yy and datetime.date.month > mm):
-        error = "Invalid expiry date."
-        return False
-    else:
-        return True
-        
-def total_books(isbns):
-    total = 0
-    for isbn in isbns:
-        if books.get(isbn) == None:
-            sys.exit("Internal error: unknown ISBN '" + isbn + "'in total_books")
-        else:
-            total += books[isbn][price] 
-    return total
-    
-def authenticate(username, password):
-    global login
-    global error
-    if login:
-        error = "User is already logged in."
-    elif legal_username(username) == True:
-        try:
-            file = open(user_directory + "/" + username, 'r')
-            
-            for line in file:
-                line.rstrip('\n')
-                line = re.escape(line)
-                key = re.sub(r"(.+?) = (.+?)", r"\1", line)
-                
-            file.close()
-            
-            if login[i_password] != password:
-                error = "Incorrect username or password."
-            else:
-                return True
-        except IOError:
-            error = "Authentication error: username '" + username + "' does not exist."
-    else:
-        error = "Incorrect username or password."
-    return False
-    
-def read_books(filename):
-    global books
-    try:
-        file = open(filename)
-        isbn = ""
-        field = ""
-        collecting = False
-        for line in file:
-            line.rstrip('\n')
-            line = re.escape(line)
-            
-            if re.match("\s*\"(\d+X?)\"\s*:\s*{\s*", line):
-                isbn = re.sub(r"\s*\"(\d+X?)\"\s*:\s*{\s*", r"\1", line)
-                continue
-            if isbn == "":
-                continue
-            elif re.match("\s*\"([^\"]+)\"\s*:\s*\"(.*)\",?\s*", line):
-                field = re.sub(r"\s*\"([^\"]+)\"\s*:\s*\"(.*)\",?\s*", r"\1", line)
-                books[isbn][field] = re.sub(r"\s*\"([^\"]+)\"\s*:\s*\"(.*)\",?\s*", r"\2", line)
-            elif re.match("\s*\"([^\"]+)\"\s*:\s*\[\s*", line):
-                field = re.sub(r"\s*\"([^\"]+)\"\s*:\s*\[\s*", r"\1", line)
-                collecting = True
-            elif collecting == True and re.match("\s*\"(.*)\"\s*,?\s*", line):
-                books[isbn][field].append(re.sub(r"\s*\"(.*)\"\s*,?\s*", r"\1"))
-            elif collecting == True and re.match("\s*\]\s*,?\s*"):
-                collecting = False
-        file.close()
-    except IOError:
-        sys.exit("Cannot open book database '" + filename + "'.")
-
-def search_books(criteria, category):
-    global error
-    criteria = re.sub(r"^\s*(.*?)\s*$", r"\1", criteria)
-    booklist = []
-    
-    if category == "isbn" and legal_isbn(criteria) and books.get(criteria):
-        booklist.append(books[criteria])
-    else:
-        for i in books:
-            line = re.escape(line)
-            
-            if i.get(category) and re.search(criteria, i.get(category)):
-                booklist.append(i)
-                
-    return booklist
-
-def read_basket():
-    global basket
-    try:
-        file = open(login[i_username], "r")
-        for line in file:
-            line.rstrip('\n')
-            isbn = re.sub(r"\s*(\d{9} (\d|X)) = (\d+)", r"\1", line)
-            if books.get(isbn):
-                basket[isbn] = re.sub(r"\s*(\d{9} (\d|X)) = (\d+)", r"\3", line)
-            
-        file.close()
-    except IOError:
-        error = "Basket is empty!"
-    
-def write_basket():
-    try:
-        file = open(login[i_username], "w")
-        for i in basket:
-            file.writeLine(i)
-            
-        file.close()
-    except Exception:
-        error = "Unsure what to put here..."
-    
-def delete_basket(isbn):
-    global basket
-    try:
-        basket[isbn] -= 1
-        if basket[isbn] <= 0:
-            basket.remove(isbn)
-        write_basket()
-    except Exception:
-        error = "Not in basket"
-
-def add_basket(isbn):
-    global basket
-    try:
-        basket[isbn] += 1
-    except Exception:
-        basket[isbn] = 1
-        
-    write_basket()
-    
-def finalise_order(login, credit_card, expiry_date):
-    order_number = 0
-    
-    try:
-        file = open("orders/next_order_number", "r+")
-        for line in file:
-            line.rstrip('\n')
-            order_number = int(line)
-            line = str(order_number + 1)
-    except Exception:
-        sys.exit("Missing orders/next_order_number")
-    finally:
-        file.close()
-        
-
-def set_globals():
-    global login
-    global error
-    login = {}
-    error = ""
-        
-def login_form():
-    global error
+def login_details():
     print """
-<p>
-<center>
-<form>
-Username: <input type="text" name="username" size=16></input>
-<br>
-Password: <input type="password" name="password" size=16></input>
-<br>
-<input class="btn" type="submit" name="login" value="Login"></input>
-<input class="btn" type="submit" name="create_account" value="Create Account"></input>
-</form>
-</center>
+              <ul class="nav navbar-nav navbar-right">
+              <!-- TODO: FIX SO THAT IT SAYS YOUR USERNAME AND TAKES YOU TO A PAGE IF YOU CLICK ON IT! -->
+                <li id="fat-menu" class="dropdown">
+                  <a id="drop3" class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">
+                    Login
+                    <b class="caret"></b>
+                  </a>
+                  <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px; width: 250px;" aria-labelledby="drop3" role="menu">
+                    <form>
+                      <label for="login">Login</label>
+                      <input type="text" id="username" class="form-control" placeholder="Enter username" style="margin-bottom: 5px;"></input>
+                      <input type="password" id="password" class="form-control" placeholder="Enter password" style="margin-bottom: 10px;"></input>
+                      <div class="checkbox">
+                        <label>
+                          <input id="remember-me" type="checkbox"> Remember me
+                        </label>
+                      </div>
+                      <input type="submit" id="login" class="btn btn-primary" style="margin-bottom: 10px; width: 215px" value="Login"></input>
+                      <button type="submit" id="forgot" class="btn btn-danger" style="margin-bottom: 10px; width: 215px">Forgot Password</button>
+                      <button type="submit" id="create" class="btn btn-warning" style="margin-bottom: 10px; width: 215px">Create account</button>
+                    </form>
+                  </div>
+                </li> 
+              </ul>
 """
-    form = cgi.FieldStorage()
-    if "username" not in form:
-        print """
-<br>
-<font color="red">Please enter a username.</font>
+
+def print_header(title):
+    print "Content-type: text/html"
+    print # Do not remove
+    print """
+    <!DOCTYPE html>
+    <html lang="en">
+    <!-- Code taken from Bootstrap website -->
+    <html>
+      <head>
+        <title>"""
+    print title
+    print """
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap -->
+        <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+      </head>
+      <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+            <nav class="collapse navbar-collapse navbar-collapse" role="navigation">
+              <ul class="nav navbar-nav">
+                <li><a href="mekong.cgi">Home</a></li>
+                <li><a href="mekong.cgi?page=recommendations">Recommendations</a></li>
+                <li><a href="mekong.cgi?page=trolley">Trolley</a></li>
+                <li><a href="mekong.cgi?page=checkout">Checkout</a></li>
+              </ul>
+              <form class="navbar-form navbar-left" role="search" action="mekong.cgi?page=search" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" style="width: 300px;" placeholder="Quick title search"></input>
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+              </form>
+              <ul class="nav navbar-nav">
+                <li><a href="mekong.cgi?page=advanced-search">Advanced search</a></li>
+              </ul>
 """
-    elif "password" not in form:
-        print """
-<br>
-<font color="red">Please enter a password.</font>
-"""
-    else:
-        username = form["username"].value
-        password = form["password"].value
-        if authenticate(username, password):
-            print "</p><p>Woot"
-        else:
-            print "</p><p>", error
-            error = ""
-    print "</p>"
+    login_details()
+    print """
+            </nav>
+          </div>
+        </div>
+
+        <div id="content" class="container">
+          <div class="jumbotron">
+            <h1>mekong.com.au</h1>
+            <p>Welcome to mekong.com.au</p>
+          </div>
+        </div>
         
-print "Content-Type: text-html"
-print
-print """
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>mekong.com.au</title>
-<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
-<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-</head>
-<body>
-<p>
-<div class="container">
+        <div class="bs-old-docs">
+            <p><br></p>
+        </div>
 """
 
-set_globals()
-login_form()
+def print_body_search():
+    print """
+        <div class="container bs-docs-container">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="panel panel-info" style="min-height: 300px;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                      <strong>Quick trolley</strong><br>
+                      <div class="row">
+                        <div class="col-md-6">
+                          0 items
+                        </div>
+                        <div class="col-md-6" align="right">
+                          $0.00
+                        </div>
+                      </div> 
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    Your trolley is empty...
+                </div>
+              </div>
+            </div>
+            <div class="col-md-9" role="main">
+              <div class="panel panel-info fixed-left" style="min-height: 300px;">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Search results</h3>
+                </div>
+                <div class="panel-body">
+                  No results to display.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-print '</div>\n\
-<body>\n\
-</html>\n'
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://code.jquery.com/jquery.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.js"></script>
+        
+      </body>
+    </html>
+"""
+
+form = cgi.FieldStorage()
+
+print_header("Mekong")
+print_body_search()

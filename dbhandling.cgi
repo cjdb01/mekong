@@ -155,5 +155,5 @@ def print_body_search():
 
 form = cgi.FieldStorage()
 
-print_header()
+print_header("Mekong")
 print_body_search()
