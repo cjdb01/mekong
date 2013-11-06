@@ -45,7 +45,7 @@ def login_details():
               </ul>
 """
 
-def print_header():
+def print_header(title):
     print "Content-type: text/html"
     print # Do not remove
     print """
@@ -54,7 +54,10 @@ def print_header():
     <!-- Code taken from Bootstrap website -->
     <html>
       <head>
-        <title>Mekong Login</title>
+        <title>"""
+    print title
+    print """
+        </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -71,19 +74,19 @@ def print_header():
           <div class="container">
             <nav class="collapse navbar-collapse navbar-collapse" role="navigation">
               <ul class="nav navbar-nav">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Recommendations</a></li>
-                <li><a href="#">Trolley</a></li>
-                <li><a href="#">Checkout</a></li>
+                <li><a href="mekong.cgi">Home</a></li>
+                <li><a href="mekong.cgi?page=recommendations">Recommendations</a></li>
+                <li><a href="mekong.cgi?page=trolley">Trolley</a></li>
+                <li><a href="mekong.cgi?page=checkout">Checkout</a></li>
               </ul>
-              <form class="navbar-form navbar-left" role="search">
+              <form class="navbar-form navbar-left" role="search" action="mekong.cgi?page=search" method="post">
                 <div class="form-group">
                     <input type="text" class="form-control" style="width: 300px;" placeholder="Quick title search"></input>
                 </div>
                 <button type="submit" class="btn btn-default">Search</button>
               </form>
               <ul class="nav navbar-nav">
-                <li><a href="#">Advanced search</a></li>
+                <li><a href="mekong.cgi?page=advanced-search">Advanced search</a></li>
               </ul>
 """
     login_details()
@@ -153,9 +156,4 @@ def print_body_search():
 form = cgi.FieldStorage()
 
 print_header()
-
-if form.getvalue("username"):
-    print form.getvalue("username")
-else:
-    print "bad request"
 print_body_search()
