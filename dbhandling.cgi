@@ -1,18 +1,8 @@
 #!/usr/bin/python -u
 
-from os import environ
-
-
-import cgi
-import cgitb
-
-    
-#############################################
-
-def html_header(title, form):
-    print "Content-type: text/html"
-    print # Do not remove
-    print """
+print "Content-type: text/html"
+print # Do not remove
+print """
 <!DOCTYPE html>
 <html lang="en">
 <!-- Code taken from Bootstrap website -->
@@ -144,7 +134,3 @@ def html_header(title, form):
   </body>
 </html>
 """
-
-form = cgi.FieldStorage()
-
-html_header("Mekong", form)
