@@ -75,12 +75,10 @@ print """
         <p>Welcome to mekong.com.au</p>
       </div>
       
-      <div class="alert alert-success fade in">
-            <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
-                ×
-            </button>
-            <strong>Item successfully added to cart.</strong>
-        </div> 
+      <div class="alert alert-warning alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Warning!</strong> Best check yo self, you're not looking too good.
+      </div>
     </div>
     
     <div class="bs-old-docs">
