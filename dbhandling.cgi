@@ -139,7 +139,7 @@ def html_header(title, form):
                     </li>
                 </ul>
 """
-    #login_details()
+    login_details()
     print """
             </nav>
         </div>
@@ -150,33 +150,6 @@ def html_header(title, form):
             <h1>mekong.com.au</h1>
             <p>Welcome to mekong.com.au</p>
         </div>
-"""
-    #if authenticated == 0 or form.getvalue("page") == "advanced-search":
-        print """
-        <div class="alert alert-danger fade in">
-            <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
-                ×
-            </button>
-            <strong>
-"""
-        print error
-        print """
-            </strong>
-        </div>
-"""
-    #elif authenticated == 1 and not form.getvalue("prevlogin"):
-        print """
-        <div class="alert alert-danger fade in">
-            <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
-                ×
-            </button>
-            <strong>Welcome,
-"""
-        print account["username"] + "!"
-        print """
-            </strong>
-"""
-    print """
     </div>
     
     <div class="bs-old-docs">
@@ -192,32 +165,16 @@ def html_header(title, form):
                             <strong>Quick trolley</strong><br>
                             <div class="row">
                                 <div class="col-md-6">
-"""
-    items = basket.count_basket()
-    if items == 1:
-        print "1 item"
-    else:
-        print items, "items"
-    print """  
+                                    0 items
                                 </div>
                                 <div class="col-md-6" align="right">
-"""
-    if items == 0:
-        print "$0.00"
-    else:
-        print "$%.2f" % basket.total_books()
-    print """
+                                    $0.00
                                 </div>
                             </div> 
                         </h3>
                     </div>
                     <div class="panel-body">
-"""
-    if items == 0:
-        print "Your trolley is empty..."
-    else:
-        print_cart()
-    print """
+                        Your trolley is empty...
                     </div>
                 </div>
             </div>
@@ -227,12 +184,7 @@ def html_header(title, form):
                         <h3 class="panel-title">Search results</h3>
                     </div>
                     <div class="panel-body">
-"""
-    if not results:
-        print "No results to display."
-    else:
-        present_results(results)
-    print """
+                        No results to display.
                     </div>
                 </div>
             </div>
