@@ -92,7 +92,7 @@ def login_details():
 """
 
 def html_header(title, form):
-    print "Content-type: text-html"
+    print "Content-type: text/html"
     print # Do not remove
     print """
 <!DOCTYPE html>
