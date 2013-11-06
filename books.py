@@ -52,14 +52,14 @@ def present_books(criteria, category, order, asc):
        print """
                         <div class="media">
                           <a class="pull-left" href="#">
-                            <img class="media-object src="%s" alt="No picture to display">
+                            <img class="media-object alt="No picture to display" src="%s">
                           </a>
                           <div class="media-body">
                             <div class="row">
-                              <div class="col-md-6">
+                              <div class="col-md-10">
                                 <h3 class="media-heading">%s</h3>
                               </div>
-                              <div class="col-md-6" align="right">
+                              <div class="col-md-2" align="right">
                                 <h3 class="media-heading">$%.2f</h3>
                               </div>
                             </div>
@@ -76,6 +76,8 @@ def present_books(criteria, category, order, asc):
                             %s
                           </div>
                           <br/>
+</div>
+<div class="media">
                           <form>
                             <div class="row">
                               <div class="col-md-9"></div>
@@ -88,4 +90,6 @@ def present_books(criteria, category, order, asc):
                             </div>
                           </form>
                         </div>
+                        <br />
+                        <br />
 """ % (book["mediumimageurl"], book["title"], book["price"], book["authors"], book["publisher"], book["productdescription"])
