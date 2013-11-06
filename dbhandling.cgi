@@ -1,7 +1,6 @@
 #!/usr/bin/env python2.7
 
-import cgi
-import cgitb
+import cgi, cgitb; cgitb.enable()
 import datetime
 import hashlib
 import re
@@ -154,4 +153,7 @@ def print_body_search():
 form = cgi.FieldStorage()
 
 print_header()
+
+if form.getvalue("username"):
+    print form.getvalue("username")
 print_body_search()
