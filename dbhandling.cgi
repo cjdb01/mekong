@@ -134,3 +134,6 @@ def print_body_search():
       </body>
     </html>
 """
+
+print_header()
+print_body_search()
