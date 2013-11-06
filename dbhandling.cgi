@@ -92,8 +92,6 @@ def login_details():
 """
 
 def html_header(title, form):
-    authenticated = -1
-    
     print "Content-Type: text-html"
     print """
 <!DOCTYPE html>
@@ -102,9 +100,7 @@ def html_header(title, form):
 <html>
   <head>
     <title>
-"""
-    print title
-    print """
+        Mekong.com.au
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
@@ -138,9 +134,7 @@ def html_header(title, form):
                         <a href="mekong.cgi?page=advanced-search">Advanced search</a>
                     </li>
                 </ul>
-"""
-    login_details()
-    print """
+                <!-- TO FIX -->
             </nav>
         </div>
     </div>
