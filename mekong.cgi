@@ -297,7 +297,7 @@ def print_header(title, form):
         if environ.has_key('HTTP_COOKIE'):
             for cookie in environ['HTTP_COOKIE'].split(';'):
                 (key, value) = cookie.split('=')
-                value.rstrip('\n')
+                key.rstrip()
                 if key == "passwd":
                     password = value
                     print "HOW?", "<br />"
