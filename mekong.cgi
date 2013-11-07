@@ -222,8 +222,8 @@ def print_header(title):
             <p>Welcome to mekong.com.au</p>
           </div>
 """
-    if cgi.getvalue("username") and cgi.getvalue("password"):
-        error_msg = login.authenticate_user(cgi.getvalue("username"), cgi.getvalue("password"), account)
+    if form.getvalue("username") and form.getvalue("password"):
+        error_msg = login.authenticate_user(form.getvalue("username"), form.getvalue("password"), account)
         if error_msg:
             print """
         <div class="alert alert-danger fade in">
