@@ -78,8 +78,8 @@ def present_books(criteria, category, order, asc, account):
                           <br/>
                         </div>
 """ % (book["mediumimageurl"], book["title"], book["price"], book["authors"], book["publisher"], book["productdescription"])
-    if account:
-        print """
+        if account:
+            print """
                         <div class="media">
                           <form action="mekong.cgi?page=search" method="post">
                             <div class="row">
@@ -88,13 +88,11 @@ def present_books(criteria, category, order, asc, account):
                                 <input type="text" class="form-control" name="qty" placeholder="1" style="width: 60px;">
                               </div>
                               <div class="col-md-1">
-                                <button type="button" class="btn btn-success" name="isbn-to-add">Add to cart</button>
+                                <button type="button" class="btn btn-success" name="isbn-to-add" value="%s">Add to cart</button>
                               </div>
                             </div>
                           </form>
                         </div>
                         <br />
                         <br />
-"""
-    else:
-        print "No soup for you."
+""" % (book["isbn"])
