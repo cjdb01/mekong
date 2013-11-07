@@ -36,9 +36,11 @@ def login_details():
                           <input id="remember-me" type="checkbox"> Remember me
                         </label>
                       </div>
-                      <button type="submit" id="login" class="btn btn-primary" style="margin-bottom: 10px; width: 215px">Login</input>
+                      <button type="submit" id="login" class="btn btn-primary" style="margin-bottom: 10px; width: 215px">Login</button>
                     </form>
+                    <form>
                       <button type="submit" id="forgot" class="btn btn-danger" style="margin-bottom: 10px; width: 215px">Forgot Password</button>
+                    </form>
                     <form action="mekong.cgi?page=create-account" method="post">
                       <button type="submit" id="create" class="btn btn-warning" style="margin-bottom: 10px; width: 215px">Create account</button>
                     </form>
