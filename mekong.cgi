@@ -195,7 +195,7 @@ def print_header(title, form):
     if environ.has_key('HTTP_COOKIE'):
         username = ""
         password = ""
-        for cookie in map(strip, split(environ['HTTP_COOKIE'], ';'):
+        for cookie in map(strip, split(environ['HTTP_COOKIE'], ';')):
             (key, val) = split(cookie, '=')
             if key == "username":
                 username = value
