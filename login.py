@@ -54,19 +54,17 @@ def authenticate_user(username, password, login):
     
     if login:
         error = "A user is already logged in."
-    elif legal_username(username):
+    elif not legal_username(username):
         db = dbase.db_init(login_db)
     
         with db:
             cursor = db.cursor()
-            db.execute("SELECT * FROM Users WHERE username = :uname", {"uname": username})
+            cursor.execute("SELECT * FROM Users WHERE username = :uname", {"uname": username})
             
-            row = db.fetchone()
+            row = cursor.fetchone()
             
             hash = hashlib.sha512()
             hash.update(password)
-            
-            print "password =", password
             
             if not row:
                 error += "username '" + username + "' does not exist."
