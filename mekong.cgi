@@ -194,14 +194,10 @@ def print_registration():
 def print_header(title, form):
     global login_error
     
-    hash = hashlib.sha512()
-    
     username = form.getvalue("username")
     password = form.getvalue("password")
     if username and password:
-        hash.update(form.getvalue("password"))
-        
-        login_error = login.authenticate_user(form.getvalue("username"), hash.hexdigest(), account)
+        login_error = login.authenticate_user(username, password, account)
     if form.getvalue("page") == "login" and not login_error and username and password:
         print "Set-Cookie:username=" + form.getvalue("username") + ";"
         print "Set-Cookie:password=" + hash.hexdigest() + ";"
