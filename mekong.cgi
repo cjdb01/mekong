@@ -173,6 +173,7 @@ def print_registration():
 
 def print_header(title, form):
     global login_error
+    print "Content-type: text/html"
     
     if form.getvalue("username") and form.getvalue("password"):
         hash = hashlib.sha512()
@@ -188,8 +189,7 @@ def print_header(title, form):
         else:
             print "Set-Cookie:Expires=" + datetime.now().strftime('%A, %d-%m-%Y ' + str(datetime.now().hour + 1) + ':%M:%S') + ";"
         print "Set-Cookie:Domain=www.cse.unsw.edu.au/~chrisdb/mekong.cgi;"
-
-    print "Content-type: text/html"
+    
     print # Do not remove
     
     if environ.has_key('HTTP_COOKIE'):
