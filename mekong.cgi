@@ -292,9 +292,7 @@ def print_header(title, form):
     else:
         print username, "<br />"
         print password, "<br />"
-        print hash.hexdigest(), "<br />"
         print form.getvalue("password"), "<br />"
-        print login_error
         #hash = hashlib.sha512()
         #hash.update(form.getvalue("password"))
         #print hash.hexdigest()
