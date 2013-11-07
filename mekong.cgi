@@ -36,7 +36,7 @@ def login_details():
                           <input id="remember-me" type="checkbox"> Remember me
                         </label>
                       </div>
-                      <input type="submit" id="login" class="btn btn-primary" style="margin-bottom: 10px; width: 215px" value="Login"></input>
+                      <button type="submit" id="login" class="btn btn-primary" style="margin-bottom: 10px; width: 215px">Login</input>
                     </form>
                       <button type="submit" id="forgot" class="btn btn-danger" style="margin-bottom: 10px; width: 215px">Forgot Password</button>
                     <form action="mekong.cgi?page=create-account" method="post">
@@ -236,6 +236,8 @@ def print_header(title):
             print """
             </strong>
 """
+        else:
+          print "Good work!"
     if form.getvalue("page") == "application-submitted":
         if form.getvalue("password-reg") == form.getvalue("confirmpass-reg"):
             user = {}
@@ -265,7 +267,7 @@ def print_header(title):
                 print error_msg
             else:
                 print """
-                <div class="alert alert-danger fade in">
+                <div class="alert alert-success fade in">
             <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
                 x
             </button>
