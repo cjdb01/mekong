@@ -212,7 +212,9 @@ def print_header(title, form):
             print "Set-Cookie:Expires=%s;" % (datetime.now().strftime('%A, %d-%m-%Y ' + str(datetime.now().hour + 1) + ':%M:%S GMT'))
         print "Set-Cookie:Domain=www.cse.unsw.edu.au/~chrisdb/mekong.cgi;"
     elif form.getvalue("page") == "logout":
-        print "Set-Cookie:Expires=Wednesday, 12-05-1993 00:00:00 GMT"
+        print "Set-Cookie:username=;"
+        print "Set-Cookie:password=;"
+        print "Set-Cookie:Expires=Wednesday, 12-05-1993 00:00:00 GMT;"
     
     print "Content-type: text/html"
     print # Do not remove
