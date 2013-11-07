@@ -302,7 +302,7 @@ def print_header(title, form):
                     password = value
                     print "HOW?", "<br />"
                 else:
-                    print "%s == %s" % (key, value)
+                    print "key == %s" % (key)
         
     if form.getvalue("page") == "application-submitted":
         if form.getvalue("password-reg") == form.getvalue("confirmpass-reg"):
