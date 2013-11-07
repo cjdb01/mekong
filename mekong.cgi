@@ -371,8 +371,8 @@ def print_body_search(form):
     print """
         <!--div class="container bs-docs-container" style="min-width: 600px"-->
           <div class="row">
-            <div class="col-md-2" style="left-padding: 50px">
-              <div class="panel panel-info" data-spy="affix" style="min-height: 300px; min-width: 260px">
+            <div class="col-md-2">
+              <div class="panel panel-info" data-spy="affix" style="min-height: 300px; min-width: 260px left-padding: 50px">
                 <div class="panel-heading">
                     <h3 class="panel-title">
                       <strong>Quick trolley</strong><br>
