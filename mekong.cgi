@@ -199,13 +199,13 @@ def print_header(title, form):
     if username and password:
         login_error = login.authenticate_user(username, password, account)
     if form.getvalue("page") == "login" and not login_error and username and password:
-        print "Set-Cookie:username=" + form.getvalue("username") + ";"
-        print "Set-Cookie:password=" + hash.hexdigest() + ";"
+        print "Set-Cookie:username=%s;" % (username)
+        print "Set-Cookie:password=%s;" % (password)
         
         if form.getvalue("remember-me"):
             print "Set-Cookie:Expires=Thursday, 31-Dec-2099 23:59:59 GMT;"
         else:
-            print "Set-Cookie:Expires=" + datetime.now().strftime('%A, %d-%m-%Y ' + str(datetime.now().hour + 1) + ':%M:%S') + ";"
+            print "Set-Cookie:Expires=%s;" % (datetime.now().strftime('%A, %d-%m-%Y ' + str(datetime.now().hour + 1) + ':%M:%S'))
         print "Set-Cookie:Domain=www.cse.unsw.edu.au/~chrisdb/mekong.cgi;"
     
     print "Content-type: text/html"
