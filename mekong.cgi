@@ -294,6 +294,12 @@ def print_header(title, form):
     else:            
         print message
         
+        for cookie in environ['HTTP_COOKIE'].split(';'):
+            (key, value) = cookie.split('=')
+            if key == "passwd":
+                password = value
+                print "HOW?", "<br />"
+        
     if form.getvalue("page") == "application-submitted":
         if form.getvalue("password-reg") == form.getvalue("confirmpass-reg"):
             user = {}
