@@ -219,7 +219,7 @@ def print_header(title, form):
         password = ""
         for cookie in environ['HTTP_COOKIE'].split(';'):
             (key, value) = cookie.split('=')
-            message += cookie + '<br />'
+            message += key + '<br />'
             if key == "username":
                 username = value
             if key == "password":
@@ -294,19 +294,7 @@ def print_header(title, form):
         print """
             </strong>
 """
-    else:
-        print username, "<br />"
-        print password, "<br />"
-        print form.getvalue("password"), "<br />"
-        
-        print "environ_has_key = ", environ.has_key('HTTP_COOKIE'), "<br />"
-        print environ.get('HTTP_COOKIE', '')
-        a = environ.get('HTTP_COOKIE', '').split(';')
-        for i in a:
-            (j,k) = i.split('=')
-            print j, "<br />"
-            print k, "<br />"
-            
+    else:            
         print message
         #hash = hashlib.sha512()
         #hash.update(form.getvalue("password"))
