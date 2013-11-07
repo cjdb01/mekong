@@ -55,16 +55,16 @@ def login_details():
         print """
                     <ul class="dropdown-menu" aria-labelledby="drop3" role="menu">
                       <li role="presentation">
-                        <a href="mekong.cgi?myaccount">Account</a>
+                        <a href="mekong.cgi?page=myaccount">Account</a>
                       </li>
                       <li role="presentation">
-                        <a href="mekong.cgi?myhistory">History</a>
+                        <a href="mekong.cgi?page=myhistory">History</a>
                       </li>
                       <li role="presentation">
-                        <a href="mekong.cgi?mysettings">Settings</a>
+                        <a href="mekong.cgi?page=mysettings">Settings</a>
                       </li>
                       <li role="presentation">
-                        <a href="mekong.cgi?logout">Log out</a>
+                        <a href="mekong.cgi?page=logout">Log out</a>
                       </li>
                     </ul>
 """
