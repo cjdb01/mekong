@@ -197,13 +197,11 @@ def print_header(title, form):
     username = form.getvalue("username")
     password = form.getvalue("password")
     
-    message = ""
-    
     if username and password:
         login_error = login.authenticate_user(username, password, account)
     if form.getvalue("page") == "login" and not login_error and username and password:
         print "Set-Cookie:username=%s;" % (username)
-        print "Set-Cookie:passwd=%s;" % (password)
+        print "Set-Cookie:password=%s;" % (password)
         
         if form.getvalue("remember-me"):
             print "Set-Cookie:Expires=Thursday, 31-Dec-2099 23:59:59 GMT;"
@@ -217,11 +215,11 @@ def print_header(title, form):
     if environ.has_key('HTTP_COOKIE'):
         username = ""
         password = ""
-        for cookie in environ['HTTP_COOKIE'].split(';'):
+        myenv = re.sub(r"\s", r"", environ['HTTP_COOKIE'])
+        for cookie in myenv.split(';'):
             (key, value) = cookie.split('=')
-            if key == "passwd":
+            if key == "password":
                 password = value
-                message = "received"
                 
         if username and password:
             login_error = login.authenticate_user(username, password, account)
@@ -292,17 +290,7 @@ def print_header(title, form):
             </strong>
 """
     else:            
-        print message
-        
-        if environ.has_key('HTTP_COOKIE'):
-            for cookie in environ['HTTP_COOKIE'].split(';'):
-                (key, value) = cookie.split('=')
-                key.rstrip()
-                if key == "passwd":
-                    password = value
-                    print "HOW?", "<br />"
-                else:
-                    print "key == %s" % (key)
+        print username, password
         
     if form.getvalue("page") == "application-submitted":
         if form.getvalue("password-reg") == form.getvalue("confirmpass-reg"):
