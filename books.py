@@ -56,7 +56,7 @@ def present_books(criteria, category, order, asc, account):
                           </a>
                           <div class="media-body">
                             <div class="row">
-                              <div class="col-md-10">
+                              <div class="col-md-9">
                                 <h3 class="media-heading">%s</h3>
                               </div>
                               <div class="col-md-2" align="right">
