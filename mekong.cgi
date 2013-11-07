@@ -224,7 +224,55 @@ def print_header(title):
 """
     if form.getvalue("page") == "application-submitted":
         if form.getvalue("password-reg") == form.getvalue("confirmpass-reg"):
-            print "Well done."
+            user = {}
+            user["username"] = form.getvalue("username-reg")
+            user["password"] = form.getvalue("password-reg")
+            user["firstname"] = form.getvalue("firstname-reg")
+            user["lastname"] = form.getvalue("lastname-reg")
+            user["address"] = form.getvalue("address-reg")
+            user["suburb"] = form.getvalue("suburb-reg")
+            user["state"] = form.getvalue("state-reg")
+            user["postcode"] = form.getvalue("postcode-reg")
+            user["email"] = form.getvalue("email-reg")
+            user["phone"] = form.getvalue("phone-reg")
+            user["sex"] = form.getvalue("sex-reg")
+            
+            error_msg = login.create_account(user)
+            
+            if error_msg:
+                print """
+          <div class="alert alert-danger fade in">
+            <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
+                x
+            </button>
+            <strong>
+"""
+                print error_msg
+            else:
+                print """
+                <div class="alert alert-danger fade in">
+            <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
+                x
+            </button>
+            <strong>
+"""
+                print "Account successfully created. An confirmation email has been sent to", user["email"] + ". Before logging in, please confirm your account."
+        else:
+            print """
+          <div class="alert alert-danger fade in">
+            <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
+                x
+            </button>
+            <strong>
+                Your password and your confirm password entries do not match!
+"""
+        print """
+            </strong>
+"""
+    print """
+        </div>
+    </div>
+"""
     print """
         </div>
 """
