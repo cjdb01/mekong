@@ -4,8 +4,11 @@ import re
 
 login_db = "data/main.db"
 
+error = ""
 
 def legal_username(username):
+    global error
+
     length = len(username)
     
     error = "Invalid username '" + username + "': usernames must"
@@ -15,8 +18,9 @@ def legal_username(username):
     elif length < 3 or length > 8:
         error += "be 3 - 8 characters long."
     else:
-        return ""
-    return error
+        error = ""
+        return True
+    return False
     
 def unique_username(username):
     db = dbase.db_init(login_db)
@@ -29,6 +33,7 @@ def unique_username(username):
     return rows is None
     
 def legal_password(password, username, first_name, last_name):
+    global error
     length = len(password)
     
     error = "Invalid password: passwords must "
@@ -46,15 +51,15 @@ def legal_password(password, username, first_name, last_name):
     elif re.search(username, password, re.IGNORECASE) or re.search(first_name, password, re.IGNORECASE) or re.search(last_name, password, re.IGNORECASE):
         error += "not contain usernames, first names, or last names."
     else:
-        return ""
-    return error
+        error = ""
+        return True
+    return False
     
-def authenticate_user(username, password, login):
+def authenticate_user(username, password):
+    global error
     error = "Authentication error: "
     
-    if login:
-        error = "A user is already logged in."
-    elif not legal_username(username):
+    if legal_username(username):
         db = dbase.db_init(login_db)
     
         with db:
@@ -74,20 +79,19 @@ def authenticate_user(username, password, login):
             elif not row["confirmed"]:
                 error += "please confirm your registration prior to logging in."
             else:
-                login = row
-                return ""
+                error = ""
+                return row
     else:
         error += "incorrect username or password."
-    return error
+    return None
     
 def create_account(user):
-    error = legal_username(user["username"])
-    if not error:
+    global error
+    if legal_username(user["username"]):
         if not unique_username(user["username"]):
             error = "Create account error: username is not unique"
         else:
-            error = legal_password(user["password"], user["username"], user["firstname"], user["lastname"])
-            if not error:
+            if legal_password(user["password"], user["username"], user["firstname"], user["lastname"]):
                 db = dbase.db_init(login_db)
         
                 with db:
@@ -100,9 +104,12 @@ def create_account(user):
                     cursor.execute("INSERT INTO Users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [user["username"], pwd, user["firstname"], user["lastname"],\
                                             user["address"], user["suburb"], user["state"], user["postcode"], user["dob"], user["email"], user["phone"], user["sex"], False])
                     # TODO: send confirmation email
-    return error
+                    
+                    return True
+    return False
     
 def change_password(username, current_password, new_password):
+    global error
     hash = hashlib.sha512()
     hash.update(current_password)
     
@@ -112,9 +119,7 @@ def change_password(username, current_password, new_password):
         cursor.execute("SELECT * FROM Users")
         
         row = cursor.fetchone()
-        
-        error = legal_password(new_password, row["username"], row["firstname"], row["lastname"])
-        if row["password"] == hash.hexdigest() and not error:
+        if row["password"] == hash.hexdigest() and legal_password(new_password, row["username"], row["firstname"], row["lastname"]):
             hash = hashlib.sha512()
             hash.update(new_password)
             

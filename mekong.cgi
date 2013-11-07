@@ -198,8 +198,8 @@ def print_header(title, form):
     password = form.getvalue("password")
     
     if username and password:
-        login_error = login.authenticate_user(username, password, account)
-    if form.getvalue("page") == "login" and not login_error and username and password:
+        account = login.authenticate_user(username, password)
+    if form.getvalue("page") == "login" and account and username and password:
         print "Set-Cookie:username=%s;" % (username)
         print "Set-Cookie:password=%s;" % (password)
         
@@ -224,8 +224,7 @@ def print_header(title, form):
                 password = value
                 
         if username and password:
-            login_error = login.authenticate_user(username, password, account)
-                
+            account = login.authenticate_user(username, password)
     
     print """
     <!DOCTYPE html>
@@ -279,7 +278,7 @@ def print_header(title, form):
             <p>Welcome to mekong.com.au</p>
           </div>
 """
-    if login_error:
+    if not account:
         print """
         <div class="alert alert-danger fade in">
             <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
@@ -287,7 +286,7 @@ def print_header(title, form):
             </button>
             <strong>
 """
-        print login_error
+        print login.error
         print """
             </strong>
 """
@@ -311,9 +310,7 @@ def print_header(title, form):
             user["dob"] = form.getvalue("dob-reg")
             user["sex"] = form.getvalue("sex-reg")
             
-            login_error = login.create_account(user)
-            
-            if login_error:
+            if not login.create_account(user):
                 print """
           <div class="alert alert-danger fade in">
             <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
@@ -321,7 +318,7 @@ def print_header(title, form):
             </button>
             <strong>
 """
-                print login_error
+                print login.error
             else:
                 print """
                 <div class="alert alert-success fade in">
