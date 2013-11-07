@@ -162,7 +162,7 @@ def print_registration():
                           </label>
                         </div>
                         <div class="form-group">
-                          <button type="button" class="btn btn-success" name="create-account">Create account</button>
+                          <button type="submit" class="btn btn-success" name="create-account">Create account</button>
                         </div>
                       </form>
 """
@@ -222,7 +222,7 @@ def print_header(title):
             <p>Welcome to mekong.com.au</p>
           </div>
 """
-    if form.getvalue("page") = "application-submitted":
+    if form.getvalue("page") == "application-submitted":
         if form.getvalue("password-reg") == form.getvalue("confirmpass-reg"):
             print "Well done."
     print """
