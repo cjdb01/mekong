@@ -88,11 +88,10 @@ def present_books(criteria, category, order, asc, account):
                                 <input type="text" class="form-control" name="qty" placeholder="1" style="width: 60px;">
                               </div>
                               <div class="col-md-1">
-                                <button type="button" class="btn btn-success" name="isbn-to-add" value="%s">Add to cart</button>
+                                <button type="button" class="btn btn-success" name="isbn-to-add">Add to cart</button>
                               </div>
                             </div>
                           </form>
                         </div>
                         <br />
                         <br />
-""" % (book["isbn"])
