@@ -196,6 +196,9 @@ def print_header(title, form):
     
     username = form.getvalue("username")
     password = form.getvalue("password")
+    
+    message = "not culled"
+    
     if username and password:
         login_error = login.authenticate_user(username, password, account)
     if form.getvalue("page") == "login" and not login_error and username and password:
@@ -214,7 +217,7 @@ def print_header(title, form):
     if environ.has_key('HTTP_COOKIE'):
         username = ""
         password = ""
-        print "got here!"
+        message = "received"
         for cookie in environ['HTTP_COOKIE'].split(';'):
             (key, value) = cookie.split('=')
             if key == "username":
@@ -302,6 +305,8 @@ def print_header(title, form):
             (j,k) = i.split('=')
             print j, "<br />"
             print k, "<br />"
+            
+        print message
         #hash = hashlib.sha512()
         #hash.update(form.getvalue("password"))
         #print hash.hexdigest()
