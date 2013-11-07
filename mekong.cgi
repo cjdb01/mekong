@@ -27,7 +27,7 @@ def login_details():
                     <b class="caret"></b>
                   </a>
                   <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px; width: 250px;" aria-labelledby="drop3" role="menu">
-                    <form action="mekong.cgi" method="post">
+                    <form action="mekong.cgi?page=login" method="post">
                       <label for="login">Login</label>
                       <input type="text" id="username" class="form-control" placeholder="Enter username" style="margin-bottom: 5px;"></input>
                       <input type="password" id="password" class="form-control" placeholder="Enter password" style="margin-bottom: 10px;"></input>
