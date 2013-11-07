@@ -1,8 +1,8 @@
 #!/usr/bin/env python2.7
 
 from os import environ
+from datetime import datetime
 import cgi, cgitb; cgitb.enable()
-import datetime
 import hashlib
 import re
 import sqlite3 as lite
@@ -196,8 +196,7 @@ def print_header(title, form):
         username = ""
         password = ""
         for cookie in environ['HTTP_COOKIE'].split(';'):
-            print item
-            (key, val) = item.split('=')
+            (key, val) = cookie.split('=')
             if key == "username":
                 username = value
             elif key == "password":
