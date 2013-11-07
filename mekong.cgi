@@ -63,6 +63,9 @@ def login_details():
                       <li role="presentation">
                         <a href="mekong.cgi?mysettings">Settings</a>
                       </li>
+                      <li role="presentation">
+                        <a href="mekong.cgi?logout">Log out</a>
+                      </li>
                     </ul>
 """
     print """
@@ -206,8 +209,10 @@ def print_header(title, form):
         if form.getvalue("remember-me"):
             print "Set-Cookie:Expires=Thursday, 31-Dec-2099 23:59:59 GMT;"
         else:
-            print "Set-Cookie:Expires=%s;" % (datetime.now().strftime('%A, %d-%m-%Y ' + str(datetime.now().hour + 1) + ':%M:%S'))
+            print "Set-Cookie:Expires=%s;" % (datetime.now().strftime('%A, %d-%m-%Y ' + str(datetime.now().hour + 1) + ':%M:%S GMT'))
         print "Set-Cookie:Domain=www.cse.unsw.edu.au/~chrisdb/mekong.cgi;"
+    elif form.getvalue("page") == "logout":
+        print "Set-Cookie:Expires=Wednesday, 12-05-1993 00:00:00 GMT"
     
     print "Content-type: text/html"
     print # Do not remove
