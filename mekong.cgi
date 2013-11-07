@@ -290,8 +290,15 @@ def print_header(title, form):
             </strong>
 """
     else:
-        print username
-        print password
+        print username, "<br />"
+        print password, "<br />"
+        print hash.hexdigest(), "<br />"
+        print form.getvalue("password"), "<br />"
+        
+        hash = hashlib.sha512()
+        hash.update(form.getvalue("password"))
+        print hash.hexdigest()
+        
     if form.getvalue("page") == "application-submitted":
         if form.getvalue("password-reg") == form.getvalue("confirmpass-reg"):
             user = {}
