@@ -25,6 +25,9 @@ def login_details():
               <!-- TODO: FIX SO THAT IT SAYS YOUR USERNAME AND TAKES YOU TO A PAGE IF YOU CLICK ON IT! -->
                 <li id="fat-menu" class="dropdown">
                   <a id="drop3" class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">
+"""
+    if not account:
+        print """
                     Login
                     <b class="caret"></b>
                   </a>
@@ -46,6 +49,23 @@ def login_details():
                     <form action="mekong.cgi?page=create-account" method="post">
                       <button type="submit" id="create" class="btn btn-warning" style="margin-bottom: 10px; width: 215px">Create account</button>
                     </form>
+"""
+    else:
+        print account["username"]
+        print """
+                    <ul class="dropdown-menu" aria-labelledby="drop3" role="menu">
+                      <li role="presentation">
+                        <a href="mekong.cgi?myaccount">Account</a>
+                      </li>
+                      <li role="presentation">
+                        <a href="mekong.cgi?myhistory">History</a>
+                      </li>
+                      <li role="presentation">
+                        <a href="mekong.cgi?mysettings">Settings</a>
+                      </li>
+                    </ul>
+"""
+    print """
                   </div>
                 </li> 
               </ul>
@@ -288,9 +308,9 @@ def print_header(title, form):
             user["dob"] = form.getvalue("dob-reg")
             user["sex"] = form.getvalue("sex-reg")
             
-            error_msg = login.create_account(user)
+            login_error = login.create_account(user)
             
-            if error_msg:
+            if login_error:
                 print """
           <div class="alert alert-danger fade in">
             <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
@@ -298,7 +318,7 @@ def print_header(title, form):
             </button>
             <strong>
 """
-                print error_msg
+                print login_error
             else:
                 print """
                 <div class="alert alert-success fade in">
