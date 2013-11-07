@@ -65,6 +65,9 @@ def authenticate_user(username, password, login):
             
             hash = hashlib.sha512()
             hash.update(password)
+            
+            print "password =", password
+            
             if not row:
                 error += "username '" + username + "' does not exist."
             elif hash.hexdigest() != row["password"]:
