@@ -369,7 +369,7 @@ def print_header(title, form):
 
 def print_body_search(form):
     print """
-        <div class="container bs-docs-container">
+        <div class="container bs-docs-container" style="min-width: 600px">
           <div class="row">
             <div class="col-md-3">
               <div class="panel panel-info" data-spy="affix" style="min-height: 300px; min-width: 260px">
