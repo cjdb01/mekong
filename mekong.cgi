@@ -39,7 +39,7 @@ def login_details():
                       <input type="submit" id="login" class="btn btn-primary" style="margin-bottom: 10px; width: 215px" value="Login"></input>
                     </form>
                       <button type="submit" id="forgot" class="btn btn-danger" style="margin-bottom: 10px; width: 215px">Forgot Password</button>
-                    <form action="mekong.cgi?page=create-account">
+                    <form action="mekong.cgi?page=create-account" method="post">
                       <button type="submit" id="create" class="btn btn-warning" style="margin-bottom: 10px; width: 215px">Create account</button>
                     </form>
                   </div>
@@ -274,6 +274,14 @@ def print_body_search(form):
           </div>
         </div>
 
+        <div class="alert alert-success fade in">
+            <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
+                ×
+            </button>
+            <strong>Item successfully added to cart.</strong>
+        </div>
+    </div>
+        
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://code.jquery.com/jquery.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
