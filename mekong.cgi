@@ -211,6 +211,7 @@ def print_header(title, form):
         else:
             print "Set-Cookie:Expires=" + datetime.now().strftime('%A, %d-%m-%Y ' + str(datetime.now().hour + 1) + ':%M:%S') + ";"
         print "Set-Cookie:Domain=www.cse.unsw.edu.au/~chrisdb/mekong.cgi;"
+    
     print "Content-type: text/html"
     print # Do not remove
     
@@ -297,7 +298,7 @@ def print_header(title, form):
         print password, "<br />"
         print hash.hexdigest(), "<br />"
         print form.getvalue("password"), "<br />"
-        
+        print login_error
         #hash = hashlib.sha512()
         #hash.update(form.getvalue("password"))
         #print hash.hexdigest()
