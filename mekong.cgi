@@ -398,7 +398,7 @@ def print_body_search(form):
                 </div>
                 <div class="panel-body">
 """
-    if form.getvalue("page") == "quicksearch":
+    if form.getvalue("page") == "search":
         books.present_books(form.getvalue("criteria"), form.getvalue("category"), form.getvalue("order"), form.getvalue("asc"), account)
     elif form.getvalue("page") == "create-account":
         print_registration()
