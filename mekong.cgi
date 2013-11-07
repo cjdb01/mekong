@@ -20,6 +20,7 @@ login_error = ""
 # Render code
 
 def login_details():
+    global account
     print """
               <ul class="nav navbar-nav navbar-right">
               <!-- TODO: FIX SO THAT IT SAYS YOUR USERNAME AND TAKES YOU TO A PAGE IF YOU CLICK ON IT! -->
