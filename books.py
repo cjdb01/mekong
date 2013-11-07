@@ -95,3 +95,6 @@ def present_books(criteria, category, order, asc, account):
                         </div>
                         <br />
                         <br />
+"""
+    else:
+        print "No soup for you."
