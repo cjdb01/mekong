@@ -197,7 +197,7 @@ def print_header(title, form):
     username = form.getvalue("username")
     password = form.getvalue("password")
     
-    message = "not culled"
+    message = ""
     
     if username and password:
         login_error = login.authenticate_user(username, password, account)
@@ -219,6 +219,7 @@ def print_header(title, form):
         password = ""
         for cookie in environ['HTTP_COOKIE'].split(';'):
             (key, value) = cookie.split('=')
+            message += cookie + '<br />'
             if key == "username":
                 username = value
             if key == "password":
