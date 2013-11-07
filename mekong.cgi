@@ -219,14 +219,9 @@ def print_header(title, form):
         password = ""
         for cookie in environ['HTTP_COOKIE'].split(';'):
             (key, value) = cookie.split('=')
-            message += key + '<br />'
-            if key == "username":
-                username = value
-            elif key == "passwd":
+            if key == "passwd":
                 password = value
                 message = "received"
-            else:
-                message += key + '<br />'
                 
         if username and password:
             login_error = login.authenticate_user(username, password, account)
