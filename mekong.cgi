@@ -217,13 +217,13 @@ def print_header(title, form):
     if environ.has_key('HTTP_COOKIE'):
         username = ""
         password = ""
-        message = "received"
         for cookie in environ['HTTP_COOKIE'].split(';'):
             (key, value) = cookie.split('=')
             if key == "username":
                 username = value
             if key == "password":
                 password = value
+                message = "received"
                 
         if username and password:
             login_error = login.authenticate_user(username, password, account)
