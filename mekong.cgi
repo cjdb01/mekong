@@ -218,7 +218,7 @@ def print_header(title, form):
             (key, value) = cookie.split('=')
             if key == "username":
                 username = value
-            elif key == "password":
+            if key == "password":
                 password = value
                 
         if username and password:
