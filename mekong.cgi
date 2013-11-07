@@ -194,8 +194,8 @@ def print_registration():
 def print_header(title, form):
     global login_error
     
+    hash = hashlib.sha512()
     if form.getvalue("username") and form.getvalue("password"):
-        hash = hashlib.sha512()
         hash.update(form.getvalue("password"))
         
         login_error = login.authenticate_user(form.getvalue("username"), hash.hexdigest(), account)
@@ -222,7 +222,7 @@ def print_header(title, form):
                 password = value
                 
         if username and password:
-            login_error = login.authenticate_user(username, password)
+            login_error = login.authenticate_user(username, password, account)
                 
     
     print """
@@ -321,27 +321,27 @@ def print_header(title, form):
             else:
                 print """
                 <div class="alert alert-success fade in">
-            <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
-                x
-            </button>
-            <strong>
+                  <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
+                    x
+                  </button>
+                  <strong>
 """
                 print "Account successfully created. An confirmation email has been sent to", user["email"] + ". Before logging in, please confirm your account."
         else:
             print """
-          <div class="alert alert-danger fade in">
-            <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
-                x
-            </button>
-            <strong>
+                  <div class="alert alert-danger fade in">
+                    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
+                      x
+                    </button>
+                    <strong>
                 Your password and your confirm password entries do not match!
 """
         print """
-            </strong>
+                    </strong>
 """
     print """
-        </div>
-    </div>
+                </div>
+          </div>
 """
     print """
         </div>
