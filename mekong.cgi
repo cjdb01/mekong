@@ -218,7 +218,9 @@ def print_header(title, form):
         myenv = re.sub(r"\s", r"", environ['HTTP_COOKIE'])
         for cookie in myenv.split(';'):
             (key, value) = cookie.split('=')
-            if key == "password":
+            if key == "username":
+                username = value
+            elif key == "password":
                 password = value
                 
         if username and password:
