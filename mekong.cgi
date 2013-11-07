@@ -195,11 +195,14 @@ def print_header(title, form):
     global login_error
     
     hash = hashlib.sha512()
-    if form.getvalue("username") and form.getvalue("password"):
+    
+    username = form.getvalue("username")
+    password = form.getvalue("password")
+    if username and password:
         hash.update(form.getvalue("password"))
         
         login_error = login.authenticate_user(form.getvalue("username"), hash.hexdigest(), account)
-    if form.getvalue("page") == "login" and not login_error:
+    if form.getvalue("page") == "login" and not login_error and username and password:
         print "Set-Cookie:username=" + form.getvalue("username") + ";"
         print "Set-Cookie:password=" + hash.hexdigest() + ";"
         
@@ -295,9 +298,9 @@ def print_header(title, form):
         print hash.hexdigest(), "<br />"
         print form.getvalue("password"), "<br />"
         
-        hash = hashlib.sha512()
-        hash.update(form.getvalue("password"))
-        print hash.hexdigest()
+        #hash = hashlib.sha512()
+        #hash.update(form.getvalue("password"))
+        #print hash.hexdigest()
         
     if form.getvalue("page") == "application-submitted":
         if form.getvalue("password-reg") == form.getvalue("confirmpass-reg"):
