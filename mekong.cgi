@@ -215,6 +215,7 @@ def print_header(title, form):
         print "Set-Cookie:username=;"
         print "Set-Cookie:password=;"
         print "Set-Cookie:Expires=Wednesday, 12-05-1993 00:00:00 GMT;"
+        print "Location: mekong.cgi?page=logout-complete"
     
     print "Content-type: text/html"
     print # Do not remove
