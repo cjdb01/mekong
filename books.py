@@ -78,8 +78,8 @@ def present_books(criteria, category, order, asc, account):
                           <br/>
                         </div>
 """ % (book["mediumimageurl"], book["title"], book["price"], book["authors"], book["publisher"], book["productdescription"])
-  if account:
-    print """
+    if account:
+        print """
                         <div class="media">
                           <form action="mekong.cgi?page=search" method="post">
                             <div class="row">
