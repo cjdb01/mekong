@@ -68,7 +68,101 @@ def print_registration():
                           </label>
                           <input name="confirmpass-reg" class="form-control" type="password" placeholder="Enter password" ></input>
                         </div>
-                        
+                        <div class="form-group">
+                          <label for="email-reg">
+                            Email
+                          </label>
+                          <input name="email-reg" class="form-control" type="email" placeholder="Enter email"></input>
+                        </div>
+                        <div class="form-group">
+                          <label for="firstname-reg">
+                            First name
+                          </label>
+                          <input name="firstname-reg" class="form-control" type="text" placeholder="e.g. John"></input>
+                        </div>
+                        <div class="form-group">
+                          <label for="lastname-reg">
+                            Last name
+                          </label>
+                          <input name="lastname-reg" class="form-control" type="text" placeholder="e.g. Smith"></input>
+                        </div>
+                        <div class="form-group">
+                          <label for="address-reg">
+                            Street address
+                          </label>
+                          <input name="address-reg" class="form-control" type="text" placeholder="e.g. 1 George Street"></input>
+                        </div>
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-3">
+                              <label for="suburb-reg">
+                                Suburb
+                              </label>
+                              <input name="suburb-reg" class="form-control" type="text" placeholder="e.g. Sydney" style="width: 200px"></input>
+                            </div>
+                            <div class="col-md-2">
+                              <label for="state-reg">
+                                State
+                              </label>
+                              <select class="form-control" name="state-reg">
+                                <option>NSW</option>
+                                <option>QLD</option>
+                                <option>VIC</option>
+                                <option>ACT</option>
+                                <option>TAS</option>
+                                <option>SA</option>
+                                <option>NT</option>
+                              </select>
+                            </div>
+                            <div class="col-md-3">
+                              <label for="postcode-reg">
+                                Postcode
+                              </label>
+                              <input name="postcode-reg" class="form-control" type="number" placeholder="e.g. 2000" style="width: 200px" maxlength="4"></input>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="phone-reg">
+                            Contact phone
+                          </label>
+                          <input name="phone-reg" class="form-control" type="text" placeholder="e.g. 0012345678"></input>
+                        </div>
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <label for="btn-group">
+                                Sex
+                              </label>
+                              <br />
+                              <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-primary">
+                                  <input type="radio" name="sex-reg" id="male"> Male
+                                </label>
+                                <label class="btn btn-primary">
+                                  <input type="radio" name="sex-reg" id="female"> Female
+                                </label>
+                                <label class="btn btn-primary">
+                                  <input type="radio" name="sex-reg" id="undisclosed"> Undisclosed
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <label for="suburb-reg">
+                                Date of birth
+                              </label>
+                              <input name="dob-reg" class="form-control" type="text" placeholder="DD/MM/YYYY" style="width: 200px"></input>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="checkbox-inline">
+                            <input type="checkbox" id="certificate"> By registering I understand my details may be used for in-house marketing purposes
+                          </label>
+                        </div>
+                        <div class="form-group">
+                          <button type="button" class="btn btn-success" name="create-account">Create account</button>
+                        </div>
                       </form>
 """
 
@@ -128,7 +222,7 @@ def print_header(title):
           </div>
         </div>
 """
-    if form.getvalue("isbn-to-add"):
+#    if form.getvalue("isbn-to-add"):
         #basket.quick_basket(account["username"])
       
     print """
