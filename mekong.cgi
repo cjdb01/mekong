@@ -49,7 +49,7 @@ def login_details():
 
 def print_registration():
     print """
-                      <form action="mekong.cgi?page=account-created" method="post">
+                      <form action="mekong.cgi?page=application-submitted" method="post">
                         <div class="form-group">
                           <label for="username-reg">
                             Username
@@ -110,6 +110,7 @@ def print_registration():
                                 <option>VIC</option>
                                 <option>ACT</option>
                                 <option>TAS</option>
+                                <option>WA</option>
                                 <option>SA</option>
                                 <option>NT</option>
                               </select>
@@ -220,6 +221,11 @@ def print_header(title):
             <h1>mekong.com.au</h1>
             <p>Welcome to mekong.com.au</p>
           </div>
+"""
+    if form.getvalue("page") = "application-submitted":
+        if form.getvalue("password-reg") == form.getvalue("confirmpass-reg"):
+            print "Well done."
+    print """
         </div>
 """
 #    if form.getvalue("isbn-to-add"):
@@ -267,6 +273,7 @@ def print_body_search(form):
         books.present_books(form.getvalue("searchbar"), "title", "salesrank", "DESC")
     elif form.getvalue("page") == "create-account":
         print_registration()
+        
     print """
                 </div>
               </div>
@@ -276,11 +283,10 @@ def print_body_search(form):
 
         <div class="alert alert-success fade in">
             <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
-                ×
+                x
             </button>
             <strong>Item successfully added to cart.</strong>
         </div>
-    </div>
         
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://code.jquery.com/jquery.js"></script>
