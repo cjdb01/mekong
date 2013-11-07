@@ -85,14 +85,18 @@ def present_books(criteria, category, order, asc, account):
                             <div class="row">
                               <div class="col-md-9"></div>
                               <div class="col-md-1">
-                                <input type="text" class="form-control" name="qty" placeholder="1" style="width: 60px;">
+                                <input type="text" class="form-control" name="qty" placeholder="1" style="width: 60px;" name="%s">
+                                <input type="hidden" name="criteria" value="%s">
+                                <input type="hidden" name="category" value="%s">
+                                <input type="hidden" name="order" value="%s">
+                                <input type="hidden" name="asc" value="%s">
                               </div>
                               <div class="col-md-1">
-                                <button type="button" class="btn btn-success" name="isbn-to-add" value="%s">Add to cart</button>
+                                <button type="button" class="btn btn-success" name="isbn-to-add" value="%s">Add to trolley</button>
                               </div>
                             </div>
                           </form>
                         </div>
                         <br />
                         <br />
-""" % (book["isbn"])
+""" % (book["isbn"], criteria, category, order, asc, book["isbn"])

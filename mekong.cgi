@@ -22,7 +22,6 @@ def login_details():
     global account
     print """
               <ul class="nav navbar-nav navbar-right">
-              <!-- TODO: FIX SO THAT IT SAYS YOUR USERNAME AND TAKES YOU TO A PAGE IF YOU CLICK ON IT! -->
                 <li id="fat-menu" class="dropdown">
                   <a id="drop3" class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">
 """
@@ -264,9 +263,12 @@ def print_header(title, form):
                 <li><a href="mekong.cgi?page=trolley">Trolley</a></li>
                 <li><a href="mekong.cgi?page=checkout">Checkout</a></li>
               </ul>
-              <form class="navbar-form navbar-left" role="search" action="mekong.cgi?page=quicksearch" method="post">
+              <form class="navbar-form navbar-left" role="search" action="mekong.cgi?page=search" method="post">
                 <div class="form-group">
-                    <input type="text" class="form-control" style="width: 300px;" placeholder="Quick title search" name="searchbar"></input>
+                    <input type="text" class="form-control" style="width: 300px;" placeholder="Quick title search" name="criteria">
+                    <input type="hidden" name="category" value="title">
+                    <input type="hidden" name="order" value="salesrank">
+                    <input type="hidden" name="asc" value="DESC">
                 </div>
                 <button type="submit" class="btn btn-default">Search</button>
               </form>
@@ -397,7 +399,7 @@ def print_body_search(form):
                 <div class="panel-body">
 """
     if form.getvalue("page") == "quicksearch":
-        books.present_books(form.getvalue("searchbar"), "title", "salesrank", "DESC", account)
+        books.present_books(form.getvalue("criteria"), form.getvalue("category"), form.getvalue("order"), form.getvalue("asc"), account)
     elif form.getvalue("page") == "create-account":
         print_registration()
         
