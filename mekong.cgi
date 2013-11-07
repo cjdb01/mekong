@@ -197,7 +197,7 @@ def print_header(title, form):
         password = ""
         for cookie in environ['HTTP_COOKIE'].split(';'):
             for item in cookie:
-                (key, val) = split(i, '=')
+                (key, val) = item.split('=')
                 if key == "username":
                     username = value
                 elif key == "password":
