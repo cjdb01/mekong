@@ -49,7 +49,7 @@ def present_books(criteria, category, order, asc, account):
         print "No items match your search."
     
     for book in booklist:
-       print """
+        print """
                         <div class="media">
                           <a class="pull-left" href="#">
                             <img class="media-object alt="No picture to display" src="%s">
