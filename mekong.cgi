@@ -152,7 +152,7 @@ def print_registration():
                               <label for="suburb-reg">
                                 Date of birth
                               </label>
-                              <input name="dob-reg" class="form-control" type="text" placeholder="DD/MM/YYYY" style="width: 200px"></input>
+                              <input name="dob-reg" class="form-control" type="text" placeholder="DD/MM/YYYY" style="width: 200px" maxlength="10"></input>
                             </div>
                           </div>
                         </div>
@@ -249,6 +249,7 @@ def print_header(title):
             user["postcode"] = form.getvalue("postcode-reg")
             user["email"] = form.getvalue("email-reg")
             user["phone"] = form.getvalue("phone-reg")
+            user["dob"] = form.getvalue("dob-reg")
             user["sex"] = form.getvalue("sex-reg")
             
             error_msg = login.create_account(user)

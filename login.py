@@ -2,7 +2,7 @@ import database as dbase
 import hashlib
 import re
 
-login_db = "main.db"
+login_db = "data/main.db"
 
 
 def legal_username(username):
