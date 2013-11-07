@@ -290,7 +290,8 @@ def print_header(title, form):
             </strong>
 """
     else:
-        print username, password
+        print username
+        print form.getvalue("password")
     if form.getvalue("page") == "application-submitted":
         if form.getvalue("password-reg") == form.getvalue("confirmpass-reg"):
             user = {}
