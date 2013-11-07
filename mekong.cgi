@@ -14,7 +14,6 @@ import trolley
 
 
 account = {}
-login_error = ""
 
 ##################################################################################################################################################
 # Render code
@@ -193,7 +192,7 @@ def print_registration():
 """
 
 def print_header(title, form):
-    global login_error
+    global account
     
     username = form.getvalue("username")
     password = form.getvalue("password")
@@ -279,7 +278,7 @@ def print_header(title, form):
             <p>Welcome to mekong.com.au</p>
           </div>
 """
-    if not account:
+    if not account and login.error:
         print """
         <div class="alert alert-danger fade in">
             <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
