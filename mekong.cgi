@@ -203,7 +203,7 @@ def print_header(title, form):
         login_error = login.authenticate_user(username, password, account)
     if form.getvalue("page") == "login" and not login_error and username and password:
         print "Set-Cookie:username=%s;" % (username)
-        print "Set-Cookie:password=%s;" % (password)
+        print "Set-Cookie:passwd=%s;" % (password)
         
         if form.getvalue("remember-me"):
             print "Set-Cookie:Expires=Thursday, 31-Dec-2099 23:59:59 GMT;"
@@ -222,7 +222,7 @@ def print_header(title, form):
             message += key + '<br />'
             if key == "username":
                 username = value
-            elif key == "password":
+            elif key == "passwd":
                 password = value
                 message = "received"
             else:
@@ -298,9 +298,6 @@ def print_header(title, form):
 """
     else:            
         print message
-        #hash = hashlib.sha512()
-        #hash.update(form.getvalue("password"))
-        #print hash.hexdigest()
         
     if form.getvalue("page") == "application-submitted":
         if form.getvalue("password-reg") == form.getvalue("confirmpass-reg"):
