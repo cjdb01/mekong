@@ -61,11 +61,16 @@ def authenticate_user(username, password, login):
             cursor = db.cursor()
             db.execute("SELECT * FROM Users WHERE username = :uname", {"uname": username})
             
-            row = db.fetchone()        
+            row = db.fetchone()
+            
+            hash = hashlib.sha512()
+            hash.update(password)
             if not row:
                 error += "username '" + username + "' does not exist."
-            elif password != row["password"]:
+            elif hash.hexdigest() != row["password"]:
                 error += "incorrect username or password."
+            elif not row["confirmed"]:
+                error += "please confirm your registration prior to logging in."
             else:
                 login = row
                 return ""

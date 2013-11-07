@@ -27,7 +27,7 @@ def login_details():
                     <b class="caret"></b>
                   </a>
                   <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px; width: 250px;" aria-labelledby="drop3" role="menu">
-                    <form>
+                    <form action="mekong.cgi" method="post">
                       <label for="login">Login</label>
                       <input type="text" id="username" class="form-control" placeholder="Enter username" style="margin-bottom: 5px;"></input>
                       <input type="password" id="password" class="form-control" placeholder="Enter password" style="margin-bottom: 10px;"></input>
@@ -222,6 +222,20 @@ def print_header(title):
             <p>Welcome to mekong.com.au</p>
           </div>
 """
+    if cgi.getvalue("username") and cgi.getvalue("password"):
+        error_msg = login.authenticate_user(cgi.getvalue("username"), cgi.getvalue("password"), account)
+        if error_msg:
+            print """
+        <div class="alert alert-danger fade in">
+            <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
+                x
+            </button>
+            <strong>
+"""
+            print error_msg
+            print """
+            </strong>
+"""
     if form.getvalue("page") == "application-submitted":
         if form.getvalue("password-reg") == form.getvalue("confirmpass-reg"):
             user = {}
@@ -327,13 +341,6 @@ def print_body_search(form):
               </div>
             </div>
           </div>
-        </div>
-
-        <div class="alert alert-success fade in">
-            <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
-                x
-            </button>
-            <strong>Item successfully added to cart.</strong>
         </div>
         
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
