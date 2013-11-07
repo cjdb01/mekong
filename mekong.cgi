@@ -296,6 +296,9 @@ def print_header(title, form):
         print form.getvalue("password"), "<br />"
         
         print environ.get('HTTP_COOKIE', '')
+        a = environ.get('HTTP_COOKIE', '').split(';')
+        for i in a:
+            print i, "<br />"
         #hash = hashlib.sha512()
         #hash.update(form.getvalue("password"))
         #print hash.hexdigest()
