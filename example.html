@@ -52,8 +52,12 @@
     </label>
   </div>
                                 <input type="submit" id="login" class="btn btn-primary" style="margin-bottom: 10px; width: 215px" value="Login"></input>
+                                </form>
+                                
                                 <button type="submit" id="forgot" class="btn btn-danger" style="margin-bottom: 10px; width: 215px">Forgot Password</button>
+                                <form action="http://www.google.com">
                                 <button type="submit" id="create" class="btn btn-warning" style="margin-bottom: 10px; width: 215px">Create account</button>
+                                </form>
                             </form>
                         </div>
                     </li> 
@@ -110,75 +114,126 @@
                 </div>
             </div>
             <div class="col-md-9" role="main">
-                <div class="panel panel-info fixed-left" style="min-height: 3000px;">
+                <div class="panel panel-info fixed-left" style="min-height: 300px;">
                     <div class="panel-heading">
                         <h3 class="panel-title">Search results</h3>
                     </div>
                     <div class="panel-body">
-        
-
-
-<button class="btn btn-default" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-placement="left" data-toggle="popover" data-container="body" type="button" data-original-title="" title="">
-
-
-              Popover on left
-            
-
-</button>
-
-<div class="popover fade left in" style="top: 16958.1px; left: 554.75px; display: block;">
-
-    <div class="arrow"></div>
-    <h3 class="popover-title" style="display: none;">
-    </h3>
-    <div class="popover-content">
-
-        Vivamus sagittis lacus vel augue laoreet rutrum fa…
-
-    </div>
-
-</div>
-        
-                        <div class="media">
-                          <a class="pull-left" href="#">
-                            <img class="media-object" src="http://ecx.images-amazon.com/images/I/51pcSwQGWSL._SL160_.jpg">
-                          </a>
-                          <div class="media-body">
-                            <div class="row">
-                              <div class="col-md-6">
-                                <h3 class="media-heading">Bear Hunt</h3>
-                              </div>
-                              <div class="col-md-6" align="right">
-                                <h3 class="media-heading">$0.00</h3>
-                              </div>
-                            </div>
-  
-                            <div class="row">
-                              <div class="col-md-6">
-                                <strong>Helen Oxenbury, Michael Rosen</strong>
-                              </div>
-                              <div class="col-md-6" align="right">
-                                <strong>Published by Little Simon</strong>
-                              </div>
-                            </div>
-    
-                            <p>Now the very youngest readers can join in the fun with this Classic Board Book edition of <I>We're Going on a Bear Hunt.</I> Full of delightful comedy and high drama, this tale of a brave family's joyous romp through sweeping landscapes is sure to win new fans.</p>
-                          </div>
-                          <br/>
-                          <form>
-                            <div class="row">
-                              <div class="col-md-9"></div>
-                              <div class="col-md-1">
-                                <input type="text" class="form-control" name="qty" placeholder="1" style="width: 60px;">
-                              </div>
-                              <div class="col-md-1">
-                                <button type="button" class="btn btn-success">Add to cart</button>
-                              </div>
-                            </div>
-                          </form>
+                      <form action="mekong.cgi?page=account-created" method="post">
+                        <div class="form-group">
+                          <label for="username-reg">
+                            Username
+                          </label>
+                          <input name="username-reg" class="form-control" type="text" placeholder="Enter username"></input>
                         </div>
-
-                        
+                        <div class="form-group">
+                          <label for="password-reg">
+                            Password
+                          </label>
+                          <input name="password-reg" class="form-control" type="password" placeholder="Enter password"></input>
+                        </div>
+                        <div class="form-group">
+                          <label for="confirmpass-reg">
+                            Confirm password
+                          </label>
+                          <input name="confirmpass-reg" class="form-control" type="password" placeholder="Enter password" ></input>
+                        </div>
+                        <div class="form-group">
+                          <label for="email-reg">
+                            Email
+                          </label>
+                          <input name="email-reg" class="form-control" type="email" placeholder="Enter email"></input>
+                        </div>
+                        <div class="form-group">
+                          <label for="firstname-reg">
+                            First name
+                          </label>
+                          <input name="firstname-reg" class="form-control" type="text" placeholder="e.g. John"></input>
+                        </div>
+                        <div class="form-group">
+                          <label for="lastname-reg">
+                            Last name
+                          </label>
+                          <input name="lastname-reg" class="form-control" type="text" placeholder="e.g. Smith"></input>
+                        </div>
+                        <div class="form-group">
+                          <label for="address-reg">
+                            Street address
+                          </label>
+                          <input name="address-reg" class="form-control" type="text" placeholder="e.g. 1 George Street"></input>
+                        </div>
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-3">
+                              <label for="suburb-reg">
+                                Suburb
+                              </label>
+                              <input name="suburb-reg" class="form-control" type="text" placeholder="e.g. Sydney" style="width: 200px"></input>
+                            </div>
+                            <div class="col-md-2">
+                              <label for="state-reg">
+                                State
+                              </label>
+                              <select class="form-control" name="state-reg">
+                                <option>NSW</option>
+                                <option>QLD</option>
+                                <option>VIC</option>
+                                <option>ACT</option>
+                                <option>TAS</option>
+                                <option>SA</option>
+                                <option>NT</option>
+                              </select>
+                            </div>
+                            <div class="col-md-3">
+                              <label for="postcode-reg">
+                                Postcode
+                              </label>
+                              <input name="postcode-reg" class="form-control" type="number" placeholder="e.g. 2000" style="width: 200px" maxlength="4"></input>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="phone-reg">
+                            Contact phone
+                          </label>
+                          <input name="phone-reg" class="form-control" type="text" placeholder="e.g. 0012345678"></input>
+                        </div>
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <label for="btn-group">
+                                Sex
+                              </label>
+                              <br />
+                              <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-primary">
+                                  <input type="radio" name="sex-reg" id="male"> Male
+                                </label>
+                                <label class="btn btn-primary">
+                                  <input type="radio" name="sex-reg" id="female"> Female
+                                </label>
+                                <label class="btn btn-primary">
+                                  <input type="radio" name="sex-reg" id="undisclosed"> Undisclosed
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <label for="suburb-reg">
+                                Date of birth
+                              </label>
+                              <input name="dob-reg" class="form-control" type="text" placeholder="DD/MM/YYYY" style="width: 200px"></input>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="checkbox-inline">
+                            <input type="checkbox" id="certificate"> By registering I understand my details may be used for in-house marketing purposes
+                          </label>
+                        </div>
+                        <div class="form-group">
+                          <button type="button" class="btn btn-success" name="create-account">Create account</button>
+                        </div>
+                      </form>
                     </div>
                 </div>
             </div>
