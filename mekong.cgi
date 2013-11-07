@@ -201,7 +201,7 @@ def print_header(title, form):
         login_error = login.authenticate_user(form.getvalue("username"), hash.hexdigest(), account)
     if form.getvalue("page") == "login" and not login_error:
         print "Set-Cookie:username=" + form.getvalue("username") + ";"
-        print "Set-Cookie:password=" + hash.hexdigest() + ";"
+        print "Set-Cookie:password=" + form.getvalue("password") + ";"
         
         if form.getvalue("remember-me"):
             print "Set-Cookie:Expires=Thursday, 31-Dec-2099 23:59:59 GMT;"
