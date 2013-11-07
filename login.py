@@ -63,12 +63,9 @@ def authenticate_user(username, password, login):
             
             row = cursor.fetchone()
             
-            hash = hashlib.sha512()
-            hash.update(password)
-            
             if not row:
                 error += "username '" + username + "' does not exist."
-            elif hash.hexdigest() != row["password"]:
+            elif password != row["password"]:
                 error += "incorrect username or password."
             elif not row["confirmed"]:
                 error += "please confirm your registration prior to logging in."

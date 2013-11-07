@@ -1,5 +1,6 @@
 #!/usr/bin/env python2.7
 
+from os import environ
 import cgi, cgitb; cgitb.enable()
 import datetime
 import hashlib
@@ -13,6 +14,7 @@ import trolley
 
 
 account = {}
+login_error = ""
 
 ##################################################################################################################################################
 # Render code
@@ -33,7 +35,7 @@ def login_details():
                       <input type="password" name="password" class="form-control" placeholder="Enter password" style="margin-bottom: 10px;"></input>
                       <div class="checkbox">
                         <label>
-                          <input id="remember-me" type="checkbox"> Remember me
+                          <input name="remember-me" type="checkbox"> Remember me
                         </label>
                       </div>
                       <button type="submit" id="login" class="btn btn-primary" style="margin-bottom: 10px; width: 215px">Login</button>
@@ -169,9 +171,41 @@ def print_registration():
                       </form>
 """
 
-def print_header(title):
+def print_header(title, form):
+    global login_error
+    
+    if form.getvalue("username") and form.getvalue("password"):
+        hash = hashlib.sha512()
+        hash.update(form.getvalue("password"))
+        
+        login_error = login.authenticate_user(form.getvalue("username"), hash.hexdigest(), account)
+    if form.getvalue("page") == "login" and not login_error:
+        print "Set-Cookie:username=" + form.getvalue("username") + ";"
+        print "Set-Cookie:password=" + hash.hexdigest() + ";"
+        
+        if form.getvalue("remember-me"):
+            print "Set-Cookie:Expires=Thursday, 31-Dec-2099 23:59:59 GMT;"
+        else:
+            print "Set-Cookie:Expires=" + datetime.now().strftime('%A, %d-%m-%Y ' + str(datetime.now().hour + 1) + ':%M:%S') + ";"
+        print "Set-Cookie:Domain=www.cse.unsw.edu.au/~chrisdb/mekong.cgi;"
+
     print "Content-type: text/html"
     print # Do not remove
+    
+    if environ.has_key('HTTP_COOKIE'):
+        username = ""
+        password = ""
+        for cookie in map(strip, split(environ['HTTP_COOKIE'], ';'):
+            (key, val) = split(cookie, '=')
+            if key == "username":
+                username = value
+            elif key == "password":
+                password = value
+                
+        if username and password:
+            login_error = login.authenticate_user(username, password)
+                
+    
     print """
     <!DOCTYPE html>
     <html lang="en">
@@ -224,18 +258,16 @@ def print_header(title):
             <p>Welcome to mekong.com.au</p>
           </div>
 """
-    if form.getvalue("username") and form.getvalue("password"):
-        error_msg = login.authenticate_user(form.getvalue("username"), form.getvalue("password"), account)
-        if error_msg:
-            print """
+    if login_error:
+        print """
         <div class="alert alert-danger fade in">
             <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
                 x
             </button>
             <strong>
 """
-            print error_msg
-            print """
+        print login_error
+        print """
             </strong>
 """
         else:
@@ -359,5 +391,5 @@ def print_body_search(form):
 
 form = cgi.FieldStorage()
 
-print_header("Mekong")
+print_header("Mekong", form)
 print_body_search(form)
