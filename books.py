@@ -28,7 +28,7 @@ def search_books(criteria, category, order, asc):
     
 def product_description(criteria, category, order, asc, account, book):
     str = """
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="%s" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" style="width:80%;">
     <div class="modal-content">
       <div class="modal-header">
@@ -40,7 +40,7 @@ def product_description(criteria, category, order, asc, account, book):
           <div class="media">
               <a class="pull-left" href="#">
                 
-                <img class="media-object alt="No picture to display" src="s" style="max-width:500px;">
+                <img class="media-object alt="No picture to display" src="%s" style="max-width:500px;">
               </a>
               <div class="media-body">
                 <div class="row">
@@ -131,7 +131,7 @@ def product_description(criteria, category, order, asc, account, book):
       </div>
       <div class="modal-footer">
         <form action="mekong.cgi?page=search" method="post"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-"""
+""" % (book["isbn"])
 #% (book["largeimageurl"], book["title"], book["price"], book["authors"], book["publisher"], book["numpages"], book["publication_date"], book["isbn"], book["salesrank"], book["productdescription"])
     if account:
         str += """
