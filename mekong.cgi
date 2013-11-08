@@ -378,7 +378,7 @@ def print_body_search(form):
     else:
         t = trolley.read_basket(account["username"], "price", "DESC")
         for i in t:
-            book = books.search_books(i["isbn"], "isbn", "price" "ASC")
+            book = books.search_books(i["isbn"], "isbn", "price", "ASC")
             print """
             <div class="media">
                           <a class="pull-left" href="#">
