@@ -305,7 +305,6 @@ def print_header(title, form):
         alert_message("danger", login.error, "")
         
     if form.getvalue("qty") and int(form.getvalue("qty")) > 0 and account:
-        print form.getvalue("qty"), "<br/>"
         trolley.set_basket(account["username"], form.getvalue("isbn"), form.getvalue("qty"))
         alert_message("success", "", "Item added to cart")
         
@@ -336,12 +335,6 @@ def print_header(title, form):
 """
     print """
         </div>
-"""
-#    if form.getvalue("isbn-to-add"):
-        #basket.quick_basket(account["username"])
-      
-    print """
-        
         <div class="bs-old-docs">
             <p><br></p>
         </div>
