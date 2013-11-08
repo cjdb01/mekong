@@ -213,8 +213,8 @@ def present_books(criteria, category, order, asc, account):
                         <br />
 """ % (book["isbn"], criteria, category, order, asc)
 
-    for book in booklist:
-        print product_description(criteria, category, order, asc, account, book)
+    #for book in booklist:
+        #print product_description(criteria, category, order, asc, account, book)
 
 def quick_trolley_books(isbn, qty):
     booklist = search_books(isbn, "isbn", "price", "asc")
