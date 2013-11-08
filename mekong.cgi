@@ -353,7 +353,10 @@ def print_body_search(form):
                       <div class="row">
                         <div class="col-md-6">
 """
-    basket_size = trolley.count_basket(account["username"])
+    if account:
+        basket_size = trolley.count_basket(account["username"])
+    else:
+        basket_size = 0
     print basket_size, "items"
     print """
                         </div>
