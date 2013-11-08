@@ -369,10 +369,10 @@ def print_header(title, form):
 
 def print_body_search(form):
     print """
-        <!--div class="container bs-docs-container" style="min-width: 600px"-->
+        <div class="container bs-docs-container" style="min-width: 600px">
           <div class="row">
             <div class="col-md-2">
-              <div class="panel panel-info" data-spy="affix" style="min-height: 300px; min-width: 260px left-padding: 50px">
+              <div class="panel panel-info" data-spy="affix" style="min-height: 300px; min-width: 260px;">
                 <div class="panel-heading">
                     <h3 class="panel-title">
                       <strong>Quick trolley</strong><br>
@@ -408,7 +408,7 @@ def print_body_search(form):
               </div>
             </div>
           </div>
-        <!--/div-->
+        </div>
         
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://code.jquery.com/jquery.js"></script>
