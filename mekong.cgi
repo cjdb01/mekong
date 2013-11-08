@@ -378,7 +378,36 @@ def print_body_search(form):
     else:
         t = trolley.read_basket(account["username"], "price", "DESC")
         for i in t:
-            print i, "<br/>"
+            book = books.search_books(i["isbn"], "isbn", "price" "ASC")
+            print """
+            <div class="media">
+                          <a class="pull-left" href="#">
+                            <img class="media-object alt="No picture to display" src="%s">
+                          </a>
+                          <div class="media-body">
+                            <div class="row">
+                              <div class="col-md-9">
+                                <h4 class="media-heading">%s</h4>
+                              </div>
+                              <div class="col-md-2" align="right">
+                                <h4 class="media-heading">$%.2f</h4>
+                              </div>
+                            </div>
+  
+                            <div class="row">
+                              <div class="col-md-6">
+                                <strong>%s</strong>
+                              </div>
+                              <div class="col-md-6" align="right">
+                                <strong>In basket: %s</strong>
+                              </div>
+                            </div>
+    
+                            %s
+                          </div>
+                          <br/>
+                        </div>
+""" % (book["smallimageurl"], book["title"], book["price"], book["authors"], i["qty"], book["productdescription"])
     print """
                 </div>
               </div>
