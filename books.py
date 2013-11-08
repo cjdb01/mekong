@@ -87,8 +87,8 @@ def present_books(criteria, category, order, asc, account):
 """ % (book["isbn"], criteria, category, order, asc)
 
 def quick_trolley_books(isbn, qty):
-    book = search_books(isbn, "isbn", "price", "asc")
-    
+    booklist = search_books(isbn, "isbn", "price", "asc")
+    book = booklist[0]
     print """
                         <div class="media">
                           <a class="pull-left" href="#">
