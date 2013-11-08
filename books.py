@@ -145,7 +145,6 @@ def product_description(criteria, category, order, asc, account, book):
     </form>
       </div>
     </div><!-- /.modal-content -->
-  </div>
 """
     return str
     
