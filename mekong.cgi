@@ -272,13 +272,12 @@ def print_header(title, form):
             <nav class="collapse navbar-collapse navbar-collapse" role="navigation">
               <ul class="nav navbar-nav">
                 <li><a href="mekong.cgi">Home</a></li>
-                <li><a href="mekong.cgi?page=recommendations">Recommendations</a></li>
                 <li><a href="mekong.cgi?page=trolley">Trolley</a></li>
                 <li><a href="mekong.cgi?page=checkout">Checkout</a></li>
               </ul>
               <form class="navbar-form navbar-left" role="search" action="mekong.cgi?page=search" method="post">
                 <div class="form-group">
-                    <input type="text" class="form-control" style="width: 300px;" placeholder="Quick title search" name="criteria">
+                    <input type="text" class="form-control" style="width: 500px;" placeholder="Quick title search" name="criteria">
                     <input type="hidden" name="category" value="title">
                     <input type="hidden" name="order" value="salesrank">
                     <input type="hidden" name="asc" value="DESC">
@@ -343,45 +342,8 @@ def print_header(title, form):
 def print_body_search(form):
     global account
     print """
-        <div class="container bs-docs-container" style="min-width: 1024px">
+        <div class="container bs-docs-container">
           <div class="row">
-            <div class="col-md-3">
-              <div class="panel panel-info" data-spy="affix" style="min-height: 300px; min-width: 260px; max-width: 400px;">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                      <strong>Quick trolley</strong><br>
-                      <div class="row">
-                        <div class="col-md-6">
-"""
-    if account:
-        basket_size = trolley.count_basket(account["username"])
-    else:
-        basket_size = 0
-    print basket_size, "items"
-    print """
-                        </div>
-                        <div class="col-md-6" align="right">
-"""
-    if account:
-        print "$%.2f" % (trolley.total_basket(account["username"]))
-    else:
-        print "$0.00"
-    print """
-                        </div>
-                      </div> 
-                    </h3>
-                </div>
-                <div class="panel-body">
-"""
-    if basket_size == 0:
-        print "Your trolley is empty..."
-    else:
-        trolley.quick_trolley(account["username"])
-    print """
-                </div>
-              </div>
-            </div>
-            <div class="col-md-9" role="main">
               <div class="panel panel-info fixed-left" style="min-height: 300px;">
                 <div class="panel-heading">
                   <h3 class="panel-title">Search results</h3>
