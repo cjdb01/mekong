@@ -145,6 +145,7 @@ def product_description(criteria, category, order, asc, account, book):
     </form>
       </div>
     </div><!-- /.modal-content -->
+  </div>
 """
     return str
     
@@ -188,7 +189,6 @@ def present_books(criteria, category, order, asc, account):
                         
                         
 """ % (book["isbn"], book["mediumimageurl"], book["isbn"], book["title"], book["price"], book["authors"], book["publisher"], book["productdescription"])
-        print product_description(criteria, category, order, asc, account, book)
         if account:
             print """
                         <div class="media">
@@ -212,6 +212,9 @@ def present_books(criteria, category, order, asc, account):
                         <br />
                         <br />
 """ % (book["isbn"], criteria, category, order, asc)
+
+    for book in booklist:
+        print product_description(criteria, category, order, asc, account, book)
 
 def quick_trolley_books(isbn, qty):
     booklist = search_books(isbn, "isbn", "price", "asc")
