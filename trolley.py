@@ -98,31 +98,4 @@ def total_basket(username):
 def quick_trolley(username):
     basket = read_basket(username, "price", "DESC")
     for isbn in basket:
-        book = books.search_books(isbn["isbn"], "isbn", "price", "ASC")
-        print """
-                        <div class="media">
-                          <a class="pull-left" href="#">
-                            <img class="media-object alt="No picture to display" src="%s">
-                          </a>
-                          <div class="media-body">
-                            <div class="row">
-                              <div class="col-md-9">
-                                <h4 class="media-heading">%s</h4>
-                              </div>
-                              <div class="col-md-2" align="right">
-                                <h4 class="media-heading">$%.2f</h4>
-                              </div>
-                            </div>
-  
-                            <div class="row">
-                              <div class="col-md-6">
-                                <strong>%s</strong>
-                              </div>
-                              <div class="col-md-6" align="right">
-                                <strong>In basket: %d</strong>
-                              </div>
-                            </div>
-                          </div>
-                          <br/>
-                        </div>
-""" % (book["smallimageurl"], book["title"], book["price"], book["authors"], isbn["qty"])
+        book = books.present_books(isbn["isbn"], "isbn", "price", "ASC")
