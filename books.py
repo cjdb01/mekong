@@ -165,7 +165,8 @@ def present_books(criteria, category, order, asc, account):
                             <div class="row">
                               <div class="col-md-9">
                                 <a href="#%s" data-toggle="modal">
-                                <h3 class="media-heading">%s</h3>
+                                  <h3 class="media-heading">%s</h3>
+                                </a>
                               </div>
                               <div class="col-md-2" align="right">
                                 <h3 class="media-heading">$%.2f</h3>
