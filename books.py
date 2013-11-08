@@ -29,7 +29,7 @@ def search_books(criteria, category, order, asc):
 def product_description(criteria, category, order, asc, account, book):
     str = """
 <div class="modal fade" id="%s" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" style="width:80%;">
+  <div class="modal-dialog" style="width:80%%;">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -48,7 +48,7 @@ def product_description(criteria, category, order, asc, account, book):
                     <h3 class="media-heading">%s</h3>
                   </div>
                   <div class="col-md-1" align="right">
-                    <h3 class="media-heading">$.2f</h3>
+                    <h3 class="media-heading">$.2%f</h3>
                   </div>
                 </div>
 
@@ -63,7 +63,7 @@ def product_description(criteria, category, order, asc, account, book):
                 
                 <div class="row">
                   <div class="col-md-10">
-                    s
+                    %s
                   </div>
                   <div class="col-md-2">%s</div>
                 </div>
@@ -83,10 +83,10 @@ def product_description(criteria, category, order, asc, account, book):
                 
                 <div class="row">
                   <div class="col-md-10">
-                    d
+                    %d
                   </div>
                   <div class="col-md-2">
-                    s
+                    %s
                   </div>
                 </div>
                 <br/>
@@ -105,10 +105,10 @@ def product_description(criteria, category, order, asc, account, book):
                 
                 <div class="row">
                   <div class="col-md-10">
-                    s
+                    %s
                   </div>
                   <div class="col-md-2">
-                    s
+                    %s
                   </div>
                 </div>
                 <br/>
@@ -122,7 +122,7 @@ def product_description(criteria, category, order, asc, account, book):
                 
                 <div class="row">
                   <div class="col-md-12">
-                    s
+                    %s
                   </div>
                 </div>
               <br/>
@@ -131,8 +131,7 @@ def product_description(criteria, category, order, asc, account, book):
       </div>
       <div class="modal-footer">
         <form action="mekong.cgi?page=search" method="post"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-""" % (book["isbn"])
-#% (book["largeimageurl"], book["title"], book["price"], book["authors"], book["publisher"], book["numpages"], book["publication_date"], book["isbn"], book["salesrank"], book["productdescription"])
+""" % (book["isbn"], book["largeimageurl"], book["title"], book["price"], book["authors"], book["publisher"], book["numpages"], book["publication_date"], book["isbn"], book["salesrank"], book["productdescription"])
     if account:
         str += """
   <input type="hidden" name="isbn" value="%s">
