@@ -376,36 +376,7 @@ def print_body_search(form):
     if basket_size == 0:
         print "Your trolley is empty..."
     else:
-        t = trolley.read_basket(account["username"], "price", "DESC")
-        for i in t:
-            book = books.search_books(i["isbn"], "isbn", "price", "ASC")
-            print """
-            <div class="media">
-                          <a class="pull-left" href="#">
-                            <img class="media-object alt="No picture to display" src="%s">
-                          </a>
-                          <div class="media-body">
-                            <div class="row">
-                              <div class="col-md-9">
-                                <h4 class="media-heading">%s</h4>
-                              </div>
-                              <div class="col-md-2" align="right">
-                                <h4 class="media-heading">$%.2f</h4>
-                              </div>
-                            </div>
-  
-                            <div class="row">
-                              <div class="col-md-6">
-                                <strong>%s</strong>
-                              </div>
-                              <div class="col-md-6" align="right">
-                                <strong>In basket: %d</strong>
-                              </div>
-                            </div>
-                          </div>
-                          <br/>
-                        </div>
-""" % (book["smallimageurl"], book["title"], book["price"], book["authors"], i["qty"])
+        trolley.quick_trolley()
     print """
                 </div>
               </div>
