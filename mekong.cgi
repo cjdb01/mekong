@@ -251,10 +251,7 @@ def print_header(title, form):
     <html lang="en">
     <!-- Code taken from Bootstrap website -->
       <head>
-        <title>"""
-    print title
-    print """
-        </title>
+        <title>%s</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -287,7 +284,7 @@ def print_header(title, form):
               <ul class="nav navbar-nav">
                 <li><a href="mekong.cgi?page=advanced-search">Advanced search</a></li>
               </ul>
-"""
+""" % (title)
     login_details()
     print """
             </nav>

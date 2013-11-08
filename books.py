@@ -26,6 +26,128 @@ def search_books(criteria, category, order, asc):
         booklist = cursor.fetchall()
     return booklist
     
+def product_description(criteria, category, order, asc, account, book):
+    str = """
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:80%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Product description</h4>
+      </div>
+      <div class="modal-body">
+        <div class="panel-body">
+          <div class="media">
+              <a class="pull-left" href="#">
+                
+                <img class="media-object alt="No picture to display" src="%s" style="max-width:500px;">
+              </a>
+              <div class="media-body">
+                <div class="row">
+                  <div class="col-md-10">
+                    <h3 class="media-heading">%s</h3>
+                  </div>
+                  <div class="col-md-1" align="right">
+                    <h3 class="media-heading">$.2%f</h3>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-10">
+                    <strong>Authors</strong>
+                  </div>
+                  <div class="col-md-2">
+                    <strong>Publisher</strong>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-10">
+                    %s
+                  </div>
+                  <div class="col-md-2">%s</div>
+                </div>
+                <br/>
+                <div class="row">
+                  <div class="col-md-10">
+                    <strong>
+                      Pages
+                    </strong>
+                  </div>
+                  <div class="col-md-2">
+                    <strong>
+                      Publication date
+                    </strong>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-10">
+                    %d
+                  </div>
+                  <div class="col-md-2">
+                    %s
+                  </div>
+                </div>
+                <br/>
+                <div class="row">
+                  <div class="col-md-10">
+                    <strong>
+                      ISBN
+                    </strong>
+                  </div>
+                  <div class="col-md-2">
+                    <strong>
+                      Current rank
+                    </strong>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-10">
+                    %s
+                  </div>
+                  <div class="col-md-2">
+                    %s
+                  </div>
+                </div>
+                <br/>
+                <div class="row">
+                  <div class="col-md-10">
+                    <strong>
+                      Product description
+                    </strong>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-12">
+                    %s
+                  </div>
+                </div>
+              <br/>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <form action="mekong.cgi?page=search" method="post"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+""" % (book["largeimageurl", book["title"], book["price"], book["authors"], book["publisher"], book["numpages"], book["publicationdate"], book["isbn"], book["salesrank"], book["description"])
+    if account:
+        str += """
+  <input type="hidden" name="isbn" value="%s">
+  <input type="hidden" name="criteria" value="%s">
+  <input type="hidden" name="category" value="%s">
+  <input type="hidden" name="order" value="%s">
+  <input type="hidden" name="asc" value="%s">
+  <button type="submit" class="btn btn-success" name="qty" value="1">Add to trolley</button>
+""" % (book["isbn"], criteria, category, order, asc)
+    str += """
+    </form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div>
+"""
+    
 def present_books(criteria, category, order, asc, account):
     booklist = search_books(criteria, category, order, asc)
     
@@ -35,12 +157,13 @@ def present_books(criteria, category, order, asc, account):
     for book in booklist:
         print """
                         <div class="media">
-                          <a class="pull-left" href="#">
+                          <a class="pull-left" href="#%s" data-toggle="modal">
                             <img class="media-object alt="No picture to display" src="%s">
                           </a>
                           <div class="media-body">
                             <div class="row">
                               <div class="col-md-9">
+                                <a href="#%s" data-toggle="modal">
                                 <h3 class="media-heading">%s</h3>
                               </div>
                               <div class="col-md-2" align="right">
@@ -61,7 +184,9 @@ def present_books(criteria, category, order, asc, account):
                           </div>
                           <br/>
                         </div>
-""" % (book["mediumimageurl"], book["title"], book["price"], book["authors"], book["publisher"], book["productdescription"])
+                        
+                        %s
+""" % (book["isbn"], book["mediumimageurl"], book["isbn"] book["title"], book["price"], book["authors"], book["publisher"], book["productdescription"], product_description(book))
         if account:
             print """
                         <div class="media">
