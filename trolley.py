@@ -48,6 +48,8 @@ def set_basket(username, isbn, quantity):
     with db:
         cursor = db.cursor()
        
+        book = cursor.fetchone()
+       
         if book:
             if quantity > 0:
                 cursor.execute("UPDATE Baskets SET quantity = ? WHERE username = ? AND isbn = ?", [quantity, username, isbn])
