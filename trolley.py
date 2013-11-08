@@ -96,9 +96,9 @@ def total_basket(username):
         return total_price
         
 def quick_trolley():
-    t = trolley.read_basket(account["username"], "price", "DESC")
-    for i in t:
-        book = books.search_books(i["isbn"], "isbn", "price", "ASC")
+    basket = read_basket(account["username"], "price", "DESC")
+    for isbn in basket:
+        book = books.search_books(isbn["isbn"], "isbn", "price", "ASC")
         print """
                         <div class="media">
                           <a class="pull-left" href="#">
@@ -125,4 +125,4 @@ def quick_trolley():
                           </div>
                           <br/>
                         </div>
-""" % (book["smallimageurl"], book["title"], book["price"], book["authors"], i["qty"])
+""" % (book["smallimageurl"], book["title"], book["price"], book["authors"], isbn["qty"])
