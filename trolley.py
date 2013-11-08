@@ -77,7 +77,7 @@ def count_basket(username):
     return items
     
 def total_basket(username):
-    price = 0.00
+    total_price = 0.00
     
     db = dbase.db_init(basket_db)
     with db:
@@ -89,6 +89,7 @@ def total_basket(username):
         for item in trolley:
             cursor.execute("SELECT price FROM Books WHERE isbn = ?", [item["isbn"]])
             book = cursor.fetchone()
-            price += float(book["price"].split('$')[1])
+            price = book["price"].split('$')
+            total_price += float(price[1])
             
-        return price
+        return total_price
