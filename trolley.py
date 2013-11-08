@@ -1,7 +1,7 @@
 import database as dbase
 import sqlite as lite
 
-basket_db = "main.db"
+basket_db = "data/main.db"
 
 def read_basket(username, order, asc):
     db = dbase.db_init(basket_db)
@@ -25,7 +25,7 @@ def delete_basket(username, isbn, quantity):
         if book:
             new_quantity = book["quantity"] - quantity
             if new_quantity > 0:
-                cursor.execute("UPDATE Baskets SET quantity = ? WHERE username = ? AND isbn = ?", [new_quantity, username isbn])
+                cursor.execute("UPDATE Baskets SET quantity = ? WHERE username = ? AND isbn = ?", [new_quantity, username, isbn])
             else:
                 cursor.execute("DELETE FROM Baskets WHERE username = ? AND isbn = ?", [username, isbn])
         
