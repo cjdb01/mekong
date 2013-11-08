@@ -1,6 +1,8 @@
 import database as dbase
 import sqlite3 as lite
 
+import books
+
 basket_db = "data/main.db"
 
 def read_basket(username, order, asc):
@@ -85,6 +87,8 @@ def total_basket(username):
         trolley = cursor.fetchall()
         
         for item in trolley:
-            price += item["price"]
+            cursor.execute("SELECT price FROM Books WHERE isbn = ?", [item["isbn"]])
+            book = cursor.fetchone()
+            price += float(book["price"].split('$')[1])
             
         return price
