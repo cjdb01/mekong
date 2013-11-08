@@ -98,4 +98,4 @@ def total_basket(username):
 def quick_trolley(username):
     basket = read_basket(username, "price", "DESC")
     for isbn in basket:
-        book = books.present_books(isbn["isbn"], "isbn", "price", "ASC")
+        book = books.present_books(isbn["isbn"], "isbn", "price", "ASC", {})
