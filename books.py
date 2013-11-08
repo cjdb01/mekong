@@ -13,22 +13,6 @@ def legal_isbn(isbn):
     else:
         return good()
 
-def total_books(basket):
-    total_price = 0
-    db = dbase.db_init(books_db)
-    
-    with db:
-        cursor = db.cursor()
-        for isbn in basket:
-            cursor.execute("SELECT price FROM Books WHERE isbn = ?", [isbn])
-            row = cursor.fetchone()
-            
-            if row:
-                price = row[0].split('$')
-                total_price += float(price[1])
-        
-    return total_price
-
 def search_books(criteria, category, order, asc):
     db = dbase.db_init(books_db)
     
