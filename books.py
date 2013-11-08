@@ -85,3 +85,34 @@ def present_books(criteria, category, order, asc, account):
                         <br />
                         <br />
 """ % (book["isbn"], criteria, category, order, asc)
+
+def quick_trolley_books(isbn, qty):
+    book = search_books(isbn, "isbn", "price", "asc")
+    
+    print """
+                        <div class="media">
+                          <a class="pull-left" href="#">
+                            <img class="media-object alt="No picture to display" src="%s">
+                          </a>
+                          <div class="media-body">
+                            <div class="row">
+                              <div class="col-md-9">
+                                <h4 class="media-heading">%s</h4>
+                              </div>
+                              <div class="col-md-2" align="right">
+                                <h4 class="media-heading">$%.2f</h4>
+                              </div>
+                            </div>
+  
+                            <div class="row">
+                              <div class="col-md-6">
+                                <strong>%s</strong>
+                              </div>
+                              <div class="col-md-6" align="right">
+                                <strong>In basket: %d</strong>
+                              </div>
+                            </div>
+                          </div>
+                          <br/>
+                        </div>
+""" % (book["smallimageurl"], book["title"], book["price"], book["authors"], qty)
