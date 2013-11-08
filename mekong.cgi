@@ -302,20 +302,11 @@ def print_header(title, form):
           </div>
 """
     if not account and login.error:
-        print """
-        <div class="alert alert-danger fade in">
-            <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
-                x
-            </button>
-            <strong>
-"""
-        print login.error
-        print """
-            </strong>
-"""
+        alert_message("danger", login.error, "")
+        
     if int(form.getvalue("qty")) > 0 and account:
         trolley.set_basket(account["username"], form.getvalue("isbn"), form.getvalue("qty"))
-        
+        alert_message("success", "", "Item added to cart")
         
     if form.getvalue("page") == "application-submitted":
         if form.getvalue("password-reg") == form.getvalue("confirmpass-reg"):
@@ -334,37 +325,12 @@ def print_header(title, form):
             user["sex"] = form.getvalue("sex-reg")
             
             if not login.create_account(user):
-                print """
-          <div class="alert alert-danger fade in">
-            <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
-                x
-            </button>
-            <strong>
-"""
-                print login.error
+                alert_message("danger", login.error, "")
             else:
-                print """
-                <div class="alert alert-success fade in">
-                  <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
-                    x
-                  </button>
-                  <strong>
-"""
-                print "Account successfully created. An confirmation email has been sent to", user["email"] + ". Before logging in, please confirm your account."
+                alert_message("success", "Account successfully created.", "A confirmation email has been sent to %s. Before logging in, please confirm your account." % (user["email"]))
         else:
-            print """
-                  <div class="alert alert-danger fade in">
-                    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
-                      x
-                    </button>
-                    <strong>
-                Your password and your confirm password entries do not match!
-"""
-        print """
-                    </strong>
-"""
+            alert_message("danger", "Your password and your confirm password entries do not match!", "")
     print """
-                </div>
           </div>
 """
     print """
@@ -381,6 +347,7 @@ def print_header(title, form):
 """
 
 def print_body_search(form):
+    global account
     print """
         <div class="container bs-docs-container" style="min-width: 600px">
           <div class="row">
@@ -391,16 +358,28 @@ def print_body_search(form):
                       <strong>Quick trolley</strong><br>
                       <div class="row">
                         <div class="col-md-6">
-                          0 items
+"""
+    basket_size = trolley.count_basket(account["username"])
+    print basket_size, "items"
+    print """
                         </div>
                         <div class="col-md-6" align="right">
-                          $0.00
+"""
+    print "$%.2f" % (trolley.total_basket(account["username"]))
+    print """
                         </div>
                       </div> 
                     </h3>
                 </div>
                 <div class="panel-body">
-                    Your trolley is empty...
+"""
+    if basket_size == 0:
+        print "Your trolley is empty..."
+    else:
+        t = trolley.read_basket(account["username"], "price", "DESC")
+        for i in t:
+            print i, "<br/>"
+    print """
                 </div>
               </div>
             </div>
