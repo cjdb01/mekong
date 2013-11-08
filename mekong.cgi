@@ -362,7 +362,10 @@ def print_body_search(form):
                         </div>
                         <div class="col-md-6" align="right">
 """
-    print "$%.2f" % (trolley.total_basket(account["username"]))
+    if account:
+        print "$%.2f" % (trolley.total_basket(account["username"]))
+    else:
+        print "$0.00"
     print """
                         </div>
                       </div> 
