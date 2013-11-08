@@ -91,7 +91,7 @@ def quick_trolley_books(isbn, qty):
     book = booklist[0]
     print """
                         <div class="media">
-                          <a class="pull-left" href="#" style="max-width: 260px;">
+                          <a class="pull-left" href="#">
                             <img class="media-object alt="No picture to display" src="%s">
                           </a>
                           <div class="media-body">

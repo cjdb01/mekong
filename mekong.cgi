@@ -343,10 +343,10 @@ def print_header(title, form):
 def print_body_search(form):
     global account
     print """
-        <div class="container bs-docs-container" style="min-width: 600px">
+        <div class="container bs-docs-container" style="min-width: 1024px">
           <div class="row">
             <div class="col-md-3">
-              <div class="panel panel-info" data-spy="affix" style="min-height: 300px; min-width: 260px; max-width: 260px;">
+              <div class="panel panel-info" data-spy="affix" style="min-height: 300px; min-width: 260px; max-width: 400px;">
                 <div class="panel-heading">
                     <h3 class="panel-title">
                       <strong>Quick trolley</strong><br>
