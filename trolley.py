@@ -7,10 +7,11 @@ basket_db = "data/main.db"
 
 def read_basket(username, order, asc):
     db = dbase.db_init(basket_db)
+    rows = None
     
     with db:
         cursor = db.cursor()
-        cursor.execute("SELECT * FROM Baskets WHERE username = ? ORDER BY " + dbase.sanitise(order) + " " + dbase.sanitise(asc), [username])
+        cursor.execute("SELECT * FROM Baskets WHERE username = ? ORDER BY isbn.%s %s" % (dbase.sanitise(order), dbase.sanitise(asc)), [username])
         
         rows = cursor.fetchall()
     return rows
