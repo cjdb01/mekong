@@ -11,6 +11,7 @@ def read_basket(username, order, asc):
     
     with db:
         cursor = db.cursor()
+        cursor.execute("PRAGMA foreign_keys = ON")
         cursor.execute("SELECT * FROM Baskets WHERE username = ? ORDER BY isbn.%s %s" % (dbase.sanitise(order), dbase.sanitise(asc)), [username])
         
         rows = cursor.fetchall()
