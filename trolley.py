@@ -68,3 +68,18 @@ def count_basket(username):
             items += item["quantity"]
             
     return items
+    
+def total_basket(username):
+    price = 0.00
+    
+    db = dbase.db_init(basket_db)
+    with db:
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM Baskets WHERE username = ?", [username])
+        
+        trolley = cursor.fetchall()
+        
+        for item in trolley:
+            price += item["price"]
+            
+        return price
