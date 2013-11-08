@@ -147,6 +147,7 @@ def product_description(criteria, category, order, asc, account, book):
     </div><!-- /.modal-content -->
   </div>
 """
+    return str
     
 def present_books(criteria, category, order, asc, account):
     booklist = search_books(criteria, category, order, asc)
