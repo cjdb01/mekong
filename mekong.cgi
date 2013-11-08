@@ -407,7 +407,7 @@ def print_body_search(form):
                           </div>
                           <br/>
                         </div>
-""" % (book["smallimageurl"], book["title"], book["price"], book["authors"], i["qty"], book["productdescription"])
+""" % (book["smallimageurl"], book["title"], book["price"], book["authors"], str(i["qty"]), book["productdescription"])
     print """
                 </div>
               </div>
