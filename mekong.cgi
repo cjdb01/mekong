@@ -304,7 +304,7 @@ def print_header(title, form):
     if not account and login.error:
         alert_message("danger", login.error, "")
         
-    if int(form.getvalue("qty")) > 0 and account:
+    if form.getvalue("qty") and int(form.getvalue("qty")) > 0 and account:
         trolley.set_basket(account["username"], form.getvalue("isbn"), form.getvalue("qty"))
         alert_message("success", "", "Item added to cart")
         
