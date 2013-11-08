@@ -18,6 +18,19 @@ account = {}
 ##################################################################################################################################################
 # Render code
 
+def alert_message(type, strong, normal):
+        print """
+        <div class="alert alert-%s fade in">
+            <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
+                x
+            </button>
+            <strong>
+              %s
+            </strong>
+            %s
+        </div>
+""" % (type, strong, normal)
+
 def login_details():
     global account
     print """
@@ -300,9 +313,9 @@ def print_header(title, form):
         print """
             </strong>
 """
-    else:            
-        print username, password
-        print account
+    if int(form.getvalue("qty")) > 0 and account:
+        trolley.set_basket(account["username"], form.getvalue("isbn"), form.getvalue("qty"))
+        
         
     if form.getvalue("page") == "application-submitted":
         if form.getvalue("password-reg") == form.getvalue("confirmpass-reg"):
