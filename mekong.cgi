@@ -376,7 +376,7 @@ def print_body_search(form):
     if basket_size == 0:
         print "Your trolley is empty..."
     else:
-        trolley.quick_trolley()
+        trolley.quick_trolley(account["username"])
     print """
                 </div>
               </div>

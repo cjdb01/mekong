@@ -95,8 +95,8 @@ def total_basket(username):
             
         return total_price
         
-def quick_trolley():
-    basket = read_basket(account["username"], "price", "DESC")
+def quick_trolley(username):
+    basket = read_basket(username, "price", "DESC")
     for isbn in basket:
         book = books.search_books(isbn["isbn"], "isbn", "price", "ASC")
         print """
