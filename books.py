@@ -187,7 +187,7 @@ def present_books(criteria, category, order, asc, account):
                         </div>
                         
                         %s
-""" % (book["isbn"], book["mediumimageurl"], book["isbn"] book["title"], book["price"], book["authors"], book["publisher"], book["productdescription"], product_description(book))
+""" % (book["isbn"], book["mediumimageurl"], book["isbn"] book["title"], book["price"], book["authors"], book["publisher"], book["productdescription"], product_description(criteria, category, order, asc, account, book))
         if account:
             print """
                         <div class="media">
