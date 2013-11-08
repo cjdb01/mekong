@@ -1,5 +1,5 @@
 import database as dbase
-import sqlite as lite
+import sqlite3 as lite
 
 basket_db = "data/main.db"
 
