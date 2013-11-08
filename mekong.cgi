@@ -399,15 +399,13 @@ def print_body_search(form):
                                 <strong>%s</strong>
                               </div>
                               <div class="col-md-6" align="right">
-                                <strong>In basket: %s</strong>
+                                <strong>In basket: %d</strong>
                               </div>
                             </div>
-    
-                            %s
                           </div>
                           <br/>
                         </div>
-""" % (book["smallimageurl"], book["title"], book["price"], book["authors"], str(i["qty"]), book["productdescription"])
+""" % (book["smallimageurl"], book["title"], book["price"], book["authors"], i["qty"])
     print """
                 </div>
               </div>
