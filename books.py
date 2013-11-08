@@ -131,7 +131,8 @@ def product_description(criteria, category, order, asc, account, book):
       </div>
       <div class="modal-footer">
         <form action="mekong.cgi?page=search" method="post"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-""" % (book["largeimageurl"], book["title"], book["price"], book["authors"], book["publisher"], book["numpages"], book["publication_date"], book["isbn"], book["salesrank"], book["productdescription"])
+""" % ("http://ecx.images-amazon.com/images/I/51pcSwQGWSL.jpg", "We're going on a bear hunt", "$7.99", "R & J", "J & R", 34, "1-2-3", "1234567890", "Hey world!")
+#% (book["largeimageurl"], book["title"], book["price"], book["authors"], book["publisher"], book["numpages"], book["publication_date"], book["isbn"], book["salesrank"], book["productdescription"])
     if account:
         str += """
   <input type="hidden" name="isbn" value="%s">
