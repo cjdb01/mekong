@@ -96,20 +96,20 @@ def quick_trolley_books(isbn, qty):
                           </a>
                           <div class="media-body">
                             <div class="row">
-                              <div class="col-md-9">
-                                <h4 class="media-heading">%s</h4>
+                              <div class="col-md-2">
+                                <strong>%s</strong>
                               </div>
                               <div class="col-md-2" align="right">
-                                <h4 class="media-heading">$%.2f</h4>
+                                <strong>$%.2f</strong>
                               </div>
                             </div>
   
                             <div class="row">
-                              <div class="col-md-6">
-                                <strong>%s</strong>
+                              <div class="col-md-2">
+                                %s
                               </div>
-                              <div class="col-md-6" align="right">
-                                <strong>In basket: %d</strong>
+                              <div class="col-md-2" align="right">
+                                <strong>In basket: </strong> %d
                               </div>
                             </div>
                           </div>
