@@ -12,15 +12,13 @@ error = ""
 def send_mail(destination, subject, body):
     SENDMAIL = "/usr/sbin/sendmail" # sendmail location
     p = os.popen("%s -t" % SENDMAIL, "w")
-    p.write("""
-From: accounts@mekong.com.au  
-To: %s
-Subject: %s
+    p.write("From: accounts@mekong.com.au\n")
+    p.write("To: %s\n" % (destination))
+    p.write("Subject: %s\n" % (subject))
+    p.write("\n\n%s\n" % (body))
 
-%s
-""" % (destination, subject, body)
     sts = p.close()
-    if sts != 0:
+    if sts:
         error = "Sendmail exit status %s" % (sts)
         return False
     error = ""
