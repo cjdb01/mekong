@@ -295,13 +295,15 @@ def print_header(title, form):
 
         <div id="content" class="container">
           <div class="jumbotron">
-            <h1>mekong.com.au</h1>
-            <p>Welcome to mekong.com.au</p>
+            <p>Welcome to</p>
+            <h3>Mekong</h3>
           </div>
 """
     if not account and login.error:
         alert_message("danger", login.error, "")
-        
+    elif form.getvalue("page") == "login" and account:
+        alert_message("success", "Thanks for logging in, %s." % (account["firstname"]), "We hope you enjoy browsing!")
+    
     if form.getvalue("qty") and int(form.getvalue("qty")) > 0 and account:
         trolley.set_basket(account["username"], form.getvalue("isbn"), form.getvalue("qty"))
         alert_message("success", "", "Item added to cart")
@@ -329,10 +331,11 @@ def print_header(title, form):
         else:
             alert_message("danger", "Your password and your confirm password entries do not match!", "")
     elif form.getvalue("page") == "confirm-account" and form.getvalue("link"):
-        if confirm_account(form.getvalue("link")):
+        if login.confirm_account(form.getvalue("link")):
             alert_message("success", "Account successfully confirmed", "Please proceed to log in.")
         else:
             alert_message("danger", "A problem occurred", login.error)
+    
     print """
           </div>
 """

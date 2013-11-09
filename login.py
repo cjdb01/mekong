@@ -83,7 +83,7 @@ def authenticate_user(username, password):
     
         with db:
             cursor = db.cursor()
-            cursor.execute("SELECT * FROM Users WHERE username = :uname", {"uname": username})
+            cursor.execute("SELECT * FROM Users WHERE username = ?", [username])
             
             row = cursor.fetchone()
             
@@ -165,12 +165,12 @@ def confirm_account(link):
     db = dbase.db_init(login_db)
     with db:
         cursor = db.cursor()
-        cursor.execute("SELECT * FROM Users WHERE confirmed = ?", link)
+        cursor.execute("SELECT * FROM Users WHERE confirmed = ?", [link])
         
         row = cursor.fetchone()
         
         if row:
-            cursor.execute("UPDATE Users SET confirmed = '' WHERE confirmed = ?", link)
+            cursor.execute("UPDATE Users SET confirmed = '' WHERE confirmed = ?", [link])
             return True
         else:
             error = """
