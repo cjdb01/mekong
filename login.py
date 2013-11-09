@@ -10,6 +10,7 @@ login_db = "data/main.db"
 error = ""
 
 def send_mail(destination, subject, body):
+    # Code from http://www.yak.net/fqa/84.html
     SENDMAIL = "/usr/sbin/sendmail" # sendmail location
     p = os.popen("%s -t" % SENDMAIL, "w")
     p.write("From: accounts@mekong.com.au\n")
@@ -126,7 +127,7 @@ def create_account(user):
                     
                     confirmation = hash.hexdigest()
                     
-                    if not send_mail(user["email"], "Mekong.com.au: Account activation", "Dear %s %s,\n\nThis email is to confirm that you have requested an account with mekong.com.au.\n\nIf you created the account, please click on the following link http://www.cse.unsw.edu.au/~chrisdb/%s.\n\nIf you did not create the account, please send an email to webmaster@mekong.com.au to rectify the issue.\n\nKind regards,\n\nMekong staff" % (user["firstname"], user["lastname"], confirmation)):
+                    if not send_mail(user["email"], "Mekong.com.au: Account activation", "Dear %s %s,\n\nThis email is to confirm that you have requested an account with mekong.com.au.\n\nIf you created the account, please click on the following link http://www.cse.unsw.edu.au/~chrisdb/page=confirm-account&link=%s.\n\nIf you did not create the account, please send an email to webmaster@mekong.com.au to rectify the issue.\n\nKind regards,\n\nMekong staff" % (user["firstname"], user["lastname"], confirmation)):
                         return False
                     
                     cursor.execute("INSERT INTO Users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [user["username"], pwd, user["firstname"], user["lastname"],\
@@ -157,6 +158,27 @@ def change_password(username, current_password, new_password):
             error = "Password update error: incorrect password."
                 
     return error
+    
+def confirm_account(link):
+    global error
+    
+    db = dbase.db_init(login_db)
+    with db:
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM Users WHERE confirmed = ?", link)
+        
+        row = cursor.fetchone()
+        
+        if row:
+            cursor.execute("UPDATE Users SET confirmed = '' WHERE confirmed = ?", link)
+            return True
+        else
+            error = """
+An error occurred while trying to confirm this account.<br/>
+Accounts can only be confirmed once, so you might have already confirmed your account. If this is the case please log in using the form at the top of the page.<br/>
+If you haven't confirmed your account yet, please ensure that you copied the URL from your email correctly.<br/>Queries may be sent to accounts@mekong.com.au.<br/>
+"""
+            return False
 
 def reset_password(username):
     return 0 # TODO

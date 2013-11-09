@@ -214,9 +214,8 @@ def present_books(criteria, category, order, asc, account):
                             </div>
                           </form>
                         </div>
-                        <br />
-                        <br />
 """ % (book["isbn"], criteria, category, order, asc)
+    print "<hr/>"
 
     for book in booklist:
         print product_description(criteria, category, order, asc, account, book)
