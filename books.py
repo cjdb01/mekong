@@ -28,7 +28,7 @@ def search_books(criteria, category, order, asc):
     
 def product_description(criteria, category, order, asc, account, book):
     str = """
-<div id="%s" class="modal fade" tabindex="-1" style="display: none; min-width: 80%; left: 23%; right: 30%;">
+<div id="%s" class="modal fade" tabindex="-1" style="display: none; min-width: 80%%; left: 23%%; right: 30%%;">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
