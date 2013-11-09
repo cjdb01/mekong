@@ -1,11 +1,43 @@
 import database as dbase
 from datetime import datetime
 import hashlib
+import os
 import re
+import smtplib
 
 login_db = "data/main.db"
 
 error = ""
+
+def send_mail(destination, subject, body):
+    SENDMAIL = "/usr/sbin/sendmail" # sendmail location
+
+    FROM = "cjdb01@hotmail.com"
+    TO = ["chrisdb@cse.unsw.edu.au"] # must be a list
+
+    SUBJECT = "Hello!"
+
+    TEXT = "This message was sent via sendmail."
+
+    # Prepare actual message
+
+    message = """\
+    From: %s
+    To: %s
+    Subject: %s
+
+    %s
+    """ % (FROM, ", ".join(TO), SUBJECT, TEXT)
+
+    # Send the mail
+
+    import os
+
+    p = os.popen("%s -t -i" % SENDMAIL, "w")
+    p.write(message)
+    status = p.close()
+    if status:
+        print "Sendmail exit status", status
 
 def legal_username(username):
     global error
@@ -109,7 +141,7 @@ def create_account(user):
                     
                     confirmation = hash.hexdigest()
                     
-                    dbase.send_mail(user["email"], "Mekong.com.au: Account activation", "Dear %s %s,\n\nThis email is to confirm that you have requested an account with mekong.com.au.\n\nIf you created the account, please click on the following link http://www.cse.unsw.edu.au/~chrisdb/%s.\n\nIf you did not create the account, please send an email to webmaster@mekong.com.au to rectify the issue.\n\nKind regards,\n\nMekong staff" % (user["firstname"], user["lastname"], confirmation))
+                    send_mail(user["email"], "Mekong.com.au: Account activation", "Dear %s %s,\n\nThis email is to confirm that you have requested an account with mekong.com.au.\n\nIf you created the account, please click on the following link http://www.cse.unsw.edu.au/~chrisdb/%s.\n\nIf you did not create the account, please send an email to webmaster@mekong.com.au to rectify the issue.\n\nKind regards,\n\nMekong staff" % (user["firstname"], user["lastname"], confirmation))
                     
                     cursor.execute("INSERT INTO Users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [user["username"], pwd, user["firstname"], user["lastname"],\
                                             user["address"], user["suburb"], user["state"], user["postcode"], user["dob"], user["email"], user["phone"], user["sex"], confirmation, "", ""])
