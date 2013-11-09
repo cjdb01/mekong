@@ -10,36 +10,19 @@ login_db = "data/main.db"
 error = ""
 
 def send_mail(destination, subject, body):
-    SENDMAIL = "/usr/sbin/sendmail" # sendmail location
-
-    FROM = "cjdb01@hotmail.com"
-    TO = ["chrisdb@cse.unsw.edu.au"] # must be a list
-
-    SUBJECT = "Hello!"
-
-    TEXT = "This message was sent via sendmail."
-
-    # Prepare actual message
-
-    message = """\
-    From: %s
-    To: %s
-    Subject: %s
-
-    %s
-    """ % (FROM, ", ".join(TO), SUBJECT, TEXT)
-
-    # Send the mail
-
-    import os
-
-    p = os.popen("%s -t -i" % SENDMAIL, "w")
-    p.write(message)
-    status = p.close()
-    if status:
-        return False
-        error = "Sendmail exit status: %s" % (status)
-    return True
+  SENDMAIL = "/usr/sbin/sendmail" # sendmail location
+  import os
+  p = os.popen("%s -t" % SENDMAIL, "w")
+  p.write("To: chrisdb@cse.unsw.edu.au\n")
+  p.write("Subject: test\n")
+  p.write("\n") # blank line separating headers from body
+  p.write("Some text\n")
+  p.write("some more text\n")
+  sts = p.close()
+  if sts != 0:
+      error = "Sendmail exit status %s" % (sts)
+      return False
+  return True
 
 def legal_username(username):
     global error
