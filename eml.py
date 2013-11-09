@@ -1,20 +1,30 @@
-#!/usr/bin/python
-
 import smtplib
 
-sender = 'cjdb01@hotmail.com'
-receivers = ['chrisdb@cse.unsw.edu.au.com']
+SENDMAIL = "/usr/sbin/sendmail" # sendmail location
 
-message = """From: From Person <from@fromdomain.com>
-To: To Person <to@todomain.com>
-Subject: SMTP e-mail test
+FROM = "cjdb01@hotmail.com"
+TO = ["chrisdb@cse.unsw.edu.au"] # must be a list
 
-This is a test e-mail message.
-"""
+SUBJECT = "Hello!"
 
-try:
-   smtpObj = smtplib.SMTP('localhost')
-   smtpObj.sendmail(sender, receivers, message)         
-   print "Successfully sent email"
-except smtplib.SMTPException:
-   print "Error: unable to send email"
+TEXT = "This message was sent via sendmail."
+
+# Prepare actual message
+
+message = """\
+From: %s
+To: %s
+Subject: %s
+
+%s
+""" % (FROM, ", ".join(TO), SUBJECT, TEXT)
+
+# Send the mail
+
+import os
+
+p = os.popen("%s -t -i" % SENDMAIL, "w")
+p.write(message)
+status = p.close()
+if status:
+    print "Sendmail exit status", status

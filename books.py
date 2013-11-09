@@ -120,7 +120,7 @@ def product_description(criteria, category, order, asc, account, book):
                 </div>
                 
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-10">
                     %s
                   </div>
                 </div>
@@ -250,4 +250,5 @@ def quick_trolley_books(isbn, qty):
                           </div>
                           <br/>
                         </div>
+                        <hr/>
 """ % (book["smallimageurl"], book["title"], book["price"], book["authors"], qty)
