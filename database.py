@@ -23,11 +23,14 @@ def db_init(path):
     return db
 
 def send_mail(destination, subject, body):
-    
     SENDMAIL = "/usr/sbin/sendmail" # sendmail location
 
-    FROM = "accounts@mekong.com.au"
-    TO = [destination] # must be a list
+    FROM = "cjdb01@hotmail.com"
+    TO = ["chrisdb@cse.unsw.edu.au"] # must be a list
+
+    SUBJECT = "Hello!"
+
+    TEXT = "This message was sent via sendmail."
 
     # Prepare actual message
 
@@ -37,7 +40,7 @@ def send_mail(destination, subject, body):
     Subject: %s
 
     %s
-    """ % (FROM, ", ".join(TO), subject, body)
+    """ % (FROM, ", ".join(TO), SUBJECT, TEXT)
 
     # Send the mail
 
