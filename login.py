@@ -13,15 +13,17 @@ def send_mail(destination, subject, body):
   SENDMAIL = "/usr/sbin/sendmail" # sendmail location
   import os
   p = os.popen("%s -t" % SENDMAIL, "w")
-  p.write("To: chrisdb@cse.unsw.edu.au\n")
-  p.write("Subject: test\n")
-  p.write("\n") # blank line separating headers from body
-  p.write("Some text\n")
-  p.write("some more text\n")
+  p.write("""
+From: accounts@mekong.com.au  
+To: %s
+Subject: %s
+
+%s""" % (destination, subject, body)
   sts = p.close()
   if sts != 0:
       error = "Sendmail exit status %s" % (sts)
       return False
+  error = ""
   return True
 
 def legal_username(username):
