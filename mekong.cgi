@@ -279,7 +279,7 @@ def print_header(title, form):
                     <input type="text" class="form-control" style="width: 500px;" placeholder="Quick title search" name="criteria">
                     <input type="hidden" name="category" value="title">
                     <input type="hidden" name="order" value="salesrank">
-                    <input type="hidden" name="asc" value="DESC">
+                    <input type="hidden" name="asc" value="ASC">
                 </div>
                 <button type="submit" class="btn btn-default">Search</button>
               </form>
@@ -350,7 +350,7 @@ def print_body_search(form):
                 <div class="panel-body">
 """
     if form.getvalue("page") == "search":
-        books.present_books(form.getvalue("criteria"), form.getvalue("category"), form.getvalue("order"), form.getvalue("desc"), account)
+        books.present_books(form.getvalue("criteria"), form.getvalue("category"), form.getvalue("order"), form.getvalue("asc"), account)
     elif form.getvalue("page") == "create-account":
         print_registration()
         
