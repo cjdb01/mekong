@@ -6,7 +6,7 @@ import re
 def regexp(expr, item):
     expr = re.escape(expr)
     reg = re.compile(expr)
-    return reg.search(item) is not None
+    return reg.search(item, re.IGNORECASE) is not None
     
 def sanitise(expr):
     return re.escape(expr)
@@ -23,14 +23,28 @@ def db_init(path):
     return db
 
 def send_mail(destination, subject, body):
-    message = """
-From: accounts@mekong.com.au
-To: %s
-Subject: %s
+    
+    SENDMAIL = "/usr/sbin/sendmail" # sendmail location
 
-%s
-""" % (destination, subject, body)
+    FROM = "accounts@mekong.com.au"
+    TO = [destination] # must be a list
 
-  postbox = os.popen("/usr/sbin/sendmail -t -i", "w")
-  postbox.write(message)
-  return postbox.close()
+    # Prepare actual message
+
+    message = """\
+    From: %s
+    To: %s
+    Subject: %s
+
+    %s
+    """ % (FROM, ", ".join(TO), subject, body)
+
+    # Send the mail
+
+    import os
+
+    p = os.popen("%s -t -i" % SENDMAIL, "w")
+    p.write(message)
+    status = p.close()
+    if status:
+        print "Sendmail exit status", status
