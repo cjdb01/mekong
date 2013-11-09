@@ -76,7 +76,7 @@ def authenticate_user(username, password):
                 error += "username '" + username + "' does not exist."
             elif password != row["password"]:
                 error += "incorrect username or password."
-            elif not row["confirmed"]:
+            elif row["confirmed"]: # a value here means that they haven't clicked on the link yet!
                 error += "please confirm your registration prior to logging in."
             else:
                 error = ""
@@ -100,11 +100,30 @@ def create_account(user):
                     hash = hashlib.sha512()
                     hash.update(user["password"])
                     pwd = hash.hexdigest()
-                
-                    cursor.execute("INSERT INTO Users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [user["username"], pwd, user["firstname"], user["lastname"],\
-                                            user["address"], user["suburb"], user["state"], user["postcode"], user["dob"], user["email"], user["phone"], user["sex"], False])
-                    # TODO: send confirmation email
                     
+                    hash = hashlib.sha512()
+                    hash.update(user["username"])
+                    hash.update(user["firstname"])
+                    hash.update(datetime.now().strftime('%A, %d-%m-%Y ' + str(datetime.now().hour + 1) + ':%M:%S GMT'))
+                    
+                    confirmation = hash.hexdigest()
+                    
+                    if dbase.send_mail(user["email"], "Mekong.com.au: Account activation", """
+Dear %s %s,
+
+This email is to confirm that you have requested an account with mekong.com.au.
+If you created the account, please click on the following link http://www.cse.unsw.edu.au/~chrisdb/%s.
+If you did not create the account, please send an email to webmaster@mekong.com.au to rectify the issue.
+
+Kind regards,
+
+Mekong staff
+""" % (user["firstname"], user["lastname"], confirmation)):
+                        error = "There was a problem sending the confirmation email to %s. Please try again shortly." % (user["email"])
+                        return False
+                    
+                    cursor.execute("INSERT INTO Users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [user["username"], pwd, user["firstname"], user["lastname"],\
+                                            user["address"], user["suburb"], user["state"], user["postcode"], user["dob"], user["email"], user["phone"], user["sex"], confirmation, "", ""])
                     return True
     return False
     

@@ -1,3 +1,5 @@
+import os
+import smtplib
 import sqlite3 as lite
 import re
 
@@ -19,3 +21,16 @@ def db_init(path):
         sys.exit("Couldn't establish a connection with database.")
     
     return db
+
+def send_mail(destination, subject, body):
+    message = """
+From: accounts@mekong.com.au
+To: %s
+Subject: %s
+
+%s
+""" % (destination, subject, body)
+
+  postbox = os.popen("/usr/sbin/sendmail -t -i", "w")
+  postbox.write(message)
+  return postbox.close()
