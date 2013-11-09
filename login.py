@@ -10,21 +10,21 @@ login_db = "data/main.db"
 error = ""
 
 def send_mail(destination, subject, body):
-  SENDMAIL = "/usr/sbin/sendmail" # sendmail location
-  import os
-  p = os.popen("%s -t" % SENDMAIL, "w")
-  p.write("""
+    SENDMAIL = "/usr/sbin/sendmail" # sendmail location
+    p = os.popen("%s -t" % SENDMAIL, "w")
+    p.write("""
 From: accounts@mekong.com.au  
 To: %s
 Subject: %s
 
-%s""" % (destination, subject, body)
-  sts = p.close()
-  if sts != 0:
-      error = "Sendmail exit status %s" % (sts)
-      return False
-  error = ""
-  return True
+%s
+""" % (destination, subject, body)
+    sts = p.close()
+    if sts != 0:
+        error = "Sendmail exit status %s" % (sts)
+        return False
+    error = ""
+    return True
 
 def legal_username(username):
     global error
