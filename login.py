@@ -127,7 +127,7 @@ def create_account(user):
                     
                     confirmation = hash.hexdigest()
                     
-                    if not send_mail(user["email"], "Mekong.com.au: Account activation", "Dear %s %s,\n\nThis email is to confirm that you have requested an account with mekong.com.au.\n\nIf you created the account, please click on the following link http://www.cse.unsw.edu.au/~chrisdb/page=confirm-account&link=%s.\n\nIf you did not create the account, please send an email to webmaster@mekong.com.au to rectify the issue.\n\nKind regards,\n\nMekong staff" % (user["firstname"], user["lastname"], confirmation)):
+                    if not send_mail(user["email"], "Mekong.com.au: Account activation", "Dear %s %s,\n\nThis email is to confirm that you have requested an account with mekong.com.au.\n\nIf you created the account, please click on the following link http://www.cse.unsw.edu.au/~chrisdb/mekong.cgi?page=confirm-account&link=%s.\n\nIf you did not create the account, please send an email to webmaster@mekong.com.au to rectify the issue.\n\nKind regards,\n\nMekong staff" % (user["firstname"], user["lastname"], confirmation)):
                         return False
                     
                     cursor.execute("INSERT INTO Users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [user["username"], pwd, user["firstname"], user["lastname"],\
