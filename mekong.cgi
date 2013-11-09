@@ -350,7 +350,7 @@ def print_body_search(form):
                 <div class="panel-body">
 """
     if form.getvalue("page") == "search":
-        books.present_books(form.getvalue("criteria"), form.getvalue("category"), form.getvalue("order"), form.getvalue("asc"), account)
+        books.present_books(form.getvalue("criteria"), form.getvalue("category"), form.getvalue("order"), form.getvalue("desc"), account)
     elif form.getvalue("page") == "create-account":
         print_registration()
         
