@@ -37,7 +37,9 @@ def send_mail(destination, subject, body):
     p.write(message)
     status = p.close()
     if status:
-        print "Sendmail exit status", status
+        return False
+        error = "Sendmail exit status: %s" % (status)
+    return True
 
 def legal_username(username):
     global error
@@ -141,7 +143,8 @@ def create_account(user):
                     
                     confirmation = hash.hexdigest()
                     
-                    send_mail(user["email"], "Mekong.com.au: Account activation", "Dear %s %s,\n\nThis email is to confirm that you have requested an account with mekong.com.au.\n\nIf you created the account, please click on the following link http://www.cse.unsw.edu.au/~chrisdb/%s.\n\nIf you did not create the account, please send an email to webmaster@mekong.com.au to rectify the issue.\n\nKind regards,\n\nMekong staff" % (user["firstname"], user["lastname"], confirmation))
+                    if not send_mail(user["email"], "Mekong.com.au: Account activation", "Dear %s %s,\n\nThis email is to confirm that you have requested an account with mekong.com.au.\n\nIf you created the account, please click on the following link http://www.cse.unsw.edu.au/~chrisdb/%s.\n\nIf you did not create the account, please send an email to webmaster@mekong.com.au to rectify the issue.\n\nKind regards,\n\nMekong staff" % (user["firstname"], user["lastname"], confirmation)):
+                        return False
                     
                     cursor.execute("INSERT INTO Users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [user["username"], pwd, user["firstname"], user["lastname"],\
                                             user["address"], user["suburb"], user["state"], user["postcode"], user["dob"], user["email"], user["phone"], user["sex"], confirmation, "", ""])
