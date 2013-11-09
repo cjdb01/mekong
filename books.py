@@ -161,13 +161,16 @@ def present_books(criteria, category, order, asc, account):
         else:
             description = book["productdescription"]
         print """
-                        <div class="media">
-                          <a class="pull-left" href="#%s" data-toggle="modal">
-                            <img class="media-object alt="No picture to display" src="%s">
-                          </a>
-                          <div class="media-body">
+                        <div class="media-body">
                             <div class="row">
-                              <div class="col-md-9">
+                              <div class="col-md-2">
+                                <center>
+                                  <a href="#%s">
+                                    <img class="media-object alt="No picture to display" src="%s">
+                                  </a>
+                                </center>
+                              </div>
+                              <div class="col-md-8">
                                 <a href="#%s" data-toggle="modal">
                                   <h3 class="media-heading">%s</h3>
                                 </a>
@@ -175,21 +178,19 @@ def present_books(criteria, category, order, asc, account):
                               <div class="col-md-2" align="right">
                                 <h3 class="media-heading">$%.2f</h3>
                               </div>
-                            </div>
-  
-                            <div class="row">
-                              <div class="col-md-6">
+                              </br>
+                              <div class="col-md-8">
                                 <strong>%s</strong>
                               </div>
-                              <div class="col-md-6" align="right">
+                              <div class="col-md-2" align="right">
                                 <strong>Published by %s</strong>
                               </div>
+                              <br/>
+                              <div class="col-md-10">
+                              %s
+                              </div>
                             </div>
-    
-                            %s
                           </div>
-                          <br/>
-                        </div>
                         
                         
 """ % (book["isbn"], book["mediumimageurl"], book["isbn"], book["title"], book["price"], book["authors"], book["publisher"], description)
