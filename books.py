@@ -28,8 +28,7 @@ def search_books(criteria, category, order, asc):
     
 def product_description(criteria, category, order, asc, account, book):
     str = """
-<div class="modal fade" id="%s" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" style="width:80%%;">
+<div id="%s" class="modal fade" tabindex="-1" style="display: none; min-width: 80%; left: 23%; right: 30%;">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -146,6 +145,7 @@ def product_description(criteria, category, order, asc, account, book):
       </div>
     </div><!-- /.modal-content -->
   </div>
+</div>
 """
     return str
     
@@ -213,8 +213,8 @@ def present_books(criteria, category, order, asc, account):
                         <br />
 """ % (book["isbn"], criteria, category, order, asc)
 
-    #for book in booklist:
-        #print product_description(criteria, category, order, asc, account, book)
+    for book in booklist:
+        print product_description(criteria, category, order, asc, account, book)
 
 def quick_trolley_books(isbn, qty):
     booklist = search_books(isbn, "isbn", "price", "asc")

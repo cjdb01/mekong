@@ -254,7 +254,9 @@ def print_header(title, form):
         <title>%s</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Bootstrap -->
-        <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">            
+        <link href="css/bootstrap-modal.css" rel="stylesheet" media="screen">
+        <link href="css/bootstrap-modal-bs3patch.css" rel="stylesheet" media="screen">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -363,7 +365,8 @@ def print_body_search(form):
         <script src="https://code.jquery.com/jquery.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="js/bootstrap.js"></script>
-        
+        <script src="js/bootstrap-modalmanager.js"></script>
+        <script src="js/bootstrap-modal.js"></script>
       </body>
     </html>
 """
