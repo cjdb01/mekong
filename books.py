@@ -47,7 +47,7 @@ def product_description(criteria, category, order, asc, account, book):
                     <h3 class="media-heading">%s</h3>
                   </div>
                   <div class="col-md-1" align="right">
-                    <h3 class="media-heading">$.2%f</h3>
+                    <h3 class="media-heading">$%.2f</h3>
                   </div>
                 </div>
 
