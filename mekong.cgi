@@ -328,6 +328,11 @@ def print_header(title, form):
                 alert_message("success", "Account successfully created.", "A confirmation email has been sent to %s. Before logging in, please confirm your account." % (user["email"]))
         else:
             alert_message("danger", "Your password and your confirm password entries do not match!", "")
+    elif form.getvalue("page") == "confirm-account" and form.getvalue("link"):
+        if confirm_account(form.getvalue("link")):
+            alert_message("success", "Account successfully confirmed", "Please proceed to log in.")
+        else:
+            alert_message("danger", "A problem occurred", login.error)
     print """
           </div>
 """

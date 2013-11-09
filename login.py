@@ -172,7 +172,7 @@ def confirm_account(link):
         if row:
             cursor.execute("UPDATE Users SET confirmed = '' WHERE confirmed = ?", link)
             return True
-        else
+        else:
             error = """
 An error occurred while trying to confirm this account.<br/>
 Accounts can only be confirmed once, so you might have already confirmed your account. If this is the case please log in using the form at the top of the page.<br/>

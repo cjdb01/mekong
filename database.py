@@ -3,8 +3,8 @@ import re
 
 def regexp(expr, item):
     expr = re.escape(expr)
-    reg = re.compile(expr)
-    return reg.search(item) is not None
+    reg = re.compile(expr, re.IGNORECASE)
+    return reg.search(item, re.IGNORECASE) is not None
     
 def sanitise(expr):
     return re.escape(expr)
