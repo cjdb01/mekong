@@ -109,19 +109,7 @@ def create_account(user):
                     
                     confirmation = hash.hexdigest()
                     
-                    if dbase.send_mail(user["email"], "Mekong.com.au: Account activation", """
-Dear %s %s,
-
-This email is to confirm that you have requested an account with mekong.com.au.
-If you created the account, please click on the following link http://www.cse.unsw.edu.au/~chrisdb/%s.
-If you did not create the account, please send an email to webmaster@mekong.com.au to rectify the issue.
-
-Kind regards,
-
-Mekong staff
-""" % (user["firstname"], user["lastname"], confirmation)):
-                        error = "There was a problem sending the confirmation email to %s. Please try again shortly." % (user["email"])
-                        return False
+                    dbase.send_mail(user["email"], "Mekong.com.au: Account activation", "Dear %s %s,\n\nThis email is to confirm that you have requested an account with mekong.com.au.\n\nIf you created the account, please click on the following link http://www.cse.unsw.edu.au/~chrisdb/%s.\n\nIf you did not create the account, please send an email to webmaster@mekong.com.au to rectify the issue.\n\nKind regards,\n\nMekong staff" % (user["firstname"], user["lastname"], confirmation))
                     
                     cursor.execute("INSERT INTO Users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [user["username"], pwd, user["firstname"], user["lastname"],\
                                             user["address"], user["suburb"], user["state"], user["postcode"], user["dob"], user["email"], user["phone"], user["sex"], confirmation, "", ""])
