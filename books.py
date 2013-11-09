@@ -156,6 +156,10 @@ def present_books(criteria, category, order, asc, account):
         print "No items match your search."
     
     for book in booklist:
+        if len(book["productdescription"]) > 30:
+            description = ' '.join(book["productdescription"].split(' ')[:30]) + "..."
+        else:
+            description = book["productdescription"]
         print """
                         <div class="media">
                           <a class="pull-left" href="#%s" data-toggle="modal">
@@ -188,7 +192,7 @@ def present_books(criteria, category, order, asc, account):
                         </div>
                         
                         
-""" % (book["isbn"], book["mediumimageurl"], book["isbn"], book["title"], book["price"], book["authors"], book["publisher"], book["productdescription"])
+""" % (book["isbn"], book["mediumimageurl"], book["isbn"], book["title"], book["price"], book["authors"], book["publisher"], description)
         if account:
             print """
                         <div class="media">
