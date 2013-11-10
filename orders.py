@@ -64,7 +64,7 @@ def retrieve_orders(account):
 </div>
 """ % (book["title"], book["authors"], book["publisher"], isbn, book["price"], qty)
             str = """
-div class="panel-group" id="accordion">
+<div class="panel-group" id="accordion">
   <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
