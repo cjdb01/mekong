@@ -85,7 +85,7 @@ def print_checkout(account):
 
   <button type="submit" class="btn btn-success">Submit order</button>
   </form>
-""" % (account["firstname"], account["lastname"], account["address"], account["suburb"], account["state"], account["postcode"])
+""" % (account["firstname"], account["lastname"], account["address"], account["suburb"], account["state"], str(account["postcode"]))
 
 def execute_order(account, month, year, credit_card, postage):
     global error
