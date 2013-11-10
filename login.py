@@ -215,7 +215,7 @@ def print_forgot_password():
   <p>We've all forgotten our passwords at one point. Don't worry, just enter your username and e-mail and we'll be able to recover it for you.</p>
 </div>
 
-<form class="form-group" action="mekong.cgi?forgot-password-sent" method="post">
+<form class="form-group" action="mekong.cgi?page=forgot-password-sent" method="post">
   <div class="control-group">
     <label for="username">
       Username
