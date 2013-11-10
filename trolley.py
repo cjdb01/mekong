@@ -254,7 +254,7 @@ def present_trolley(username):
         <h3 class="media-heading">$%.2f</h3>
       </div>
       </br>
-      <div class="col-md-8">
+      <div class="col-md-7">
         <strong>%s</strong>
       </div>
       <div class="col-md-3" align="right">
@@ -292,8 +292,9 @@ def present_trolley(username):
             
             str += product_description(book, item["quantity"])
     str += """
-<div class="col-md-8">
-  Total price: $%.2f
+<div class="col-md-8"></div>
+<div class="col-md-2">
+  <h4>Total price: $%.2f</h4>
 </div>
 """ % total_basket(username)
     return str
