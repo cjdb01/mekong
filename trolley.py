@@ -56,8 +56,7 @@ def set_basket(username, isbn, quantity):
        
         if book:
             cursor.execute("UPDATE Baskets SET quantity = ? WHERE username = ? AND isbn = ?;", [quantity, username, isbn])
-            if quantity <= 0:
-                cursor.execute("DELETE FROM Baskets WHERE quantity <= 0;")
+            cursor.execute("DELETE FROM Baskets WHERE quantity <= 0;")
         else:
             if quantity > 0:
                 cursor.execute("INSERT INTO Baskets VALUES(?, ?, ?);", [username, isbn, quantity])
