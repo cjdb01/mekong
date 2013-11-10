@@ -138,8 +138,6 @@ def create_account(user):
     
 def change_password(username, current_password, new_password):
     global error
-    hash = hashlib.sha512()
-    hash.update(current_password)
     
     db = dbase.db_init(login_db)
     with db:
@@ -147,17 +145,21 @@ def change_password(username, current_password, new_password):
         cursor.execute("SELECT * FROM Users")
         
         user = cursor.fetchone()
-        if user["password"] == hash.hexdigest() and legal_password(new_password, user["username"], user["firstname"], user["lastname"]):
-            hash = hashlib.sha512()
-            hash.update(new_password)
             
-            if hash.hexdigest() != user["password"]:
-                cursor.execute("UPDATE Users SET password = ? WHERE username = ? AND password = ?;", [hash.hexdigest(), username, user["password"]])
-                error = ""
-                return True
-            else:
-                error = "Password update error: new password cannot match old password."
-        elif user["password"] != hash.hexdigest():
+        hash = hashlib.sha512()
+        hash.update(current_password)
+        if user["password"] == hash.hexdigest():
+            if legal_password(new_password, user["username"], user["firstname"], user["lastname"]):
+                hash = hashlib.sha512()
+                hash.update(new_password)
+            
+                if hash.hexdigest() != user["password"]:
+                    cursor.execute("UPDATE Users SET password = ? WHERE username = ? AND password = ?;", [hash.hexdigest(), username, user["password"]])
+                    error = ""
+                    return True
+                else:
+                    error = "Password update error: new password cannot match old password."
+        else:
             error = "Password update error: incorrect password. %s %s" % (hash.hexdigest(), user["password"])
                 
     return False
