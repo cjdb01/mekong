@@ -4,6 +4,7 @@ import re
 
 books_db = 'data/main.db'
 
+# Checks if an ISBN is legal or not
 def legal_isbn(isbn):
     global error
     
@@ -13,6 +14,7 @@ def legal_isbn(isbn):
     else:
         return good()
 
+# The backbone of the search queries
 def search_books(criteria, category, order, asc):
     db = dbase.db_init(books_db)
     
@@ -25,7 +27,8 @@ def search_books(criteria, category, order, asc):
 
         booklist = cursor.fetchall()
     return booklist
-    
+
+# Shows the full product description
 def product_description(criteria, category, order, asc, account, book):
     str = """
 <div id="%s" class="modal fade" tabindex="-1" style="display: none; min-width: 80%%; left: 23%%; right: 30%%;">
@@ -141,7 +144,7 @@ def product_description(criteria, category, order, asc, account, book):
   <input type="hidden" name="category" value="%s">
   <input type="hidden" name="order" value="%s">
   <input type="hidden" name="asc" value="%s">
-  <button type="submit" class="btn btn-success" name="qty" value="1">Add to trolley</button>
+  <button type="submit" class="btn btn-success" name="qty" value="1" maxlen="4">Add to trolley</button>
 """ % (book["isbn"], criteria, category, order, asc)
     str += """
     </form>
@@ -152,7 +155,9 @@ def product_description(criteria, category, order, asc, account, book):
 """
     return str
     
+# Prints the books that need to be found
 def present_books(criteria, category, order, asc, account, firstlook, page):
+    # Are we making a search or just presenting some books to make it look nice?
     if not criteria and page == "search":
         print "No items match your search"
         return;
@@ -229,7 +234,7 @@ def present_books(criteria, category, order, asc, account, firstlook, page):
     for book in booklist:
         print product_description(criteria, category, order, asc, account, book)
         
-        
+# Takes 10 books and presents them if there's nothing else to show
 def first_look():
     db = dbase.db_init(books_db)
     random_books = []

@@ -5,6 +5,7 @@ order_db = "data/main.db"
 
 error = ""
 
+# Tells if the user has orders or not
 def have_orders(username):
     db = dbase.db_init(order_db)
     
@@ -20,6 +21,7 @@ def have_orders(username):
         else:
             return True
 
+# Retrieves an order
 def retrieve_orders(account):
     db = dbase.db_init(order_db)
     

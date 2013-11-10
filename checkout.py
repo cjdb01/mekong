@@ -8,6 +8,7 @@ error = ""
 
 checkout_db = "data/main.db"
 
+# Prints the checkout form
 def print_checkout(account):
     return """
 <form action="mekong.cgi?page=order-submitted" method="post">
@@ -89,6 +90,7 @@ def print_checkout(account):
   </form>
 """ % (account["firstname"], account["lastname"], account["address"], account["suburb"], account["state"], account["postcode"])
 
+# Goes to checkout
 def execute_order(account, month, year, credit_card, postage):
     global error
     if year == date.today().year and month < date.today().month:

@@ -10,6 +10,7 @@ login_db = "data/main.db"
 error = ""
 
 def send_mail(destination, subject, body):
+    # Original code from http://effbot.org/pyfaq/how-do-i-send-mail-from-a-python-script.htm
     message = """\
 From: donotreply@mekong.com.au
 To: %s
@@ -27,7 +28,7 @@ Subject: %s
     else:
         return True
     
-
+# Checks if the username is allowed or not
 def legal_username(username):
     global error
 
@@ -43,7 +44,8 @@ def legal_username(username):
         error = ""
         return True
     return False
-    
+
+# Checks if the username is unique
 def unique_username(username):
     db = dbase.db_init(login_db)
     rows = None
@@ -54,7 +56,8 @@ def unique_username(username):
         rows = cursor.fetchone()
         
     return rows is None
-    
+
+# Checks if the email is unique    
 def unique_email(email):
     db = dbase.db_init(login_db)
     rows = None
@@ -64,7 +67,8 @@ def unique_email(email):
         
         rows = cursor.fetchone()
     return rows is None
-    
+
+# Checks if the password is legal
 def legal_password(password, username, first_name, last_name):
     global error
     length = len(password)
@@ -87,7 +91,8 @@ def legal_password(password, username, first_name, last_name):
         error = ""
         return True
     return False
-    
+
+# Tries to log the user in
 def authenticate_user(username, password):
     global error
     error = "Authentication error: "
@@ -117,7 +122,8 @@ def authenticate_user(username, password):
     else:
         error += "incorrect username or password."
     return None
-    
+
+# Creates an account for a user
 def create_account(user):
     global error
     if legal_username(user["username"]):
@@ -152,6 +158,7 @@ def create_account(user):
                     return True
     return False
     
+# Changes passwords for a user
 def change_password_backend(username, current_password, new_password):
     global error
     
@@ -178,6 +185,7 @@ def change_password_backend(username, current_password, new_password):
                 
     return False
     
+# Tries to confirm the account for a user (email link supplied)
 def confirm_account(link):
     global error
     
@@ -198,6 +206,7 @@ If you haven't confirmed your account yet, please ensure that you copied the URL
 """
             return False
 
+# Sends out an email to the user who has forgotten their password
 def reset_password_request(username, email):
     global error
     
@@ -226,7 +235,8 @@ def reset_password_request(username, email):
         else:
             error = "Could not find username '%s'" % (username)
         return False
-        
+
+# Resets the password (actual resetting)
 def reset_password(link, password):
     global error
     
@@ -246,7 +256,8 @@ def reset_password(link, password):
           return False
     error += '<br/><a href="mekong.cgi?page=reset-password&link=%s">Click here</a> to try again' % (link)
     return False
-
+    
+# Form for resetting password
 def reset_password_validate(link):
     global error
     
@@ -275,7 +286,7 @@ def reset_password_validate(link):
       New password
     </label>
     <div class="controls">
-      <input name="password" class="form-control" type="password" required />
+      <input name="password" class="form-control" type="password" maxlen="64" required />
       <p class="help-block"></p>
     </div>
   </div>
@@ -283,7 +294,7 @@ def reset_password_validate(link):
     <label for="email">
       Confirm new password
     </label>
-    <input name="confirm-password" class="form-control" type="password" required />
+    <input name="confirm-password" class="form-control" type="password" maxlen="64" required />
   </div>
   <div class="controls">
     <input type="hidden" name="userid" value="%s" />
@@ -300,7 +311,7 @@ def reset_password_validate(link):
             return False
     return False
     
-            
+# Prints out the initial forgot password form
 def print_forgot_password():
     print """
 <div class="bs-callout bs-callout-info">
@@ -314,7 +325,7 @@ def print_forgot_password():
       Username
     </label>
     <div class="controls">
-      <input name="username" class="form-control" type="text" required />
+      <input name="username" class="form-control" type="text" maxlen="8" required />
       <p class="help-block"></p>
     </div>
   </div>
@@ -322,7 +333,7 @@ def print_forgot_password():
     <label for="email">
       Email
     </label>
-    <input name="email" class="form-control" type="email" placeholder="Enter e-mail" required />
+    <input name="email" class="form-control" type="email" placeholder="Enter e-mail" maxlen="64" required />
   </div>
   <div class="controls">
     <button type="submit" class="btn btn-info" name="reset-password">Email me</button>

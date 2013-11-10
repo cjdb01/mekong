@@ -5,6 +5,7 @@ import books
 
 basket_db = "data/main.db"
 
+# Reads what's in the basket
 def read_basket(username, order, asc):
     db = dbase.db_init(basket_db)
     rows = None
@@ -17,7 +18,7 @@ def read_basket(username, order, asc):
         rows = cursor.fetchall()
     return rows
     
-
+# Deletes an entry from basket
 def delete_basket(username, isbn, quantity):
     db = dbase.db_init(basket_db)
     
@@ -32,7 +33,8 @@ def delete_basket(username, isbn, quantity):
                 cursor.execute("UPDATE Baskets SET quantity = ? WHERE username = ? AND isbn = ?", [new_quantity, username, isbn])
             else:
                 cursor.execute("DELETE FROM Baskets WHERE username = ? AND isbn = ?", [username, isbn])
-        
+                
+# Adds an item to the basket
 def add_basket(username, isbn, quantity):
     db = dbase.db_init(basket_db)
     
@@ -46,6 +48,7 @@ def add_basket(username, isbn, quantity):
         else:
             cursor.execute("INSERT INTO Baskets VALUES(?, ?, ?);", [username, isbn, quantity])
             
+# Sets an item to a particular count in the basket
 def set_basket(username, isbn, quantity):
     db = dbase.db_init(basket_db)
     
@@ -60,7 +63,8 @@ def set_basket(username, isbn, quantity):
         else:
             if quantity > 0:
                 cursor.execute("INSERT INTO Baskets VALUES(?, ?, ?);", [username, isbn, quantity])
-    
+
+# Counts the number of items in the basket
 def count_basket(username):
     items = 0
     
@@ -76,6 +80,7 @@ def count_basket(username):
             
     return items
     
+# Total price of basket    
 def total_basket(username):
     total_price = 0.00
     
@@ -93,6 +98,7 @@ def total_basket(username):
             
         return total_price
 
+# Returns a product description extremely similar to the books one
 def product_description(book, qty):
     str = """
 <div id="%s" class="modal fade" tabindex="-1" style="display: none; min-width: 80%%; left: 23%%; right: 30%%;">
@@ -217,6 +223,7 @@ def product_description(book, qty):
 """ % (book["isbn"], book["largeimageurl"], book["title"], book["price"], book["authors"], book["publisher"], book["numpages"], book["publication_date"], book["isbn"], book["salesrank"], book["productdescription"], qty, book["isbn"])
     return str
         
+# Provides a string that is to be printed for trolley display
 def present_trolley(username):
     str = ""
     db = dbase.db_init(basket_db)
@@ -265,7 +272,7 @@ def present_trolley(username):
       <div class="col-md-7"></div>
       <div class="col-md-1"><strong>Quantity:</strong></div>
       <div class="col-md-1">
-        <input type="text" class="form-control" name="qty" placeholder="%d" style="width: 60px;" pattern="\d*" />
+        <input type="text" class="form-control" name="qty" placeholder="%d" style="width: 60px;" pattern="\d*" maxlen="4" />
         <input type="hidden" name="isbn" value="%s" />
       </div>
       <div class="col-md-1">

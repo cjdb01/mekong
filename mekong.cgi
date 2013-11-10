@@ -14,11 +14,17 @@ import login
 import orders
 import trolley
 
+# Credit to:
+## HTML/CSS/JavaScript ##
+# Twitter Bootstrap (http://getbootstrap.com/)
+# Bootstrap Modal (https://github.com/jschr/bootstrap-modal)
+
+
 
 account = {}
 
-##################################################################################################################################################
-# Render code
+
+
 
 def alert_message(type, strong, normal):
         print """
@@ -49,8 +55,8 @@ def login_details():
                   <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px; width: 250px;" aria-labelledby="drop3" role="menu">
                     <form action="mekong.cgi?page=login" method="post">
                       <label for="login">Login</label>
-                      <input type="text" name="username" class="form-control" placeholder="Enter username" style="margin-bottom: 5px;"></input>
-                      <input type="password" name="password" class="form-control" placeholder="Enter password" style="margin-bottom: 10px;"></input>
+                      <input type="text" name="username" class="form-control" placeholder="Enter username" style="margin-bottom: 5px;" maxlen="8"></input>
+                      <input type="password" name="password" class="form-control" placeholder="Enter password" style="margin-bottom: 10px;" maxlen="64"></input>
                       <div class="checkbox">
                         <label>
                           <input name="remember-me" type="checkbox"> Remember me
@@ -91,43 +97,43 @@ def print_registration():
                           <label for="username-reg">
                             Username
                           </label>
-                          <input name="username-reg" class="form-control" type="text" placeholder="Enter username" required />
+                          <input name="username-reg" class="form-control" type="text" placeholder="Enter username" maxlen="8" required />
                         </div>
                         <div class="form-group">
                           <label for="password-reg">
                             Password
                           </label>
-                          <input name="password-reg" class="form-control" type="password" placeholder="Enter password" required />
+                          <input name="password-reg" class="form-control" type="password" placeholder="Enter password" maxlen="64" required />
                         </div>
                         <div class="form-group">
                           <label for="confirmpass-reg">
                             Confirm password
                           </label>
-                          <input name="confirmpass-reg" class="form-control" type="password" placeholder="Enter password" required />
+                          <input name="confirmpass-reg" class="form-control" type="password" placeholder="Enter password" maxlen="64" required />
                         </div>
                         <div class="form-group">
                           <label for="email-reg">
                             Email
                           </label>
-                          <input name="email-reg" class="form-control" type="email" placeholder="Enter email" required />
+                          <input name="email-reg" class="form-control" type="email" placeholder="Enter email" maxlen="64" required />
                         </div>
                         <div class="form-group">
                           <label for="firstname-reg">
                             First name
                           </label>
-                          <input name="firstname-reg" class="form-control" type="text" placeholder="e.g. John" required />
+                          <input name="firstname-reg" class="form-control" type="text" placeholder="e.g. John" maxlen="120" required />
                         </div>
                         <div class="form-group">
                           <label for="lastname-reg">
                             Last name
                           </label>
-                          <input name="lastname-reg" class="form-control" type="text" placeholder="e.g. Smith" required />
+                          <input name="lastname-reg" class="form-control" type="text" placeholder="e.g. Smith" maxlen="120" required />
                         </div>
                         <div class="form-group">
                           <label for="address-reg">
                             Street address
                           </label>
-                          <input name="address-reg" class="form-control" type="text" placeholder="e.g. 1 George Street" required />
+                          <input name="address-reg" class="form-control" type="text" placeholder="e.g. 1 George Street" maxlen="120" required />
                         </div>
                         <div class="form-group">
                           <div class="row">
@@ -135,7 +141,7 @@ def print_registration():
                               <label for="suburb-reg">
                                 Suburb
                               </label>
-                              <input name="suburb-reg" class="form-control" type="text" placeholder="e.g. Sydney" style="width: 200px" required />
+                              <input name="suburb-reg" class="form-control" type="text" placeholder="e.g. Sydney" style="width: 200px" maxlen="120" required />
                             </div>
                             <div class="col-md-2">
                               <label for="state-reg">
@@ -164,7 +170,7 @@ def print_registration():
                           <label for="phone-reg">
                             Contact phone
                           </label>
-                          <input name="phone-reg" class="form-control" type="text" placeholder="e.g. 0012345678" required /></input>
+                          <input name="phone-reg" class="form-control" type="text" placeholder="e.g. 00 1234 5678" pattern="\d\d \d\d\d\d \d\d\d\d" required /></input>
                         </div>
                         <div class="form-group">
                           <div class="row">
@@ -189,7 +195,7 @@ def print_registration():
                               <label for="suburb-reg">
                                 Date of birth
                               </label>
-                              <input name="dob-reg" class="form-control" type="text" placeholder="DD/MM/YYYY" style="width: 200px" maxlength="10" required />
+                              <input name="dob-reg" class="form-control" type="text" placeholder="DD/MM/YYYY" style="width: 200px" pattern="\d\d/\d\d/\d\d\d\d" required />
                             </div>
                           </div>
                         </div>
@@ -356,12 +362,16 @@ def print_header(title, form):
     elif form.getvalue("page") == "reset-password" and form.getvalue("link"):
         if not login.reset_password_validate(form.getvalue("link")):
             alert_message("danger", "A problem occurred", login.error)
+            
+    # Check if an order has been submitted while the user is logged in
     elif form.getvalue("page") == "order-submitted" and account:
         if form.getvalue("credit-card") and form.getvalue("month") and form.getvalue("year") and form.getvalue("postage"):
             if checkout.execute_order(account, form.getvalue("month"), form.getvalue("year"), form.getvalue("credit-card"), form.getvalue("postage")):
                 alert_message("success", "Order completed!", "We'll process your order as fast as we can.")
             else:
                 alert_message("danger", "A problem occurred", checkout.error)
+                
+    # Check if the user wants to validate their password
     elif form.getvalue("page") == "validate-password":
         if form.getvalue("password") == form.getvalue("confirm-password"):
             if login.reset_password(form.getvalue("userid"), form.getvalue("password")):
@@ -370,6 +380,8 @@ def print_header(title, form):
                 alert_message("danger", "A problem occurred", login.error)
         else:
             alert_message("danger", "Your passwords do not match.", '<a href="mekong.cgi?page=reset-password&link=%s">Click here</a> to try again' % (form.getvalue("userid")))
+            
+    # Show the user's order history
     elif form.getvalue("page") == "myhistory" and account:
         if not orders.have_orders(account["username"]):
             alert_message("danger", "A problem occurred", orders.error)
