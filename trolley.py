@@ -69,7 +69,7 @@ def count_basket(username):
     db = dbase.db_init(basket_db)
     with db:
         cursor = db.cursor()
-        cursor.execute("SELECT * FROM Baskets WHERE username = ?", [username])
+        cursor.execute("SELECT * FROM Baskets WHERE username = ?;", [username])
         
         trolley = cursor.fetchall()
         
@@ -84,18 +84,212 @@ def total_basket(username):
     db = dbase.db_init(basket_db)
     with db:
         cursor = db.cursor()
-        cursor.execute("SELECT * FROM Baskets WHERE username = ?", [username])
+        cursor.execute("SELECT * FROM Baskets WHERE username = ?;", [username])
         
         trolley = cursor.fetchall()
         
         for item in trolley:
-            cursor.execute("SELECT price FROM Books WHERE isbn = ?", [item["isbn"]])
+            cursor.execute("SELECT price FROM Books WHERE isbn = ?;", [item["isbn"]])
             book = cursor.fetchone()
             total_price += book["price"]
             
         return total_price
+
+def product_description(criteria, category, order, asc, account, book):
+    str = """
+<div id="%s" class="modal fade" tabindex="-1" style="display: none; min-width: 80%%; left: 23%%; right: 30%%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Product description</h4>
+      </div>
+      <div class="modal-body">
+        <div class="panel-body">
+          <div class="media">
+              <a class="pull-left" href="#">
+                
+                <img class="media-object alt="No picture to display" src="%s" style="max-width:500px;">
+              </a>
+              <div class="media-body">
+                <div class="row">
+                  <div class="col-md-10">
+                    <h3 class="media-heading">%s</h3>
+                  </div>
+                  <div class="col-md-1" align="right">
+                    <h3 class="media-heading">$%.2f</h3>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-10">
+                    <strong>Authors</strong>
+                  </div>
+                  <div class="col-md-2">
+                    <strong>Publisher</strong>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-10">
+                    %s
+                  </div>
+                  <div class="col-md-2">%s</div>
+                </div>
+                <br/>
+                <div class="row">
+                  <div class="col-md-10">
+                    <strong>
+                      Pages
+                    </strong>
+                  </div>
+                  <div class="col-md-2">
+                    <strong>
+                      Publication date
+                    </strong>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-10">
+                    %d
+                  </div>
+                  <div class="col-md-2">
+                    %s
+                  </div>
+                </div>
+                <br/>
+                <div class="row">
+                  <div class="col-md-10">
+                    <strong>
+                      ISBN
+                    </strong>
+                  </div>
+                  <div class="col-md-2">
+                    <strong>
+                      Current rank
+                    </strong>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-10">
+                    %s
+                  </div>
+                  <div class="col-md-2">
+                    %s
+                  </div>
+                </div>
+                <br/>
+                <div class="row">
+                  <div class="col-md-10">
+                    <strong>
+                      Product description
+                    </strong>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-10">
+                    %s
+                  </div>
+                </div>
+              <br/>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <form action="mekong.cgi?page=search" method="post"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+""" % (book["isbn"], book["largeimageurl"], book["title"], book["price"], book["authors"], book["publisher"], book["numpages"], book["publication_date"], book["isbn"], book["salesrank"], book["productdescription"])
+    if account:
+        str += """
+  <input type="hidden" name="isbn" value="%s">
+  <div class="md-col-1">
+    <button type="submit" class="btn btn-success" name="qty" value="1">Add to trolley</button>
+  </div>
+  <div>
+    <button type="submit" class="btn btn-danger" name="qty" value="0">Remove from trolley</button>
+  </div>
+""" % (book["isbn"])
+    str += """
+    </form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div>
+</div>
+"""
+    return str
         
-def quick_trolley(username):
-    basket = read_basket(username, "price", "DESC")
-    for isbn in basket:
-        books.quick_trolley_books(isbn["isbn"], isbn["quantity"])
+def present_trolley(username):
+    str = ""
+    db = dbase.db_init(basket_db)
+    with db:
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM Baskets WHERE username = ?;", [username])
+        
+        trolley = cursor.fetchall()
+        
+        for item in trolley:
+            cursor.execute("SELECT * FROM Books WHERE isbn = ?;", [item["isbn"]])
+            
+            book = cursor.fetchone()
+            
+            if len(book["productdescription"]) > 30:
+                description = ' '.join(book["productdescription"].split(' ')[:30]) + "..."
+            else:
+                description = book["productdescription"]
+            str += """
+<div class="media-body">
+    <div class="row">
+      <div class="col-md-2">
+        <center>
+          <a href="#%s">
+            <img class="media-object alt="No picture to display" src="%s">
+          </a>
+        </center>
+      </div>
+      <div class="col-md-8">
+        <a href="#%s" data-toggle="modal">
+          <h3 class="media-heading">%s</h3>
+        </a>
+      </div>
+      <div class="col-md-2" align="right">
+        <h3 class="media-heading">$%.2f</h3>
+      </div>
+      </br>
+      <div class="col-md-8">
+        <strong>%s</strong>
+      </div>
+      <div class="col-md-2" align="right">
+        <strong>Published by %s</strong>
+      </div>
+      <br/>
+      <div class="col-md-10">
+      %s
+      </div>
+    </div>
+  </div>
+""" % (book["isbn"], book["mediumimageurl"], book["isbn"], book["title"], book["price"], book["authors"], book["publisher"], description)
+            if account:
+                str += """
+<div class="media">
+  <form action="mekong.cgi?page=trolley" method="post">
+    <div class="row">
+      <div class="col-md-8"></div>
+      <div class="col-md-1">
+        <input type="text" class="form-control" name="qty" placeholder="1" style="width: 60px;">
+        <input type="hidden" name="isbn" value="%s">
+      </div>
+      <div class="col-md-1">
+        <button type="submit" class="btn btn-success" name="isbn-to-add">Update trolley</button>
+      </div>
+      <div class="col-md-1">
+        <button type="submit" class="btn btn-danger" name="remove" onclick="document.getElementsByName('qty')[0].value = 0;">Remove from trolley</button>
+      </div>
+    </div>
+  </form>
+</div>
+""" % (book["isbn"])
+            str += "<hr/>"
+            
+            str += product_description(book)
+    return str

@@ -256,7 +256,7 @@ def print_header(title, form):
         <title>%s</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Bootstrap -->
-        <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">            
+        <link href="css/bootstrap.css" rel="stylesheet" media="screen">            
         <link href="css/bootstrap-modal.css" rel="stylesheet" media="screen">
         <link href="css/bootstrap-modal-bs3patch.css" rel="stylesheet" media="screen">
 
@@ -309,6 +309,9 @@ def print_header(title, form):
     if form.getvalue("qty") and int(form.getvalue("qty")) > 0 and account:
         trolley.set_basket(account["username"], form.getvalue("isbn"), form.getvalue("qty"))
         alert_message("success", "", "Item added to cart")
+    elif form.getvalue("qty") and int(form.getvalue("qty")) == 0 and account:
+        trolley.set_basket(account["username"], form.getvalue("isbn"), form.getvalue("qty"))
+        alert_message("success", "", "Item removed from cart")
         
     if form.getvalue("page") == "application-submitted":
         if form.getvalue("password-reg") == form.getvalue("confirmpass-reg"):
@@ -381,6 +384,9 @@ def print_body_search(form):
         print_registration()
     elif form.getvalue("page") == "forgot-password":
         login.print_forgot_password()
+    elif form.getvalue("page") == "trolley":
+        str = trolley.present_trolley(account["username"])
+        print str
         
     print """
                 </div>
