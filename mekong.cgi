@@ -97,43 +97,43 @@ def print_registration():
                           <label for="username-reg">
                             Username
                           </label>
-                          <input name="username-reg" class="form-control" type="text" placeholder="Enter username"></input>
+                          <input name="username-reg" class="form-control" type="text" placeholder="Enter username" required />
                         </div>
                         <div class="form-group">
                           <label for="password-reg">
                             Password
                           </label>
-                          <input name="password-reg" class="form-control" type="password" placeholder="Enter password"></input>
+                          <input name="password-reg" class="form-control" type="password" placeholder="Enter password" required />
                         </div>
                         <div class="form-group">
                           <label for="confirmpass-reg">
                             Confirm password
                           </label>
-                          <input name="confirmpass-reg" class="form-control" type="password" placeholder="Enter password" ></input>
+                          <input name="confirmpass-reg" class="form-control" type="password" placeholder="Enter password" required />
                         </div>
                         <div class="form-group">
                           <label for="email-reg">
                             Email
                           </label>
-                          <input name="email-reg" class="form-control" type="email" placeholder="Enter email"></input>
+                          <input name="email-reg" class="form-control" type="email" placeholder="Enter email" required />
                         </div>
                         <div class="form-group">
                           <label for="firstname-reg">
                             First name
                           </label>
-                          <input name="firstname-reg" class="form-control" type="text" placeholder="e.g. John"></input>
+                          <input name="firstname-reg" class="form-control" type="text" placeholder="e.g. John" required />
                         </div>
                         <div class="form-group">
                           <label for="lastname-reg">
                             Last name
                           </label>
-                          <input name="lastname-reg" class="form-control" type="text" placeholder="e.g. Smith"></input>
+                          <input name="lastname-reg" class="form-control" type="text" placeholder="e.g. Smith" required />
                         </div>
                         <div class="form-group">
                           <label for="address-reg">
                             Street address
                           </label>
-                          <input name="address-reg" class="form-control" type="text" placeholder="e.g. 1 George Street"></input>
+                          <input name="address-reg" class="form-control" type="text" placeholder="e.g. 1 George Street" required />
                         </div>
                         <div class="form-group">
                           <div class="row">
@@ -141,7 +141,7 @@ def print_registration():
                               <label for="suburb-reg">
                                 Suburb
                               </label>
-                              <input name="suburb-reg" class="form-control" type="text" placeholder="e.g. Sydney" style="width: 200px"></input>
+                              <input name="suburb-reg" class="form-control" type="text" placeholder="e.g. Sydney" style="width: 200px" required />
                             </div>
                             <div class="col-md-2">
                               <label for="state-reg">
@@ -162,7 +162,7 @@ def print_registration():
                               <label for="postcode-reg">
                                 Postcode
                               </label>
-                              <input name="postcode-reg" class="form-control" type="number" placeholder="e.g. 2000" style="width: 200px" maxlength="4"></input>
+                              <input name="postcode-reg" class="form-control" type="number" placeholder="e.g. 2000" style="width: 200px" maxlength="4" required />
                             </div>
                           </div>
                         </div>
@@ -170,7 +170,7 @@ def print_registration():
                           <label for="phone-reg">
                             Contact phone
                           </label>
-                          <input name="phone-reg" class="form-control" type="text" placeholder="e.g. 0012345678"></input>
+                          <input name="phone-reg" class="form-control" type="text" placeholder="e.g. 0012345678" required /></input>
                         </div>
                         <div class="form-group">
                           <div class="row">
@@ -195,13 +195,13 @@ def print_registration():
                               <label for="suburb-reg">
                                 Date of birth
                               </label>
-                              <input name="dob-reg" class="form-control" type="text" placeholder="DD/MM/YYYY" style="width: 200px" maxlength="10"></input>
+                              <input name="dob-reg" class="form-control" type="text" placeholder="DD/MM/YYYY" style="width: 200px" maxlength="10" required />
                             </div>
                           </div>
                         </div>
                         <div class="form-group">
                           <label class="checkbox-inline">
-                            <input type="checkbox" id="certificate"> By registering I understand my details may be used for in-house marketing purposes
+                            <input type="checkbox" id="certificate" required /> By registering I understand my details may be used for in-house marketing purposes
                           </label>
                         </div>
                         <div class="form-group">

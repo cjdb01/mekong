@@ -44,7 +44,7 @@ def add_basket(username, isbn, quantity):
         if book:
             cursor.execute("UPDATE Baskets SET quantity = ? WHERE username = ? AND isbn = ?", [book["quantity"] + quantity, username, isbn])
         else:
-            cursor.exectue("INSERT INTO Baskets VALUES(?, ?, ?)", [username, isbn, quantity])
+            cursor.execute("INSERT INTO Baskets VALUES(?, ?, ?);", [username, isbn, quantity])
             
 def set_basket(username, isbn, quantity):
     db = dbase.db_init(basket_db)
