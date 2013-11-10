@@ -102,6 +102,7 @@ def execute_order(account, month, year, credit_card, postage):
             isbn = ""
             hash = hashlib.sha512(credit_card)
             last_four = credit_card[-4:]
+            now = datetime.now()
             for b in books:
                isbn += "%s;" % (b["isbn"])
             
