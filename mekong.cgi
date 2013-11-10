@@ -405,7 +405,7 @@ def print_body_search(form):
                 <div class="panel-body">
 """
     if form.getvalue("page") == "search":
-        books.present_books(form.getvalue("criteria"), form.getvalue("category"), form.getvalue("order"), form.getvalue("asc"), account)
+        books.present_books(form.getvalue("criteria"), form.getvalue("category"), form.getvalue("order"), form.getvalue("asc"), account, False)
     elif form.getvalue("page") == "myhistory" and orders.have_orders(account["username"]):
         orders.retrieve_orders(account)
     elif form.getvalue("page") == "create-account":
@@ -424,6 +424,8 @@ def print_body_search(form):
         else:
             str = "You must be signed in to check out."
         print str
+    else:
+        books.present_books("","","","",account, True)
     print """
                 </div>
               </div>

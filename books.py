@@ -152,8 +152,11 @@ def product_description(criteria, category, order, asc, account, book):
 """
     return str
     
-def present_books(criteria, category, order, asc, account):
-    booklist = search_books(criteria, category, order, asc)
+def present_books(criteria, category, order, asc, account, firstlook):
+    if not firstlook:
+        booklist = search_books(criteria, category, order, asc)
+    else:
+        booklist = first_look()
     
     if not booklist:
         print "No items match your search."
@@ -222,3 +225,18 @@ def present_books(criteria, category, order, asc, account):
 
     for book in booklist:
         print product_description(criteria, category, order, asc, account, book)
+        
+        
+def first_look():
+    db = dbase.db_init(books_db)
+    random_books = []
+    with db:
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM Books WHERE salesrank <= 10 ORDER BY salesrank ASC")
+       
+        books = cursor.fetchall()
+        
+        for i in range(1, 10):
+            random_books.append(books[i])
+            
+    return random_books
