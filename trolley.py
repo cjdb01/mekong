@@ -296,5 +296,12 @@ def present_trolley(username):
 <div class="col-md-2">
   <h4>Total price: $%.2f</h4>
 </div>
+<div class="mod-md-2">
+  <form action="mekong.cgi?page=checkout? method="post">
+    <button type="submit" class="btn btn-info">
+      Proceed to checkout
+    </button>
+  </form>
+</div>
 """ % total_basket(username)
     return str
