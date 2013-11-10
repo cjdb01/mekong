@@ -297,7 +297,7 @@ def present_trolley(username):
   <h4>Total price: $%.2f</h4>
 </div>
 <div class="mod-md-2">
-  <form action="mekong.cgi?page=checkout? method="post">
+  <form action="mekong.cgi?page=checkout" method="post">
     <button type="submit" class="btn btn-info">
       Proceed to checkout
     </button>

@@ -385,8 +385,16 @@ def print_body_search(form):
     elif form.getvalue("page") == "forgot-password":
         login.print_forgot_password()
     elif form.getvalue("page") == "trolley":
-        str = trolley.present_trolley(account["username"])
+        if account:
+            str = trolley.present_trolley(account["username"])
+        else:
+            str = "You must be signed in to view your trolley."
         print str
+    elif form.getvalue("page") == "checkout":
+        if account:
+            print "TODO"
+        else:
+            print "You must be signed in to check out."
         
     print """
                 </div>
