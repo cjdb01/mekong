@@ -264,12 +264,12 @@ def present_trolley(username):
 <div class="media">
   <form action="mekong.cgi?page=trolley" method="post">
     <div class="row">
-      <div class="col-md-8"></div>
+      <div class="col-md-7"></div>
       <div class="col-md-1">
         <input type="text" class="form-control" name="qty" placeholder="1" style="width: 60px;">
         <input type="hidden" name="isbn" value="%s">
       </div>
-      <div class="col-md-2">
+      <div class="col-md-1">
         <button type="submit" class="btn btn-success" name="isbn-to-add">Update trolley</button>
       </div>
       <div class="col-md-1">
