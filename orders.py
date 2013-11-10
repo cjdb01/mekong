@@ -55,7 +55,7 @@ def retrieve_orders(account):
     $%.2f
   </div>
   <div class="col-md-1">
-    %d
+    %s
   </div>
 </div>
 
