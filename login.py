@@ -202,7 +202,7 @@ def reset_password_request(username, email):
             
             cursor.execute("UPDATE Users SET password_reset_link = ?, password_reset_date = ? WHERE username = ?", [hash.hexdigest(), dtime, username])
             
-            if send_email(user["email"], "Mekong.com.au: Reset password request", "Dear %s,\n\nWe have received a request to reset your password.\n\nBefore resetting your password, it is our policy to request that you click the following link, %s.\n\nIf you did not authorise this request, you may choose to ignore this email.\n\nIf you didn't create an account with Mekong, please contact us at webmaster@mekong.com.au immediately. Do not provide personal details in this email." % (user["username"], hash.hexdigest()))
+            if send_email(user["email"], "Mekong.com.au: Reset password request", "Dear %s,\n\nWe have received a request to reset your password.\n\nBefore resetting your password, it is our policy to request that you click the following link, %s.\n\nIf you did not authorise this request, you may choose to ignore this email.\n\nIf you didn't create an account with Mekong, please contact us at webmaster@mekong.com.au immediately. Do not provide personal details in this email." % (user["username"], hash.hexdigest())):
                 return True
         else:
             error = "Could not find username '%s'" % (username)
@@ -215,7 +215,7 @@ def print_forgot_password():
   <p>We've all forgotten our passwords at one point. Don't worry, just enter your username and e-mail and we'll be able to recover it for you.</p>
 </div>
 
-<form class="form-group">
+<form class="form-group" action="mekong.cgi?forgot-password-sent" method="post">
   <div class="control-group">
     <label for="username">
       Username
