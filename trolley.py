@@ -243,7 +243,7 @@ def present_trolley(username):
       </div>
       <div class="col-md-8">
         <a href="#%s" data-toggle="modal">
-          <h3 class="media-heading">%s</h3>
+          <h4 class="media-heading">%s</h4>
         </a>
       </div>
       <div class="col-md-2" align="right">
@@ -257,18 +257,15 @@ def present_trolley(username):
         <strong>Published by %s</strong>
       </div>
       <br/>
-      <div class="col-md-2">
-        <strong>Quantity:</strong> %s
-      </div>
-      <br/>
     </div>
   </div>
 <div class="media">
   <form action="mekong.cgi?page=trolley" method="post">
     <div class="row">
-      <div class="col-md-8"></div>
+      <div class="col-md-7"></div>
+      <div class="col-md-1"><strong>Quantity:</strong></div>
       <div class="col-md-1">
-        <input type="text" class="form-control" name="qty" placeholder="1" style="width: 60px;" />
+        <input type="text" class="form-control" name="qty" placeholder="%d" style="width: 60px;" />
         <input type="hidden" name="isbn" value="%s" />
       </div>
       <div class="col-md-1">
@@ -281,7 +278,7 @@ def present_trolley(username):
   </form>
 </div>
 <hr/>
-""" % (book["isbn"], book["smallimageurl"], book["isbn"], book["title"], book["price"], book["authors"], book["publisher"], item["quantity"], book["isbn"])
+""" % (book["isbn"], book["smallimageurl"], book["isbn"], book["title"], book["price"], book["authors"], book["publisher"], item["quantity"] book["isbn"])
             
             str += product_description(book, item["quantity"])
     str += """
