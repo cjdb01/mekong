@@ -269,11 +269,11 @@ def present_trolley(username):
         <input type="text" class="form-control" name="qty" placeholder="1" style="width: 60px;">
         <input type="hidden" name="isbn" value="%s">
       </div>
-      <div class="col-md-2">
+      <div class="col-md-1">
         <button type="submit" class="btn btn-success" name="isbn-to-add">Update trolley</button>
       </div>
       <div class="col-md-1">
-        <button type="submit" class="btn btn-danger" name="remove" onclick="document.getElementsByName('qty')[0].value = 0;">Remove from trolley</button>
+        <button type="submit" class="btn btn-danger" name="remove" onclick="document.getElementsByName('qty')[0].value = 0;">Remove item</button>
       </div>
     </div>
   </form>
