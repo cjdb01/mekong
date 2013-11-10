@@ -222,7 +222,7 @@ def reset_password(link, password):
         user = cursor.fetchone()
         
         if user:
-            if change_password(user["username"], user["password"], password):
+            if change_password(user["username"], password, user["password"]):
                 cursor.execute("UPDATE Users SET password_reset_link = '', password_reset_date = '' WHERE username = ?;", [user["username"]])
                 return True
         else:
@@ -252,7 +252,7 @@ def reset_password_validate(link):
 </div>
 
                 
-<form class="form-group" action="mekong.cgi?page=password-validate" method="post">
+<form class="form-group" action="mekong.cgi?page=validate-password" method="post">
   <div class="control-group">
     <label for="username">
       New password
