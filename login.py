@@ -24,7 +24,7 @@ Subject: %s
     if status:
         error = "A problem occurred sending the email: %s" % (str(status))
         return False
-    else
+    else:
         return True
     
 
