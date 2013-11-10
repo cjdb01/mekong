@@ -349,7 +349,7 @@ def print_header(title, form):
     elif form.getvalue("page") == "reset-password" and form.getvalue("link"):
         if not login.reset_password_validate(form.getvalue("link")):
             alert_message("danger", "A problem occurred", login.error)
-    elif form.getvalue("page") == "confirm-order" and account:
+    elif form.getvalue("page") == "order-submitted" and account:
         if form.getvalue("credit-card") and form.getvalue("month") and form.getvalue("year") and form.getvalue("postage"):
             if checkout.execute_order(account, form.getvalue("month"), form.getvalue("year"), form.getvalue("credit-card"), form.getvalue("postage")):
                 alert_message("success", "Order completed!", "We'll process your order as fast as we can.")
