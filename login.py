@@ -123,12 +123,12 @@ def create_account(user):
                     hash = hashlib.sha512()
                     hash.update(user["username"])
                     hash.update(user["firstname"])
-                    hash.update(datetime.now())
+                    hash.update(str(datetime.now()))
                     hash.update(os.urandom(20))
                     
                     confirmation = hash.hexdigest()
                     
-                    if not send_mail(user["email"], "Mekong.com.au: Account activation", "Dear %s,\n\nThis email is to confirm that you have requested an account with mekong.com.au.\n\nIf you created the account, please click on the following link http://www.cse.unsw.edu.au/~chrisdb/mekong.cgi?page=confirm-account&link=%s.\n\nIf you did not create the account, please send an email to webmaster@mekong.com.au to rectify the issue.\n\nKind regards,\n\nMekong staff" % (user["firstname"], user["lastname"], confirmation)):
+                    if not send_mail(user["email"], "Mekong.com.au: Account activation", "Dear %s,\n\nThis email is to confirm that you have requested an account with mekong.com.au.\n\nIf you created the account, please click on the following link http://www.cse.unsw.edu.au/~chrisdb/mekong.cgi?page=confirm-account&link=%s.\n\nIf you did not create the account, please send an email to webmaster@mekong.com.au to rectify the issue.\n\nKind regards,\n\nMekong staff" % (user["firstname"], confirmation)):
                         return False
                     
                     cursor.execute("INSERT INTO Users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [user["username"], pwd, user["firstname"], user["lastname"],\
@@ -153,12 +153,14 @@ def change_password(username, current_password, new_password):
             
             if hash.hexdigest() != user["password"]:
                 cursor.execute("UPDATE Users SET password = ? WHERE username = ? AND password = ?;", [hash.hexdigest(), username, user["password"]])
+                error = ""
+                return True
             else:
                 error = "Password update error: new password cannot match old password."
         elif user["password"] != hash.hexdigest():
             error = "Password update error: incorrect password."
                 
-    return error
+    return False
     
 def confirm_account(link):
     global error
@@ -198,7 +200,7 @@ def reset_password_request(username, email):
             dtime = datetime.now()
             hash = hashlib.sha512()
             hash.update(username)
-            hash.update(datetime.now())
+            hash.update(str(datetime.now()))
             hash.update(os.urandom(20))
             
             cursor.execute("UPDATE Users SET password_reset_link = ?, password_reset_date = ? WHERE username = ?;", [hash.hexdigest(), dtime, username])
@@ -221,7 +223,7 @@ def reset_password(link, password):
         
         if user:
             if change_password(user["username"], user["password"], password):
-                cursor.execute("UPDATE Users SET password_reset_link = '', password_reset_date = '' WHERE username = ?;", [password, user["username"]])
+                cursor.execute("UPDATE Users SET password_reset_link = '', password_reset_date = '' WHERE username = ?;", [user["username"]])
                 return True
         else:
           error = "User does not exist."
@@ -240,9 +242,10 @@ def reset_password_validate(link):
         
         if user:
             now = datetime.now()
-            time_difference = now - user["password_reset_date"]
-            if time_difference.total_seconds() < (60 * 60 * 24 * 2): # seconds/minute * minutes/hour * hours/day * max days before timeout
-                print """
+            then = user["password_reset_date"]
+#            time_difference = now - then
+#            if time_difference.total_seconds() < (60 * 60 * 24 * 2): # seconds/minute * minutes/hour * hours/day * max days before timeout
+            print """
 <div class="bs-callout bs-callout-info">
   <h4>Nearly there!</h4>
   <p>Just enter your new password into the boxes below and press the button to reset your password!</p>
@@ -266,15 +269,15 @@ def reset_password_validate(link):
     <input name="confirm-password" class="form-control" type="password" required />
   </div>
   <div class="controls">
-    <input type="hidden name="userid" value="%s"
-    <button type="submit" class="btn btn-info" name="reset-password">Reset my password</button>
+    <input type="hidden" name="userid" value="%s" />
+    <button type="submit" class="btn btn-info">Reset my password</button>
   </div>
 </form>
 """ % (link)
-                return True
-            else:
-                error = "The link timed out. You only have two days to reset your password."
-                return False
+            return True
+#            else:
+#                error = "The link timed out. You only have two days to reset your password."
+#                return False
         else:
             error = "Invalid link"
             return False

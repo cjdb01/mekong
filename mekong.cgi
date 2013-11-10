@@ -348,7 +348,7 @@ def print_header(title, form):
         if form.getvalue("password") == form.getvalue("confirm-password"):
             if login.reset_password(form.getvalue("userid"), form.getvalue("password")):
                 alert_message("success", "Your password has been reset!", "Please proceed to log in.")
-            else
+            else:
                 alert_message("danger", "A problem occurred", login.error)
         else:
             alert_message("danger", "Your passwords do not match.", '<a href="mekong.cgi?%s">Click here</a> to try again' % (form.getvalue("userid")))
