@@ -364,8 +364,9 @@ def print_header(title, form):
                 alert_message("danger", "A problem occurred", login.error)
         else:
             alert_message("danger", "Your passwords do not match.", '<a href="mekong.cgi?page=reset-password&link=%s">Click here</a> to try again' % (form.getvalue("userid")))
-    elif form.getvalue("page") == "myhistory") and not orders.have_orders(account["username"]):
-        alert_message("danger", "A problem occurred", orders.error)
+    elif form.getvalue("page") == "myhistory" and account:
+        if not orders.have_orders(account["username"]):
+            alert_message("danger", "A problem occurred", orders.error)
     
     print """
           </div>

@@ -1,5 +1,6 @@
 import database as dbase
 import hashlib
+import trolley
 from datetime import date
 from datetime import datetime
 
@@ -109,7 +110,7 @@ def execute_order(account, month, year, credit_card, postage):
                    isbn += "%s*%d;" % (b["isbn"], b["quantity"])
                 
                 cursor.execute("INSERT INTO Orders(username, credit_card, expiry, last_four, isbns, date_of_order, postage, total_price) VALUES(?, ?, ?, ?, ?, ?, ?, ?);",\
-                                             [account["username"], hash.hexdigest(), "%s/%s" % (str(month), str(year)), last_four, isbn, now, postage, total_basket(account["username"])])
+                                             [account["username"], hash.hexdigest(), "%s/%s" % (str(month), str(year)), last_four, isbn, now, postage, trolley.total_basket(account["username"])])
                 cursor.execute("DELETE FROM Baskets WHERE username = ?;", account["username"])
                 return True
             else:
