@@ -95,7 +95,7 @@ def total_basket(username):
             
         return total_price
 
-def product_description(criteria, category, order, asc, account, book):
+def product_description(book):
     str = """
 <div id="%s" class="modal fade" tabindex="-1" style="display: none; min-width: 80%%; left: 23%%; right: 30%%;">
     <div class="modal-content">
