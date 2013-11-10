@@ -299,6 +299,7 @@ def print_header(title, form):
           <p>Welcome to</p>
           <h1>Mekong</h1>
         </div>
+        <div id="content" class="container">
 """
     if not account and login.error:
         alert_message("danger", login.error, "")
