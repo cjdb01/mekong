@@ -158,7 +158,7 @@ def change_password(username, current_password, new_password):
             else:
                 error = "Password update error: new password cannot match old password."
         elif user["password"] != hash.hexdigest():
-            error = "Password update error: incorrect password."
+            error = "Password update error: incorrect password. %s %s" % (hash.hexdigest(), user["password"])
                 
     return False
     
