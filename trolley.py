@@ -51,16 +51,16 @@ def set_basket(username, isbn, quantity):
     
     with db:
         cursor = db.cursor()
-        cursor.execute("SELECT * FROM Baskets WHERE username = ? AND isbn = ?", [username, isbn])
+        cursor.execute("SELECT * FROM Baskets WHERE username = ? AND isbn = ?;", [username, isbn])
         book = cursor.fetchone()
        
         if book:
-            cursor.execute("UPDATE Baskets SET quantity = ? WHERE username = ? AND isbn = ?", [quantity, username, isbn])
+            cursor.execute("UPDATE Baskets SET quantity = ? WHERE username = ? AND isbn = ?;", [quantity, username, isbn])
             if quantity <= 0:
-                cursor.execute("DELETE FROM Baskets WHERE quantity <= 0")
+                cursor.execute("DELETE FROM Baskets WHERE quantity <= 0;")
         else:
             if quantity > 0:
-                cursor.execute("INSERT INTO Baskets VALUES(?, ?, ?)", [username, isbn, quantity])
+                cursor.execute("INSERT INTO Baskets VALUES(?, ?, ?);", [username, isbn, quantity])
     
 def count_basket(username):
     items = 0
