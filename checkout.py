@@ -97,17 +97,21 @@ def execute_order(account, month, year, credit_card, postage):
         
         with db:
             cursor = db.cursor()
-            cursor.execute("SELECT * FROM Baskets WHERE username = ?", [account["username"]])
+            cursor.execute("SELECT * FROM Baskets WHERE username = ?;", [account["username"]])
             
             books = cursor.fetchall()
-            isbn = ""
-            hash = hashlib.sha512(credit_card)
-            last_four = credit_card[-4:]
-            now = datetime.now()
-            for b in books:
-               isbn += "%s;" % (b["isbn"])
-            
-            cursor.execute("INSERT INTO Orders(username, credit_card, expiry, last_four, isbns, date_of_order, postage) VALUES(?, ?, ?, ?, ?, ?, ?)",\
-                                         [account["username"], hash.hexdigest(), "%s/%s" % (str(month), str(year)), last_four, isbn, now, postage])
-            return True
+            if books:
+                isbn = ""
+                hash = hashlib.sha512(credit_card)
+                last_four = credit_card[-4:]
+                now = datetime.now()
+                for b in books:
+                   isbn += "%s*%d;" % (b["isbn"], b["quantity"])
+                
+                cursor.execute("INSERT INTO Orders(username, credit_card, expiry, last_four, isbns, date_of_order, postage, total_price) VALUES(?, ?, ?, ?, ?, ?, ?, ?);",\
+                                             [account["username"], hash.hexdigest(), "%s/%s" % (str(month), str(year)), last_four, isbn, now, postage, total_basket(account["username"])])
+                cursor.execute("DELETE FROM Baskets WHERE username = ?;", account["username"])
+                return True
+            else:
+                error = "Your trolley is empty!"
     return False
