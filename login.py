@@ -10,20 +10,23 @@ login_db = "data/main.db"
 error = ""
 
 def send_mail(destination, subject, body):
-    # Code from http://www.yak.net/fqa/84.html
-    SENDMAIL = "/usr/sbin/sendmail" # sendmail location
-    p = os.popen("%s -t" % SENDMAIL, "w")
-    p.write("From: accounts@mekong.com.au\n")
-    p.write("To: %s\n" % (destination))
-    p.write("Subject: %s\n" % (subject))
-    p.write("\n\n%s\n" % (body))
+    message = """\
+From: donotreply@mekong.com.au
+To: %s
+Subject: %s
 
-    sts = p.close()
-    if sts:
-        error = "Sendmail exit status %s" % (sts)
+%s
+""" % (destination, subject, body)
+
+    mailbox = os.popen("/usr/sbin/sendmail -t -i", "w")
+    mailbox.write(message)
+    status = mailbox.close():
+    if status:
+        error = "A problem occurred sending the email: %s" % (str(status))
         return False
-    error = ""
-    return True
+    else
+        return True
+    
 
 def legal_username(username):
     global error
