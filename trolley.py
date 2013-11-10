@@ -278,7 +278,7 @@ def present_trolley(username):
   </form>
 </div>
 <hr/>
-""" % (book["isbn"], book["smallimageurl"], book["isbn"], book["title"], book["price"], book["authors"], book["publisher"], item["quantity"] book["isbn"])
+""" % (book["isbn"], book["smallimageurl"], book["isbn"], book["title"], book["price"], book["authors"], book["publisher"], item["quantity"], book["isbn"])
             
             str += product_description(book, item["quantity"])
     str += """
