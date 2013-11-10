@@ -261,9 +261,6 @@ def present_trolley(username):
         <strong>Quantity:</strong> %s
       </div>
       <br/>
-      <div class="col-md-10">
-      %s
-      </div>
     </div>
   </div>
 <div class="media">
