@@ -142,7 +142,7 @@ def change_password(username, current_password, new_password):
     db = dbase.db_init(login_db)
     with db:
         cursor = db.cursor()
-        cursor.execute("SELECT * FROM Users")
+        cursor.execute("SELECT * FROM Users WHERE username = ?", [username])
         
         user = cursor.fetchone()
             
