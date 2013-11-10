@@ -89,7 +89,7 @@ def total_basket(username):
         for item in trolley:
             cursor.execute("SELECT price FROM Books WHERE isbn = ?;", [item["isbn"]])
             book = cursor.fetchone()
-            total_price += book["price"]
+            total_price += (book["price"] * book["quantity"])
             
         return total_price
 
