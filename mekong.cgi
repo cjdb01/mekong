@@ -294,12 +294,11 @@ def print_header(title, form):
           </div>
         </div>
 
-
+        <div id="content" class="container">
         <div class="jumbotron">
           <p>Welcome to</p>
           <h1>Mekong</h1>
         </div>
-        <div id="content" class="container">
 """
     if not account and login.error:
         alert_message("danger", login.error, "")
@@ -342,6 +341,17 @@ def print_header(title, form):
             alert_message("info", "An email has been sent to your account", "Please click on the link in the email to reset your password.")
         else:
             alert_message("danger", "A problem occurred", login.error)
+    elif form.getvalue("page") == "reset-password" and form.getvalue("link"):
+        if not login.reset_password_validate(form.getvalue("link")):
+            alert_message("danger", "A problem occurred", login.error)
+    elif form.getvalue("page") == "validate-password":
+        if form.getvalue("password") == form.getvalue("confirm-password"):
+            if login.reset_password(form.getvalue("userid"), form.getvalue("password")):
+                alert_message("success", "Your password has been reset!", "Please proceed to log in.")
+            else
+                alert_message("danger", "A problem occurred", login.error)
+        else:
+            alert_message("danger", "Your passwords do not match.", '<a href="mekong.cgi?%s">Click here</a> to try again' % (form.getvalue("userid")))
     
     print """
           </div>

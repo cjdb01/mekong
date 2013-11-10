@@ -123,7 +123,8 @@ def create_account(user):
                     hash = hashlib.sha512()
                     hash.update(user["username"])
                     hash.update(user["firstname"])
-                    hash.update(datetime.now().strftime('%A, %d-%m-%Y ' + str(datetime.now().hour + 1) + ':%M:%S GMT'))
+                    hash.update(datetime.now())
+                    hash.update(os.urandom(20))
                     
                     confirmation = hash.hexdigest()
                     
@@ -194,19 +195,91 @@ def reset_password_request(username, email):
                error = "The e-mail address you provided does not match the one in our database."
                return False
         
-            dtime = datetime.now().strftime('%A, %d-%m-%Y ' + str(datetime.now().hour + 1) + ':%M:%S GMT')
+            dtime = datetime.now()
             hash = hashlib.sha512()
             hash.update(username)
-            hash.update(dtime)
+            hash.update(datetime.now())
             hash.update(os.urandom(20))
             
-            cursor.execute("UPDATE Users SET password_reset_link = ?, password_reset_date = ? WHERE username = ?", [hash.hexdigest(), dtime, username])
+            cursor.execute("UPDATE Users SET password_reset_link = ?, password_reset_date = ? WHERE username = ?;", [hash.hexdigest(), dtime, username])
             
-            if send_mail(user["email"], "Mekong.com.au: Reset password request", "Dear %s,\n\nWe have received a request to reset your password.\n\nBefore resetting your password, it is our policy to request that you click the following link, http://www.cse.unsw.edu.au/%s.\n\nIf you did not authorise this request, you may choose to ignore this email.\n\nIf you didn't create an account with Mekong, please contact us at webmaster@mekong.com.au immediately. Do not provide personal details in this email." % (user["username"], hash.hexdigest())):
+            if send_mail(user["email"], "Mekong.com.au: Reset password request", "Dear %s,\n\nWe have received a request to reset your password.\n\nBefore resetting your password, it is our policy to request that you click the following link, http://www.cse.unsw.edu.au/~chrisdb/mekong.cgi?page=reset-password&link=%s.\n\nIf you did not authorise this request, you may choose to ignore this email.\n\nIf you didn't create an account with Mekong, please contact us at webmaster@mekong.com.au immediately. Do not provide personal details in this email." % (user["firstname"], hash.hexdigest())):
                 return True
         else:
             error = "Could not find username '%s'" % (username)
         return False
+        
+def reset_password(link, password):
+    global error
+    
+    db = dbase.db_init(login_db)
+    with db:
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM Users WHERE password_reset_link = ?", [link])
+        
+        user = cursor.fetchone()
+        
+        if user:
+            if change_password(user["username"], user["password"], password):
+                cursor.execute("UPDATE Users SET password_reset_link = '', password_reset_date = '' WHERE username = ?;", [password, user["username"]])
+                return True
+        else:
+          error = "User does not exist."
+          return False
+    return False
+
+def reset_password_validate(link):
+    global error
+    
+    db = dbase.db_init(login_db)
+    with db:
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM Users WHERE password_reset_link = ?;", [link])
+        
+        user = cursor.fetchone()
+        
+        if user:
+            now = datetime.now()
+            time_difference = now - user["password_reset_date"]
+            if time_difference.total_seconds() < (60 * 60 * 24 * 2): # seconds/minute * minutes/hour * hours/day * max days before timeout
+                print """
+<div class="bs-callout bs-callout-info">
+  <h4>Nearly there!</h4>
+  <p>Just enter your new password into the boxes below and press the button to reset your password!</p>
+</div>
+
+                
+<form class="form-group" action="mekong.cgi?page=password-validate" method="post">
+  <div class="control-group">
+    <label for="username">
+      New password
+    </label>
+    <div class="controls">
+      <input name="password" class="form-control" type="password" required />
+      <p class="help-block"></p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="email">
+      Confirm new password
+    </label>
+    <input name="confirm-password" class="form-control" type="password" required />
+  </div>
+  <div class="controls">
+    <input type="hidden name="userid" value="%s"
+    <button type="submit" class="btn btn-info" name="reset-password">Reset my password</button>
+  </div>
+</form>
+""" % (link)
+                return True
+            else:
+                error = "The link timed out. You only have two days to reset your password."
+                return False
+        else:
+            error = "Invalid link"
+            return False
+    return False
+    
             
 def print_forgot_password():
     print """
@@ -232,7 +305,7 @@ def print_forgot_password():
     <input name="email" class="form-control" type="email" placeholder="Enter e-mail" required />
   </div>
   <div class="controls">
-    <button type="submit" class="btn btn-info" name="reset-password">Reset password</button>
+    <button type="submit" class="btn btn-info" name="reset-password">Email me</button>
   </div>
 </form>
 """

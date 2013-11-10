@@ -19,4 +19,3 @@ def db_init(path):
         sys.exit("Couldn't establish a connection with database.")
     
     return db
-
