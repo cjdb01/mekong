@@ -51,7 +51,7 @@ def set_basket(username, isbn, quantity):
     
     with db:
         cursor = db.cursor()
-       
+        cursor.execute("SELECT * FROM Baskets WHERE username = ? AND isbn = ?", [username, isbn])
         book = cursor.fetchone()
        
         if book:
