@@ -43,12 +43,23 @@ def legal_username(username):
     
 def unique_username(username):
     db = dbase.db_init(login_db)
+    rows = None
     with db:
         cursor = db.cursor()
         cursor.execute("SELECT * FROM Users WHERE username = ?", [username])
         
         rows = cursor.fetchone()
         
+    return rows is None
+    
+def unique_email(email):
+    db = dbase.db_init(login_db)
+    rows = None
+    with db:
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM Users WHERE email = ?", [email])
+        
+        rows = cursor.fetchone()
     return rows is None
     
 def legal_password(password, username, first_name, last_name):
@@ -109,6 +120,8 @@ def create_account(user):
     if legal_username(user["username"]):
         if not unique_username(user["username"]):
             error = "Create account error: username is not unique"
+        if not unique_email(user["email"]):
+            error = "Create account error: e-mail is not unique"
         else:
             if legal_password(user["password"], user["username"], user["firstname"], user["lastname"]):
                 db = dbase.db_init(login_db)

@@ -265,7 +265,7 @@ def present_trolley(username):
       <div class="col-md-7"></div>
       <div class="col-md-1"><strong>Quantity:</strong></div>
       <div class="col-md-1">
-        <input type="text" class="form-control" name="qty" placeholder="%d" style="width: 60px;" />
+        <input type="text" class="form-control" name="qty" placeholder="%d" style="width: 60px;" pattern="\d*" />
         <input type="hidden" name="isbn" value="%s" />
       </div>
       <div class="col-md-1">
