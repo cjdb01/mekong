@@ -268,9 +268,6 @@ def present_trolley(username):
       </div>
     </div>
   </div>
-""" % (book["isbn"], book["mediumimageurl"], book["isbn"], book["title"], book["price"], book["authors"], book["publisher"], description)
-            if account:
-                str += """
 <div class="media">
   <form action="mekong.cgi?page=trolley" method="post">
     <div class="row">
@@ -288,8 +285,8 @@ def present_trolley(username):
     </div>
   </form>
 </div>
-""" % (book["isbn"])
-            str += "<hr/>"
+<hr/>
+""" % (book["isbn"], book["mediumimageurl"], book["isbn"], book["title"], book["price"], book["authors"], book["publisher"], description, book["isbn"])
             
             str += product_description(book)
     return str
