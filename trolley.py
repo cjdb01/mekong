@@ -199,9 +199,6 @@ def product_description(book):
       </div>
       <div class="modal-footer">
         <form action="mekong.cgi?page=search" method="post"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-""" % (book["isbn"], book["largeimageurl"], book["title"], book["price"], book["authors"], book["publisher"], book["numpages"], book["publication_date"], book["isbn"], book["salesrank"], book["productdescription"])
-    if account:
-        str += """
   <input type="hidden" name="isbn" value="%s">
   <div class="md-col-1">
     <button type="submit" class="btn btn-success" name="qty" value="1">Add to trolley</button>
@@ -209,14 +206,12 @@ def product_description(book):
   <div>
     <button type="submit" class="btn btn-danger" name="qty" value="0">Remove from trolley</button>
   </div>
-""" % (book["isbn"])
-    str += """
-    </form>
+      </form>
       </div>
     </div><!-- /.modal-content -->
   </div>
 </div>
-"""
+""" % (book["isbn"], book["largeimageurl"], book["title"], book["price"], book["authors"], book["publisher"], book["numpages"], book["publication_date"], book["isbn"], book["salesrank"], book["productdescription"], book["isbn"])
     return str
         
 def present_trolley(username):
