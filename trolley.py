@@ -198,7 +198,7 @@ def product_description(book):
         </div>
       </div>
       <div class="modal-footer">
-        <form action="mekong.cgi?page=search" method="post"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <form action="mekong.cgi?page=trolley" method="post"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
   <input type="hidden" name="isbn" value="%s">
   <div class="md-col-1">
     <button type="submit" class="btn btn-success" name="qty" value="1">Add to trolley</button>
@@ -271,7 +271,7 @@ def present_trolley(username):
         <input type="text" class="form-control" name="qty" placeholder="1" style="width: 60px;">
         <input type="hidden" name="isbn" value="%s">
       </div>
-      <div class="col-md-1">
+      <div class="col-md-2">
         <button type="submit" class="btn btn-success" name="isbn-to-add">Update trolley</button>
       </div>
       <div class="col-md-1">
