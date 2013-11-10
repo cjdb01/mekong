@@ -1,4 +1,5 @@
 import database as dbase
+import re
 
 order_db = "data/main.db"
 
@@ -31,13 +32,16 @@ def retrieve_orders(account):
 
         for order in orders:
             isbn_list = order["isbns"].split(';')
+
             books = ""
             for i in isbn_list:
-                qty = i.split('*')
-                
-                cursor.execute("SELECT * FROM Books WHERE isbn = ?", [qty[0]])
+                isbn = re.sub(r"(.{10})\*\d+", r"\1", i)
+                qty = re.sub(r".{10}\*(\d+)", r"\1", i)
+                cursor.execute("SELECT * FROM Books WHERE isbn = ?", [isbn])
                 book = cursor.fetchone()
-                books += """
+                print isbn
+                if book:
+                    books += """
 <div class="row">
   <div class="col-md-2">
     %s
@@ -52,14 +56,14 @@ def retrieve_orders(account):
     %s
   </div>
   <div class="col-md-2">
-    $%.2f
+    $%s
   </div>
   <div class="col-md-1">
     %s
   </div>
 </div>
-
-""" % (book["title"], book["authors"], book["publisher"], book["isbn"], book["price"], qty[1])
+<hr/>
+""" % (book["title"], book["authors"], book["publisher"], isbn, book["price"], qty)
             str = """
 div class="panel-group" id="accordion">
   <div class="panel panel-default">
@@ -75,7 +79,6 @@ div class="panel-group" id="accordion">
         <div class="row">
           <div class="col-md-3">
             <label>Order placed</label><br/>
-            %s <br/>
             %s
             <hr/>
             <label>Total price</label><br/>
@@ -120,6 +123,6 @@ div class="panel-group" id="accordion">
   </div>
   
 </div>
-""" % (order["number"], date_text, days_ago, order["total_price"], order["last_four"], order["expiry"], account["firstname"],\
+""" % (order["order_number"], order["date_of_order"], order["total_price"], order["last_four"], order["expiry"], account["firstname"],\
                      account["lastname"], account["address"], account["suburb"], account["state"], account["postcode"], books)
             print str
