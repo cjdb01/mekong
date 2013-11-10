@@ -269,7 +269,7 @@ def present_trolley(username):
         <input type="text" class="form-control" name="qty" placeholder="1" style="width: 60px;">
         <input type="hidden" name="isbn" value="%s">
       </div>
-      <div class="col-md-1">
+      <div class="col-md-2">
         <button type="submit" class="btn btn-success" name="isbn-to-add">Update trolley</button>
       </div>
       <div class="col-md-1">
