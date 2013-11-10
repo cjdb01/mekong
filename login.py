@@ -20,7 +20,7 @@ Subject: %s
 
     mailbox = os.popen("/usr/sbin/sendmail -t -i", "w")
     mailbox.write(message)
-    status = mailbox.close():
+    status = mailbox.close()
     if status:
         error = "A problem occurred sending the email: %s" % (str(status))
         return False
