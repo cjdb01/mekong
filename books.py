@@ -204,7 +204,7 @@ def present_books(criteria, category, order, asc, account):
                             <div class="row">
                               <div class="col-md-9"></div>
                               <div class="col-md-1">
-                                <input type="text" class="form-control" name="qty" placeholder="1" style="width: 60px;" value="1">
+                                <input type="text" class="form-control" name="qty" placeholder="1" style="width: 60px;">
                                 <input type="hidden" name="isbn" value="%s">
                                 <input type="hidden" name="criteria" value="%s">
                                 <input type="hidden" name="category" value="%s">
