@@ -231,10 +231,6 @@ def present_trolley(username):
             
             book = cursor.fetchone()
             
-            if len(book["productdescription"]) > 30:
-                description = ' '.join(book["productdescription"].split(' ')[:30]) + "..."
-            else:
-                description = book["productdescription"]
             str += """
 <div class="media-body">
     <div class="row">
@@ -288,7 +284,7 @@ def present_trolley(username):
   </form>
 </div>
 <hr/>
-""" % (book["isbn"], book["mediumimageurl"], book["isbn"], book["title"], book["price"], book["authors"], book["publisher"], item["quantity"], description, book["isbn"])
+""" % (book["isbn"], book["smallimageurl"], book["isbn"], book["title"], book["price"], book["authors"], book["publisher"], item["quantity"], book["isbn"])
             
             str += product_description(book, item["quantity"])
     str += """
