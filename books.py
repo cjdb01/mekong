@@ -152,8 +152,8 @@ def product_description(criteria, category, order, asc, account, book):
 """
     return str
     
-def present_books(criteria, category, order, asc, account, firstlook):
-    if not criteria:
+def present_books(criteria, category, order, asc, account, firstlook, page):
+    if not criteria and page == "search":
         print "No items match your search"
         return;
     if not firstlook:
