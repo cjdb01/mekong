@@ -182,10 +182,10 @@ def present_books(criteria, category, order, asc, account):
                                 <h3 class="media-heading">$%.2f</h3>
                               </div>
                               </br>
-                              <div class="col-md-8">
+                              <div class="col-md-7">
                                 <strong>%s</strong>
                               </div>
-                              <div class="col-md-2" align="right">
+                              <div class="col-md-3" align="right">
                                 <strong>Published by %s</strong>
                               </div>
                               <br/>
