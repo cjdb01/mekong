@@ -96,7 +96,7 @@ def execute_order(account, month, year, credit_card, postage):
         
         with db:
             cursor = db.cursor()
-            cursor.execute("SELECT * FROM Trolley WHERE username = ?", [account["username"]])
+            cursor.execute("SELECT * FROM Baskets WHERE username = ?", [account["username"]])
             
             books = cursor.fetchall()
             isbn = ""
