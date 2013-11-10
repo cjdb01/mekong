@@ -352,7 +352,7 @@ def print_header(title, form):
             else:
                 alert_message("danger", "A problem occurred", login.error)
         else:
-            alert_message("danger", "Your passwords do not match.", '<a href="mekong.cgi?page=%s">Click here</a> to try again' % (form.getvalue("userid")))
+            alert_message("danger", "Your passwords do not match.", '<a href="mekong.cgi?page=reset-password&link=%s">Click here</a> to try again' % (form.getvalue("userid")))
     
     print """
           </div>
