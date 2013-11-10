@@ -219,35 +219,3 @@ def present_books(criteria, category, order, asc, account):
 
     for book in booklist:
         print product_description(criteria, category, order, asc, account, book)
-
-def quick_trolley_books(isbn, qty):
-    booklist = search_books(isbn, "isbn", "price", "asc")
-    book = booklist[0]
-    print """
-                        <div class="media">
-                          <a class="pull-left" href="#">
-                            <img class="media-object alt="No picture to display" src="%s">
-                          </a>
-                          <div class="media-body">
-                            <div class="row">
-                              <div class="col-md-2">
-                                <strong>%s</strong>
-                              </div>
-                              <div class="col-md-2" align="right">
-                                <strong>$%.2f</strong>
-                              </div>
-                            </div>
-  
-                            <div class="row">
-                              <div class="col-md-2">
-                                %s
-                              </div>
-                              <div class="col-md-2" align="right">
-                                <strong>In basket: </strong> %d
-                              </div>
-                            </div>
-                          </div>
-                          <br/>
-                        </div>
-                        <hr/>
-""" % (book["smallimageurl"], book["title"], book["price"], book["authors"], qty)

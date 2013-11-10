@@ -22,7 +22,7 @@ def alert_message(type, strong, normal):
         print """
         <div class="alert alert-%s fade in">
             <button class="close" aria-hidden="true" data-dismiss="alert" type="button">
-                x
+                &times;
             </button>
             <strong>
               %s
@@ -55,7 +55,7 @@ def login_details():
                       </div>
                       <button type="submit" id="login" class="btn btn-primary" style="margin-bottom: 10px; width: 215px">Login</button>
                     </form>
-                    <form>
+                    <form action="mekong.cgi?page=forgot-password" method="post">
                       <button type="submit" id="forgot" class="btn btn-danger" style="margin-bottom: 10px; width: 215px">Forgot Password</button>
                     </form>
                     <form action="mekong.cgi?page=create-account" method="post">
@@ -65,6 +65,7 @@ def login_details():
     else:
         print account["username"]
         print """
+                    <b class="caret"></b>
                     <ul class="dropdown-menu" aria-labelledby="drop3" role="menu">
                       <li role="presentation">
                         <a href="mekong.cgi?page=myaccount">Account</a>
@@ -276,7 +277,7 @@ def print_header(title, form):
               </ul>
               <form class="navbar-form navbar-left" role="search" action="mekong.cgi?page=search" method="post">
                 <div class="form-group">
-                    <input type="text" class="form-control" style="width: 500px;" placeholder="Quick title search" name="criteria">
+                    <input type="text" class="form-control" style="width: 400px;" placeholder="Quick title search" name="criteria">
                     <input type="hidden" name="category" value="title">
                     <input type="hidden" name="order" value="salesrank">
                     <input type="hidden" name="asc" value="ASC">
@@ -293,11 +294,11 @@ def print_header(title, form):
           </div>
         </div>
 
-        <div id="content" class="container">
-          <div class="jumbotron">
-            <p>Welcome to</p>
-            <h3>Mekong</h3>
-          </div>
+
+        <div class="jumbotron">
+          <p>Welcome to</p>
+          <h1>Mekong</h1>
+        </div>
 """
     if not account and login.error:
         alert_message("danger", login.error, "")
@@ -335,6 +336,11 @@ def print_header(title, form):
             alert_message("success", "Account successfully confirmed", "Please proceed to log in.")
         else:
             alert_message("danger", "A problem occurred", login.error)
+    elif form.getvalue("page") == "forgot-password-sent":
+        if login.reset_password_request(form.getvalue("username"), form.getvalue("email")):
+            alert_message("info", "An email has been sent to your account", "Please click on the link in the email to reset your password.")
+        else:
+            alert_message("danger", "A problem occurred", login.error)
     
     print """
           </div>
@@ -361,6 +367,8 @@ def print_body_search(form):
         books.present_books(form.getvalue("criteria"), form.getvalue("category"), form.getvalue("order"), form.getvalue("asc"), account)
     elif form.getvalue("page") == "create-account":
         print_registration()
+    elif form.getvalue("page") == "forgot-password":
+        login.print_forgot_password()
         
     print """
                 </div>

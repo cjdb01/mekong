@@ -85,21 +85,21 @@ def authenticate_user(username, password):
             cursor = db.cursor()
             cursor.execute("SELECT * FROM Users WHERE username = ?", [username])
             
-            row = cursor.fetchone()
+            user = cursor.fetchone()
             
             hash = hashlib.sha512()
             hash.update(password)
             password = hash.hexdigest()
             
-            if not row:
+            if not user:
                 error += "username '" + username + "' does not exist."
-            elif password != row["password"]:
+            elif password != user["password"]:
                 error += "incorrect username or password."
-            elif row["confirmed"]: # a value here means that they haven't clicked on the link yet!
+            elif user["confirmed"]: # a value here means that they haven't clicked on the link yet!
                 error += "please confirm your registration prior to logging in."
             else:
                 error = ""
-                return row
+                return user
     else:
         error += "incorrect username or password."
     return None
@@ -127,7 +127,7 @@ def create_account(user):
                     
                     confirmation = hash.hexdigest()
                     
-                    if not send_mail(user["email"], "Mekong.com.au: Account activation", "Dear %s %s,\n\nThis email is to confirm that you have requested an account with mekong.com.au.\n\nIf you created the account, please click on the following link http://www.cse.unsw.edu.au/~chrisdb/mekong.cgi?page=confirm-account&link=%s.\n\nIf you did not create the account, please send an email to webmaster@mekong.com.au to rectify the issue.\n\nKind regards,\n\nMekong staff" % (user["firstname"], user["lastname"], confirmation)):
+                    if not send_mail(user["email"], "Mekong.com.au: Account activation", "Dear %s,\n\nThis email is to confirm that you have requested an account with mekong.com.au.\n\nIf you created the account, please click on the following link http://www.cse.unsw.edu.au/~chrisdb/mekong.cgi?page=confirm-account&link=%s.\n\nIf you did not create the account, please send an email to webmaster@mekong.com.au to rectify the issue.\n\nKind regards,\n\nMekong staff" % (user["firstname"], user["lastname"], confirmation)):
                         return False
                     
                     cursor.execute("INSERT INTO Users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [user["username"], pwd, user["firstname"], user["lastname"],\
@@ -145,16 +145,16 @@ def change_password(username, current_password, new_password):
         cursor = db.cursor()
         cursor.execute("SELECT * FROM Users")
         
-        row = cursor.fetchone()
-        if row["password"] == hash.hexdigest() and legal_password(new_password, row["username"], row["firstname"], row["lastname"]):
+        user = cursor.fetchone()
+        if user["password"] == hash.hexdigest() and legal_password(new_password, user["username"], user["firstname"], user["lastname"]):
             hash = hashlib.sha512()
             hash.update(new_password)
             
-            if hash.hexdigest() != row["password"]:
-                cursor.execute("UPDATE Users SET password = ? WHERE username = ? AND password = ?", [hash.hexdigest(), username, row["password"]])
+            if hash.hexdigest() != user["password"]:
+                cursor.execute("UPDATE Users SET password = ? WHERE username = ? AND password = ?;", [hash.hexdigest(), username, user["password"]])
             else:
                 error = "Password update error: new password cannot match old password."
-        elif row["password"] != hash.hexdigest():
+        elif user["password"] != hash.hexdigest():
             error = "Password update error: incorrect password."
                 
     return error
@@ -165,20 +165,74 @@ def confirm_account(link):
     db = dbase.db_init(login_db)
     with db:
         cursor = db.cursor()
-        cursor.execute("SELECT * FROM Users WHERE confirmed = ?", [link])
+        cursor.execute("SELECT * FROM Users WHERE confirmed = ?;", [link])
         
-        row = cursor.fetchone()
+        user = cursor.fetchone()
         
-        if row:
-            cursor.execute("UPDATE Users SET confirmed = '' WHERE confirmed = ?", [link])
+        if user:
+            cursor.execute("UPDATE Users SET confirmed = '' WHERE confirmed = ?;", [link])
             return True
         else:
             error = """
-An error occurred while trying to confirm this account.<br/>
 Accounts can only be confirmed once, so you might have already confirmed your account. If this is the case please log in using the form at the top of the page.<br/>
 If you haven't confirmed your account yet, please ensure that you copied the URL from your email correctly.<br/>Queries may be sent to accounts@mekong.com.au.<br/>
 """
             return False
 
-def reset_password(username):
-    return 0 # TODO
+def reset_password_request(username, email):
+    global error
+    
+    db = dbase.db_init(login_db)
+    with db:
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM Users WHERE username = ?", [username])
+        
+        user = cursor.fetchone()
+        
+        if user:
+            if user["email"] != email:
+               error = "The e-mail address you provided does not match the one in our database."
+               return False
+        
+            dtime = datetime.now().strftime('%A, %d-%m-%Y ' + str(datetime.now().hour + 1) + ':%M:%S GMT')
+            hash = hashlib.sha512()
+            hash.update(username)
+            hash.update(dtime)
+            hash.update(os.urandom(20))
+            
+            cursor.execute("UPDATE Users SET password_reset_link = ?, password_reset_date = ? WHERE username = ?", [hash.hexdigest(), dtime, username])
+            
+            if send_email(user["email"], "Mekong.com.au: Reset password request", "Dear %s,\n\nWe have received a request to reset your password.\n\nBefore resetting your password, it is our policy to request that you click the following link, %s.\n\nIf you did not authorise this request, you may choose to ignore this email.\n\nIf you didn't create an account with Mekong, please contact us at webmaster@mekong.com.au immediately. Do not provide personal details in this email.")
+                return True
+        else:
+            error = "Could not find username '%s'" % (username)
+        return False
+            
+def print_forgot_password():
+    print """
+<div class="bs-callout bs-callout-info">
+  <h4>Oops!</h4>
+  <p>We've all forgotten our passwords at one point. Don't worry, just enter your username and e-mail and we'll be able to recover it for you.</p>
+</div>
+
+<form class="form-group">
+  <div class="control-group">
+    <label for="username">
+      Username
+    </label>
+    <div class="controls">
+      <input name="username" class="form-control" type="text" required />
+      <p class="help-block"></p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="email">
+      Email
+    </label>
+    <input name="email" class="form-control" type="email" placeholder="Enter e-mail" required />
+  </div>
+  <div class="controls">
+    <button type="submit" class="btn btn-info" name="reset-password">Reset password</button>
+  </div>
+</form>
+"""
