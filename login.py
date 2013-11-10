@@ -222,7 +222,7 @@ def reset_password(link, password):
         user = cursor.fetchone()
         
         if user:
-            if change_password(user["username"], user["password"], password):
+            if change_password_backbone(user["username"], user["password"], password):
                 cursor.execute("UPDATE Users SET password_reset_link = '', password_reset_date = '' WHERE username = ?;", [user["username"]])
                 return True
         else:
