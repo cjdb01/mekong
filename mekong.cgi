@@ -71,13 +71,7 @@ def login_details():
                     <b class="caret"></b>
                     <ul class="dropdown-menu" aria-labelledby="drop3" role="menu">
                       <li role="presentation">
-                        <a href="mekong.cgi?page=myaccount">Account</a>
-                      </li>
-                      <li role="presentation">
                         <a href="mekong.cgi?page=myhistory">History</a>
-                      </li>
-                      <li role="presentation">
-                        <a href="mekong.cgi?page=mysettings">Settings</a>
                       </li>
                       <li role="presentation">
                         <a href="mekong.cgi?page=logout">Log out</a>
@@ -287,9 +281,6 @@ def print_header(title, form):
                 </div>
                 <button type="submit" class="btn btn-default">Search</button>
               </form>
-              <ul class="nav navbar-nav">
-                <li><a href="mekong.cgi?page=advanced-search">Advanced search</a></li>
-              </ul>
 """ % (title)
     login_details()
     print """
