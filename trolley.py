@@ -93,7 +93,7 @@ def total_basket(username):
             
         return total_price
 
-def product_description(book):
+def product_description(book, qty):
     str = """
 <div id="%s" class="modal fade" tabindex="-1" style="display: none; min-width: 80%%; left: 23%%; right: 30%%;">
     <div class="modal-content">
@@ -184,11 +184,17 @@ def product_description(book):
                       Product description
                     </strong>
                   </div>
+                  <div class="col-md-2">
+                    <strong>Quantity:</strong>
+                  </div>
                 </div>
                 
                 <div class="row">
                   <div class="col-md-10">
                     %s
+                  </div>
+                  <div class="col-md-2">
+                    %d
                   </div>
                 </div>
               <br/>
@@ -196,20 +202,19 @@ def product_description(book):
         </div>
       </div>
       <div class="modal-footer">
-        <form action="mekong.cgi?page=trolley" method="post"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-  <input type="hidden" name="isbn" value="%s">
-  <div class="md-col-1">
+        <form action="mekong.cgi?page=trolley" method="post">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          Close
+        </button>
+    <input type="hidden" name="isbn" value="%s">
     <button type="submit" class="btn btn-success" name="qty" value="1">Add to trolley</button>
-  </div>
-  <div>
     <button type="submit" class="btn btn-danger" name="qty" value="0">Remove from trolley</button>
-  </div>
       </form>
       </div>
     </div><!-- /.modal-content -->
   </div>
 </div>
-""" % (book["isbn"], book["largeimageurl"], book["title"], book["price"], book["authors"], book["publisher"], book["numpages"], book["publication_date"], book["isbn"], book["salesrank"], book["productdescription"], book["isbn"])
+""" % (book["isbn"], book["largeimageurl"], book["title"], book["price"], book["authors"], book["publisher"], book["numpages"], book["publication_date"], book["isbn"], book["salesrank"], book["productdescription"], qty, book["isbn"])
     return str
         
 def present_trolley(username):
@@ -256,6 +261,10 @@ def present_trolley(username):
         <strong>Published by %s</strong>
       </div>
       <br/>
+      <div class="col-md-2">
+        <strong>Quantity:</strong> %s
+      </div>
+      <br/>
       <div class="col-md-10">
       %s
       </div>
@@ -264,7 +273,7 @@ def present_trolley(username):
 <div class="media">
   <form action="mekong.cgi?page=trolley" method="post">
     <div class="row">
-      <div class="col-md-9"></div>
+      <div class="col-md-8"></div>
       <div class="col-md-1">
         <input type="text" class="form-control" name="qty" placeholder="1" style="width: 60px;" />
         <input type="hidden" name="isbn" value="%s" />
@@ -279,7 +288,7 @@ def present_trolley(username):
   </form>
 </div>
 <hr/>
-""" % (book["isbn"], book["mediumimageurl"], book["isbn"], book["title"], book["price"], book["authors"], book["publisher"], description, book["isbn"])
+""" % (book["isbn"], book["mediumimageurl"], book["isbn"], book["title"], book["price"], book["authors"], book["publisher"], item["quantity"], description, book["isbn"])
             
-            str += product_description(book)
+            str += product_description(book, item["quantity"])
     return str

@@ -129,7 +129,10 @@ def product_description(criteria, category, order, asc, account, book):
         </div>
       </div>
       <div class="modal-footer">
-        <form action="mekong.cgi?page=search" method="post"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <form action="mekong.cgi?page=search" method="post">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            Close
+          </button>
 """ % (book["isbn"], book["largeimageurl"], book["title"], book["price"], book["authors"], book["publisher"], book["numpages"], book["publication_date"], book["isbn"], book["salesrank"], book["productdescription"])
     if account:
         str += """
