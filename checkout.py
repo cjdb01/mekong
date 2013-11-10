@@ -111,7 +111,7 @@ def execute_order(account, month, year, credit_card, postage):
                 
                 cursor.execute("INSERT INTO Orders(username, credit_card, expiry, last_four, isbns, date_of_order, postage, total_price) VALUES(?, ?, ?, ?, ?, ?, ?, ?);",\
                                              [account["username"], hash.hexdigest(), "%s/%s" % (str(month), str(year)), last_four, isbn, now, postage, trolley.total_basket(account["username"])])
-                cursor.execute("DELETE FROM Baskets WHERE username = ?;", account["username"])
+                cursor.execute("DELETE FROM Baskets WHERE username = ?;", [account["username"]])
                 return True
             else:
                 error = "Your trolley is empty!"
