@@ -39,9 +39,9 @@ def retrieve_orders(account):
                 qty = re.sub(r".{10}\*(\d+)", r"\1", i)
                 cursor.execute("SELECT * FROM Books WHERE isbn = ?", [isbn])
                 book = cursor.fetchone()
-                print isbn
                 if book:
                     books += """
+<hr/>
 <div class="row">
   <div class="col-md-2">
     %s
@@ -62,7 +62,6 @@ def retrieve_orders(account):
     %s
   </div>
 </div>
-<hr/>
 """ % (book["title"], book["authors"], book["publisher"], isbn, book["price"], qty)
             str = """
 div class="panel-group" id="accordion">

@@ -303,18 +303,26 @@ def print_header(title, form):
           <h1>Mekong</h1>
         </div>
 """
+    # Log the user in if at all possible
     if not account and login.error:
         alert_message("danger", login.error, "")
     elif form.getvalue("page") == "login" and account:
         alert_message("success", "Thanks for logging in, %s." % (account["firstname"]), "We hope you enjoy browsing!")
     
+    # Update the trolley
     if form.getvalue("qty") and int(form.getvalue("qty")) > 0 and account:
-        trolley.set_basket(account["username"], form.getvalue("isbn"), form.getvalue("qty"))
+        # Trolley behaves differently to search!
+        if form.getvalue("page") == "trolley":
+            trolley.set_basket(account["username"], form.getvalue("isbn"), form.getvalue("qty"))
+        else:
+            trolley.add_basket(account["username"], form.getvalue("isbn"), form.getvalue("qty"))
         alert_message("success", "", "Item added to cart")
     elif form.getvalue("qty") and int(form.getvalue("qty")) == 0 and account:
-        trolley.set_basket(account["username"], form.getvalue("isbn"), form.getvalue("qty"))
+        if form.getvalue("page") == "trolley":
+            trolley.set_basket(account["username"], form.getvalue("isbn"), form.getvalue("qty"))
         alert_message("success", "", "Item removed from cart")
         
+    # If there's an application waiting for accounts to be processed, work it!
     if form.getvalue("page") == "application-submitted":
         if form.getvalue("password-reg") == form.getvalue("confirmpass-reg"):
             user = {}
@@ -331,22 +339,29 @@ def print_header(title, form):
             user["dob"] = form.getvalue("dob-reg")
             user["sex"] = form.getvalue("sex-reg")
             
+            # Attempt to make the account
             if not login.create_account(user):
                 alert_message("danger", login.error, "")
             else:
                 alert_message("success", "Account successfully created.", "A confirmation email has been sent to %s. Before logging in, please confirm your account." % (user["email"]))
         else:
-            alert_message("danger", "Your password and your confirm password entries do not match!", "")
+            alert_message("danger", "A problem occurred", "Your password and your confirm password entries do not match!")
+            
+    # Check if user wants to confirm their account
     elif form.getvalue("page") == "confirm-account" and form.getvalue("link"):
         if login.confirm_account(form.getvalue("link")):
             alert_message("success", "Account successfully confirmed", "Please proceed to log in.")
         else:
             alert_message("danger", "A problem occurred", login.error)
+            
+    # Check if the user wants to reset their password
     elif form.getvalue("page") == "forgot-password-sent":
         if login.reset_password_request(form.getvalue("username"), form.getvalue("email")):
             alert_message("info", "An email has been sent to your account", "Please click on the link in the email to reset your password.")
         else:
             alert_message("danger", "A problem occurred", login.error)
+            
+    # Check if the user can 
     elif form.getvalue("page") == "reset-password" and form.getvalue("link"):
         if not login.reset_password_validate(form.getvalue("link")):
             alert_message("danger", "A problem occurred", login.error)
