@@ -399,7 +399,7 @@ def print_body_search(form):
         print str
     elif form.getvalue("page") == "checkout":
         if account:
-            str = print_checkout(account) 
+            str = checkout.print_checkout(account) 
         else:
             str = "You must be signed in to check out."
         print str
