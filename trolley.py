@@ -247,7 +247,7 @@ def present_trolley(username):
         </a>
       </div>
       <div class="col-md-2" align="right">
-        <h3 class="media-heading">$%.2f</h3>
+        <h4 class="media-heading">$%.2f</h4>
       </div>
       </br>
       <div class="col-md-7">

@@ -9,6 +9,7 @@ import sqlite3 as lite
 import sys
 
 import books
+import checkout
 import login
 import trolley
 
@@ -348,6 +349,12 @@ def print_header(title, form):
     elif form.getvalue("page") == "reset-password" and form.getvalue("link"):
         if not login.reset_password_validate(form.getvalue("link")):
             alert_message("danger", "A problem occurred", login.error)
+    elif form.getvalue("page") == "confirm-order" and account:
+        if form.getvalue("credit-card") and form.getvalue("month") and form.getvalue("year") and form.getvalue("postage"):
+            if checkout.execute_order(account, form.getvalue("month"), form.getvalue("year"), form.getvalue("credit-card"), form.getvalue("postage")):
+                alert_message("success", "Order completed!", "We'll process your order as fast as we can.")
+            else:
+                alert_message("danger", "A problem occurred", checkout.error)
     elif form.getvalue("page") == "validate-password":
         if form.getvalue("password") == form.getvalue("confirm-password"):
             if login.reset_password(form.getvalue("userid"), form.getvalue("password")):
@@ -392,10 +399,10 @@ def print_body_search(form):
         print str
     elif form.getvalue("page") == "checkout":
         if account:
-            print "TODO"
+            str = print_checkout(account) 
         else:
-            print "You must be signed in to check out."
-        
+            str = "You must be signed in to check out."
+        print str
     print """
                 </div>
               </div>
