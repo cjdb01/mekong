@@ -240,7 +240,7 @@ def present_trolley(username):
     <div class="row">
       <div class="col-md-2">
         <center>
-          <a href="#%s">
+          <a href="#%s" data-toggle="modal">
             <img class="media-object alt="No picture to display" src="%s">
           </a>
         </center>
@@ -257,7 +257,7 @@ def present_trolley(username):
       <div class="col-md-8">
         <strong>%s</strong>
       </div>
-      <div class="col-md-2" align="right">
+      <div class="col-md-3" align="right">
         <strong>Published by %s</strong>
       </div>
       <br/>
@@ -291,4 +291,9 @@ def present_trolley(username):
 """ % (book["isbn"], book["mediumimageurl"], book["isbn"], book["title"], book["price"], book["authors"], book["publisher"], item["quantity"], description, book["isbn"])
             
             str += product_description(book, item["quantity"])
+    str += """
+<div class="col-md-8">
+  Total price: $%.2f
+</div>
+""" % total_basket(username)
     return str
