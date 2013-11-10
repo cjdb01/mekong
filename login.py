@@ -136,19 +136,17 @@ def create_account(user):
                     return True
     return False
     
-def change_password(username, current_password, new_password):
+def change_password_backend(username, current_password, new_password):
     global error
     
     db = dbase.db_init(login_db)
     with db:
         cursor = db.cursor()
-        cursor.execute("SELECT * FROM Users WHERE username = ?", [username])
+        cursor.execute("SELECT * FROM Users WHERE username = ? AND password = ?;", [username, current_password])
         
         user = cursor.fetchone()
-            
-        hash = hashlib.sha512()
-        hash.update(current_password)
-        if user["password"] == hash.hexdigest():
+        
+        if user:
             if legal_password(new_password, user["username"], user["firstname"], user["lastname"]):
                 hash = hashlib.sha512()
                 hash.update(new_password)
@@ -160,7 +158,7 @@ def change_password(username, current_password, new_password):
                 else:
                     error = "Password update error: new password cannot match old password."
         else:
-            error = "Password update error: incorrect password. %s %s" % (hash.hexdigest(), user["password"])
+            error = "Password update error: incorrect password." 
                 
     return False
     
