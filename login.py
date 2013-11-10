@@ -228,7 +228,7 @@ def reset_password(link, password):
         else:
           error = "User does not exist."
           return False
-    error += '<a href="mekong.cgi?page=%s">Click here</a> to try again' % (form.getvalue("link")
+    error += '<a href="mekong.cgi?page=%s">Click here</a> to try again' % (link)
     return False
 
 def reset_password_validate(link):
