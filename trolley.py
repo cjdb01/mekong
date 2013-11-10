@@ -42,7 +42,7 @@ def add_basket(username, isbn, quantity):
         
         book = cursor.fetchone()
         if book:
-            cursor.execute("UPDATE Baskets SET quantity = ? WHERE username = ? AND isbn = ?", [book["quantity"] + quantity, username, isbn])
+            cursor.execute("UPDATE Baskets SET quantity = ? WHERE username = ? AND isbn = ?", [int(book["quantity"]) + int(quantity), username, isbn])
         else:
             cursor.execute("INSERT INTO Baskets VALUES(?, ?, ?);", [username, isbn, quantity])
             
